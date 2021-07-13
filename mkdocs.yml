@@ -1,0 +1,15 @@
+site_name: lpnTPM Documentation
+site_url: https://lpntpm.lpnplant.io/
+theme:
+    name: material
+# TODO: provide logo and styling
+#     favicon: images/favicon.png
+#     logo: images/logo.png
+# extra_css:
+#     - stylesheets/extra.css
+markdown_extensions:
+    - pymdownx.highlight
+    - pymdownx.superfences
+    - pymdownx.keys
+nav:
+    - 'Intro': index.md
