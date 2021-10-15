@@ -83,8 +83,18 @@ For now, the rest of the protocol is to be discovered. Probably we should
 focus on getting `tpm2_tools` to work with STM32, as we probably don't want to
 port VCOM to Linux.
 
-This requires a better understanding of the comunication protocol itself.
+This requires a better understanding of the communication protocol itself thus
+the following document will be helpful:
 
+[TCG TSS 2.0 TPM Command Transmission Interface (TCTI) API Specification](https://trustedcomputinggroup.org/wp-content/uploads/TCG_TSS_TCTI_v1p0_r18_pub.pdf)
+
+Section 1.3 Refedences
+
+[TCG PC Client Platform TPM Profile (PTP) Specification](https://www.trustedcomputinggroup.org/wp-content/uploads/PCClientPlatform-TPM-Profile-for-TPM-2-0-v1-03-20-161114_public-review.pdf)
+
+Chapter 6
+
+[TCG TSS 2.0 TPM Command Transmission Interface (TCTI) API Specification](https://trustedcomputinggroup.org/wp-content/uploads/TSS_TCTI_Version-1.0_Revision-05_Review_END030918.pdf)
 
 ### Memmory usage
 Memory limitations hit us right at the beginning preventing us from building the
