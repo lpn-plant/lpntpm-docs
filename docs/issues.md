@@ -1,5 +1,91 @@
 ## Current issues
 
+### Protocol analisys - early conclusions
+
+Getting STM32 to communicate with
+[VCOM](https://github.com/lpn-plant/ms-tpm-20-ref/tree/master/Samples/Nucleo-TPM/VCOM)
+application leads us to a current yet not resolved problem.
+
+Right now we are able to execute commands on TPM, but an error occurs when the
+host device verifies the response data. Specifically, this line of code causes an
+error:
+```
+*((unsigned int*)&response[sizeof(unsigned short) + sizeof(unsigned int)]) == 0
+```
+
+[VCOM-TPM.cpp:198](https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L198)
+
+For now, it's not clear what the response data of TPM_Startup command should look
+like and what each byte of command represents.
+
+Command and response data looks as follows.
+```
+unsigned char CmdBuf[12] = {
+0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
+};
+
+unsigned char RspBuf[12] = {
+0x80, 0x01, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x00
+};
+```
+
+This data is output via ITM trace on port 2.
+
+Correctness of data was verified on both sides of the communication.
+
+Startup command data is hardcoded in VCOM application
+[here](https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L192)
+what makes it hard to reason about its origins.
+
+
+Raw data dumped from `CDC_Receive_FS` shows some similarities between VCOM
+sent command and test run of `tpm2_startup -T device:/dev/ttyACM1` application.
+
+VCOM Startup command received
+```
+0x54 0x70 0x6d 0x32 0x3 0x0 0x0 0x0 0x4 0x0 0x0 0x0 0xac 0x44 0x69 0x61 
+0x54 0x70 0x6d 0x32 0x6 0x0 0x0 0x0 0x14 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0xc 0x0 0x0 0x0 0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x0 
+```
+
+tpm2_startup received command
+```
+0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x1 
+```
+
+As you can see VCOM sends much more bytes. Presumably two commands (?) as new
+the line gets appended to the log after a new pack of data gets received by 
+`CDC_Receive_FS` function.
+
+```
+static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
+{
+    for(int i=0; i<*Len; i++) {
+        itmPrintAppend(ITMSTDERR, "0x%x ", Buf[i]);
+    }
+    itmPrintAppend(ITMSTDERR, "\n");
+...
+}
+```
+
+What's interesting is the last 12 bytes of the received buffer, which differs
+only in the last byte between VCOM and tpm2_startup. 
+
+From what I discovered, the first 4 bytes of VCOM communication are the
+magic signal values from `TpmDevice.h`
+
+```
+0x54 0x70 0x6d 0x32
+
+#define SIGNALMAGIC (0x326d7054) //Tpm2
+```
+
+For now, the rest of the protocol is to be discovered. Probably we should
+focus on getting `tpm2_tools` to work with STM32, as we probably don't want to
+port VCOM to Linux.
+
+This requires a better understanding of the comunication protocol itself.
+
+
 ### Memmory usage
 Memory limitations hit us right at the beginning preventing us from building the
 project for STM32L476RG on both Linux STM32CubeIDE and Windows Atollic Studio.
