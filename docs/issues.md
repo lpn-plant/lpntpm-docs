@@ -1,5 +1,14 @@
 ## Current issues
 
+### Investigate possible security issues
+
+As Jeremy Boone mention @ slack trusted-computing channel, we should investigate
+possible flaws in NVMem implementation.
+
+> the _plat__ APIs in NVMem.c are where i’ve seen the most mistakes.
+> If you are persisting data to external flash then you need confidentiality,
+> integrity, rollback-protection, and replay-protection.
+
 ### Protocol analisys - early conclusions
 
 Getting STM32 to communicate with
@@ -7,16 +16,16 @@ Getting STM32 to communicate with
 application leads us to a current yet not resolved problem.
 
 Right now we are able to execute commands on TPM, but an error occurs when the
-host device verifies the response data. Specifically, this line of code causes an
-error:
+host device verifies the response data. Specifically, this line of code causes
+an error:
 ```
 *((unsigned int*)&response[sizeof(unsigned short) + sizeof(unsigned int)]) == 0
 ```
 
 [VCOM-TPM.cpp:198](https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L198)
 
-For now, it's not clear what the response data of TPM_Startup command should look
-like and what each byte of command represents.
+For now, it's not clear what the response data of TPM_Startup command should
+look like and what each byte of command represents.
 
 Command and response data looks as follows.
 ```
@@ -113,8 +122,9 @@ At the moment of writing, we are almost out of memory.
 
 ### Outdated repository
 After struggling a lot with build errors while compiling the `master` branch we
-decided to roll back repo to the actual commit adding STM32 samples. Future
-plans involve updating the repo, eventually hitting most actual changes.
+decided to roll back the repo. Chosen commit is the one, that adds STM32
+samples. Plans involve updating the repo, eventually hitting most actual
+changes.
 
 
 ### Differences between STM32 and Simulator implementation of command parsing
