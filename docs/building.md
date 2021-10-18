@@ -2,8 +2,7 @@
 
 ### Build
 [Here](https://github.com/lpn-plant/ms-tpm-20-ref) you can find our fork of
-[Official TPM 2.0 Reference Implementation (by Microsoft)]
-(https://github.com/microsoft/ms-tpm-20-ref).
+[Official TPM 2.0 Reference Implementation (by Microsoft)](https://github.com/microsoft/ms-tpm-20-ref).
 
 The project is developed using STM32CubeIDE so the building process is
 straightforward.
@@ -11,6 +10,8 @@ straightforward.
 Just clone it with git...
 ```
 git clone --recurse-submodules git@github.com:lpn-plant/ms-tpm-20-ref.git
+cd ms-tpm-20-ref
+git checkout samples_stm32cubeide
 ```
 
 ... and import it using `Import -> Existing Project into Workspace` in
