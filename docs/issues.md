@@ -79,6 +79,35 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 What's interesting is the last 12 bytes of the received buffer, which differs
 only in the last byte between VCOM and tpm2_startup. 
 
+Software simulator [tpm-js](https://google.github.io/tpm-js/) shows exactly the
+same command and response data, as ITM debug output when using VCOM application.
+
+tpm-js output:
+
+```
+PowerOn
+ManufactureReset
+Startup
+About to execute command TPM2_CC_Startup
+Command buffer (12):
+  0000 80 01 00 00 00 0c 00 00 01 44 00 00              .........D..
+Response buffer (10):
+  0000 80 01 00 00 00 0a 00 00 00 00                    ..........
+```
+
+```
+ITM port 2
+
+//2021.10.14-08:52:37.000GMT
+unsigned char CmdBuf[12] = {
+0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
+};
+//2021.10.14-08:52:37.330GMT
+unsigned char RspBuf[12] = {
+0x80, 0x01, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x00
+};
+```
+
 From what I discovered, the first 4 bytes of VCOM communication are the
 magic signal values from `TpmDevice.h`
 
