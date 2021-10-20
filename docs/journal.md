@@ -21,3 +21,15 @@
 - investigation the root cause of response check failing
 [link](https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L198)
 
+15.10.2021
+- small fix for NDEBUG enabled compilation
+- protocol analysis
+
+18.10.2021
+- protocol analysis
+
+19.10.2021
+- protocol analysis
+- decoding command and response data frames
+- setting up lib tpm2-tss and tpm2-pytss for future communication
+

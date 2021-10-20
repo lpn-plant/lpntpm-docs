@@ -9,6 +9,24 @@ possible flaws in NVMem implementation.
 > If you are persisting data to external flash then you need confidentiality,
 > integrity, rollback-protection, and replay-protection.
 
+### Incoming data reception and decoding
+
+Data sent from VCOM application always get received as full command located in
+one incoming buffer. Parsing commands make use of this feature, letting the
+application execute only commands, that are received at once.
+```
+static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
+{
+  /* USER CODE BEGIN 6 */
+    if(!TpmSignalEvent(Buf, Len))
+    {
+        return(USBD_FAIL);
+    }
+...
+}
+```
+
+
 ### Protocol analisys - early conclusions
 
 Getting STM32 to communicate with
@@ -95,9 +113,8 @@ Response buffer (10):
   0000 80 01 00 00 00 0a 00 00 00 00                    ..........
 ```
 
+ITM port 2 output:
 ```
-ITM port 2
-
 //2021.10.14-08:52:37.000GMT
 unsigned char CmdBuf[12] = {
 0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
@@ -133,6 +150,37 @@ Section 1.3 Refedences
 Chapter 6
 
 [TCG TSS 2.0 TPM Command Transmission Interface (TCTI) API Specification](https://trustedcomputinggroup.org/wp-content/uploads/TSS_TCTI_Version-1.0_Revision-05_Review_END030918.pdf)
+
+20.10.2021 update:
+
+The incoming data sent from VCOM application decodes as follows:
+
+```
+54 70 6d 32 6 0 0 0 14 0 0 0 0 0 0 0 c 0 0 0 80 1 0 0 0 c 0 0 1 44 0 0 
+```
+
+```
+sizeof(signalWrapper_t)
+{
+sig->s.magic    '\x54\x70\x6d\x32'	uint32_t hardcoded magic value
+sig->s.signal   '\x06\x00\x00\x00'	uint32_t signal enum
+sig->s.dataSize '\x14\x00\x00\x00'	uint32_t data size
+}
+sizeof(unsigned int) * 2)
+{
+'\x00\x00\x00\x00'			uint32_t locality
+'\x0c\x00\x00\x00'			uint32_t cmdSize
+}
+actual TPM command			Global.h:1098
+'\x80\x01' 				TPM_ST           command.tag;
+'\x00\x00'\x00\x0c'			UINT32           commandSize;
+'\x00\x00\x01\x44'			TPM_CC           command.code
+'\x00\x00'
+```
+
+Probably all of those header values are redundant and should be decoded using
+unmarshal mechanism.
+
 
 ### Memmory usage
 Memory limitations hit us right at the beginning preventing us from building the
