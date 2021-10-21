@@ -37,6 +37,7 @@
 - setting up lib tpm2-tss and tpm2-pytss for future communication
 
 20.10.2021
+
 - protocol analysis
 - investigation of lib tpm2-tss and tpm2-pytss behaviour and wrong packet
 reception
