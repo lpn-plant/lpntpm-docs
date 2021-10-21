@@ -3,7 +3,7 @@
 ### Investigate possible security issues
 
 As Jeremy Boone mention @
-[slack trusted-computing channel]((https://slack.osfw.dev/)), we should
+[slack trusted-computing channel](https://slack.osfw.dev/), we should
 investigate possible flaws in NVMem implementation.
 
 > the _plat__ APIs in NVMem.c are where i’ve seen the most mistakes.
