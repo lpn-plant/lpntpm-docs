@@ -2,8 +2,9 @@
 
 ### Investigate possible security issues
 
-As Jeremy Boone mention @ slack trusted-computing channel, we should investigate
-possible flaws in NVMem implementation.
+As Jeremy Boone mention @
+[slack trusted-computing channel]((https://slack.osfw.dev/)), we should
+investigate possible flaws in NVMem implementation.
 
 > the _plat__ APIs in NVMem.c are where i’ve seen the most mistakes.
 > If you are persisting data to external flash then you need confidentiality,
@@ -191,7 +192,6 @@ in SRAM memory, but probably the problem will hit us soon after successful
 execution of TPM command.
 
 ![Static stack analysis](images/static_stack_analysis.png)
-^^^^^^^^^^^^^^^^^^^^^ TODO open by click
 
 At the moment of writing, we are almost out of memory.
 ![Build analysis](images/memory_usage.png)

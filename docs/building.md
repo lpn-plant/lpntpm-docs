@@ -13,6 +13,7 @@ Just clone it with git...
 git clone --recurse-submodules git@github.com:lpn-plant/ms-tpm-20-ref.git
 cd ms-tpm-20-ref
 git checkout samples_stm32cubeide
+git submodule update
 ```
 
 ... and import it using `Import -> Existing Project into Workspace` in

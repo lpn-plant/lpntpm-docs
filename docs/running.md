@@ -3,7 +3,8 @@
 The project is using three communication interfaces to debug and talk to TPM core.
 
 - TPM core communication is handled by STM32 USB CDC interface.
-See `ms-tpm-20-ref/Samples/Nucleo-TPM/microUSB_Hookup.jpg`
+See
+`https://github.com/microsoft/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/USB_Hookup.jpg`
 - `printf` is forwarded to the integrated STLink VCOM.
 - `fprintf(stderr, *)` could be received on port 0 of ITM SWV.
 - `dbgPrint` uses port 1 of  ITM SWV.
@@ -46,5 +47,6 @@ To stop receiving AT commands just disable ModemManager service with the
 following command:
 
 ```shell
+systemctl stop ModemManager
 sudo systemctl disable ModemManager
 ```

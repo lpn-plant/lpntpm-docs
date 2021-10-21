@@ -1,9 +1,10 @@
 ## About
 
-lpnTPM is Open Source Software (OSS), and Open Source Hardware (OSHW) Trusted
-Platform Module (TPM, also known as ISO/IEC 11889) is an international standard
-for a secure cryptoprocessor, a dedicated microcontroller designed to secure
-hardware through integrated cryptographic keys.
+[lpnTPM](https://nlnet.nl/project/lpnTPM/) is Open Source Software (OSS),
+and Open Source Hardware (OSHW) Trusted Platform Module (TPM, also known as
+ISO/IEC 11889) is an international standard for a secure cryptoprocessor,
+a dedicated microcontroller designed to secure hardware through integrated
+cryptographic keys.
 
 What makes lpnTPM different from generally available solutions is openness.
 Software and hardware of lpnTPM can, without limits, be audited, fixed, and
