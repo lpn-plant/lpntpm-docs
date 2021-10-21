@@ -4,8 +4,9 @@
 [Here](https://github.com/lpn-plant/ms-tpm-20-ref) you can find our fork of
 [Official TPM 2.0 Reference Implementation (by Microsoft)](https://github.com/microsoft/ms-tpm-20-ref).
 
-The project is developed using STM32CubeIDE so the building process is
-straightforward.
+The project is developed using
+[STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)
+so the building process is straightforward.
 
 Just clone it with git...
 ```shell
