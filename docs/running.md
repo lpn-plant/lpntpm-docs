@@ -45,6 +45,6 @@ port mount as /dev/ACM* device this could be problematic.
 To stop receiving AT commands just disable ModemManager service with the
 following command:
 
-```
+```shell
 sudo systemctl disable ModemManager
 ```

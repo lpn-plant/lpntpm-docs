@@ -14,7 +14,7 @@ possible flaws in NVMem implementation.
 Data sent from VCOM application always get received as full command located in
 one incoming buffer. Parsing commands make use of this feature, letting the
 application execute only commands, that are received at once.
-```
+```C
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
   /* USER CODE BEGIN 6 */
@@ -36,7 +36,7 @@ application leads us to a current yet not resolved problem.
 Right now we are able to execute commands on TPM, but an error occurs when the
 host device verifies the response data. Specifically, this line of code causes
 an error:
-```
+```C
 *((unsigned int*)&response[sizeof(unsigned short) + sizeof(unsigned int)]) == 0
 ```
 
@@ -46,7 +46,7 @@ For now, it's not clear what the response data of TPM_Startup command should
 look like and what each byte of command represents.
 
 Command and response data looks as follows.
-```
+```C
 unsigned char CmdBuf[12] = {
 0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
 };
@@ -83,7 +83,7 @@ As you can see VCOM sends much more bytes. Presumably two commands (?) as new
 the line gets appended to the log after a new pack of data gets received by 
 `CDC_Receive_FS` function.
 
-```
+```C
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
     for(int i=0; i<*Len; i++) {
@@ -114,7 +114,7 @@ Response buffer (10):
 ```
 
 ITM port 2 output:
-```
+```C
 //2021.10.14-08:52:37.000GMT
 unsigned char CmdBuf[12] = {
 0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
