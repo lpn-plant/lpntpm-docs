@@ -11,5 +11,12 @@ markdown_extensions:
     - pymdownx.highlight
     - pymdownx.superfences
     - pymdownx.keys
+    - attr_list
 nav:
-    - 'Intro': index.md
+    - 'About': index.md
+    - 'How to':
+      - 'Intro': how_to.md
+      - 'Building flashing and debugging': building.md
+      - 'Running': running.md
+    - 'Current issues': issues.md
+    - 'Journal': journal.md
