@@ -20,7 +20,7 @@ git checkout samples_stm32cubeide
 Select `Nucleo-L476RG` project from `ms-tpm-20-ref/Samples/Nucleo-TPM/L476RG`
 directory.
 
-### Flash and Debug,
+### Flash and Debug
 To flash/debug the application click on the green bug icon on the top toolbar
 and select `Nucleo-L476RG Debug`.
 
@@ -30,7 +30,7 @@ If you cannot see it, select `Debug Configuration...` and it should be listed
 under `STM32 Cortex-M C/C++ Application` menu selection.
 
 
-Some extra tweaks was necessary to enable SWV ITM traces, other than that we are
+Some extra tweaks were necessary to enable SWV ITM traces, other than that we are
 using the default STLink debug configuration.
 
 ![Debug congiguration](images/eclipse_debug_config.png)

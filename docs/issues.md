@@ -27,7 +27,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 ```
 
 
-### Protocol analisys - early conclusions
+### Protocol analysis - early conclusions
 
 Getting STM32 to communicate with
 [VCOM](https://github.com/lpn-plant/ms-tpm-20-ref/tree/master/Samples/Nucleo-TPM/VCOM)
@@ -182,7 +182,7 @@ Probably all of those header values are redundant and should be decoded using
 unmarshal mechanism.
 
 
-### Memmory usage
+### Memory usage
 Memory limitations hit us right at the beginning preventing us from building the
 project for STM32L476RG on both Linux STM32CubeIDE and Windows Atollic Studio.
 

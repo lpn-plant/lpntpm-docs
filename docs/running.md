@@ -36,8 +36,8 @@ Now you should see trace debug output like in the picture below.
 
 ### USB CDC configuration
 
-On some platforms (Ubuntu in my case) '/dev/ACM*' ports automaticly receive AT
-commands just after plugging USB cable.
+On some platforms (Ubuntu in my case) '/dev/ttyACM*' ports automatically receive
+AT commands just after plugging USB cable.
 
 As we are using raw data format to communicate with TPM device and STM32 CDC
 port mount as /dev/ACM* device this could be problematic.

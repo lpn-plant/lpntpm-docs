@@ -13,7 +13,7 @@ For future compatibility, we converted project files to
 is a successor of Atollic software. The project doesn't provide any other build
 systems but we are definitely looking forward to use one.
 
-During the early development stage, we are using Nucleo 476RG board with USB
+During the early development stage, we are using Nucleo L476RG board with USB
 cable connected to STM32 IO.
 
 Due to the limited amount of SRAM memory of such uC soon we will probably switch
