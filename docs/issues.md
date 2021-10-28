@@ -1,5 +1,36 @@
 ## Current issues
 
+### tpm2-tools incompatibility with tty devices
+
+tpm2-tools are not compatible with the current tpm implementation, which uses
+USB CDC, `/dev/tty*` device as a communication interface.
+
+This issue is probably caused, by the lack of `poll` function implementation
+is `tty` kernel driver.
+Apparently, tpm_tools expects a slightly different behavior and are designed to
+work with a particular tpm driver
+
+The actual line of code in `tpm-tss` library, causing failures in communication.
+```
+https://github.com/tpm2-software/tpm2-tss/blob/master/src/tss2-tcti/tcti-device.c#L466
+```
+
+[Scripts](https://github.com/lpn-plant/ms-tpm-20-ref/tree/cmd_parsing/Samples/Nucleo-TPM/scripts)
+are provided to make it easier to debug and investigate the behavior both for
+`tpm2-tools` and `tpm2-tss` `tpm2-pytss` libraries.
+
+`simulator` - virtual serial port was created to act as a simulated tpm device,
+to capture commands, that tpm2-tools are sending. Those commands can be
+directly used, using `lpntpn_cmd` script.
+
+`tpm2-pytss_example` - simple startup example using tpm2-pytss library
+
+`tpm2-tts_example` - simple startup example using tpm2-tss library - has to be
+compiled with provided Makefile
+
+Some additional information could be found in
+[Scripts readme file](https://github.com/lpn-plant/ms-tpm-20-ref/blob/cmd_parsing/Samples/Nucleo-TPM/scripts/README.md)
+
 ### Investigate possible security issues
 
 As Jeremy Boone mention @
