@@ -50,6 +50,23 @@ for command validation.
 investigation the root cause of tpm2_tool @ /dev/ACM* failures.
 
 27.10.2021
+
 - Cleanup and refactor of python scripts.
 - Writing documentation.
+
+28.10.2021
+
+- Kernel development setup.
+- Browsing tpm related kernel code.
+
+02.11.2021
+
+- Writing docs.
+- Function profiler prototype refactor.
+- Experimenting with tpm module debug build.
+
+03.11.2021
+
+- Investigation of dynamic debug behavior
+- Writing how-to for kernel module recompilation
 
