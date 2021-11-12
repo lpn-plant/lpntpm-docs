@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 This chapter shows the TPM test procedure using the **Raspberry Pi 3** module.
+=======
+This chapter shows the TPM test procedure using **Raspberry Pi 3** module.
+>>>>>>> 58f00eb... Init raspberry test chapter
 ### Lets Trust TPM Information
 
 #### 1. Product contents
@@ -9,6 +13,7 @@ This chapter shows the TPM test procedure using the **Raspberry Pi 3** module.
 #### 2. Install LetsTrust TPM module
 **Installation precedure :** <br />
 
+<<<<<<< HEAD
 * First, insert the additional female header starting with pin 1 (on the far 
 left side) into the Raspberry Pi GPIO header. The supplied female header helps 
 to plug in the TPM module in the right position. After mounting it, could be 
@@ -16,10 +21,15 @@ removed. <br />
 * Insert the Letstrust TPM module directly next to the additional female header.
  The TPM module will be installed starting with **pin 17**, facing downwards 
  with the chip and oriented towards the HDMI port. <br /><br />
+=======
+* First insert the additional female header starting with the pin 1 (on the far left side) into the Raspberry Pi GPIO header. The supplied female header helps to plug in the TPM module at the right position. After mountage it could be removed. <br />
+* Insert the Letstrust TPM module directly next to the additional female header. The TPM module will be installed starting with **pin 17**, facing downwards with the chip and oriented towards the HDMI port. <br /><br />
+>>>>>>> 58f00eb... Init raspberry test chapter
 
 ![rpiTpm](images/rpiTpm.jpg)
 
 
+<<<<<<< HEAD
 The LetsTrust TPM module is also compatible with other Raspberry Pi modules.
 
 **All connections should be done while the power supply is switched OFF!**
@@ -30,6 +40,15 @@ The LetsTrust TPM module is also compatible with other Raspberry Pi modules.
 The best projects for the TPM module come from the community in which the 
 Letstrust supplied the hardware. Already, several core software packages are 
 available:
+=======
+LetsTrust TPM module is also compatible with other raspberry Pi modules.
+
+**For safety all connection should be done while the power supply is switched OFF!**<br /><br />
+
+
+#### 3. Usage examples
+The best projects for the TPM module come from the community which the Letstrust supplied the hardware. Already, several core software packages are available:
+>>>>>>> 58f00eb... Init raspberry test chapter
 
 | Link  | Description |
 |-------|-------------|
@@ -37,6 +56,7 @@ available:
 | [https://github.com/Infineon/eltt2](https://github.com/Infineon/eltt2)| ELTT2 Infineon Embedded Linux TPM Toolbox 2 for TPM 2.0 - test, diagnostics and essential changing of the Infineon TPM chip  p |
 | [https://github.com/PaulKissinger/LetsTrust](https://github.com/PaulKissinger/LetsTrust) |Useful resources and script to get you started with the TPM and compilation/installation of the TPM 2.0 Tools.|
 
+<<<<<<< HEAD
 Application samples, documentation, and a lot of additional information from 
 the community are available at [www.letsTrust.de](https://www.letsTrust.de).
 
@@ -45,6 +65,13 @@ To report your examples and develop applications send an e-mail at
 
 <!---## For check out the whole process, there was executed test using the 
 ##tpm_2 tools.
+=======
+Application samples, documentation and a lot of additional information from the community are available at [www.letsTrust.de](https://www.letsTrust.de).
+
+To report your own examples and developing applications send e-mail at **<support@pi3g.com>** or **<info@letstrust.de>**. 
+
+## For check out the whole process, there was executed test using the tpm_2 tools.
+>>>>>>> 58f00eb... Init raspberry test chapter
 
 ```console
 git clone git@github.com:tpm2-software/tpm2-tools.git
@@ -53,13 +80,21 @@ The repository was downloaded into:
 ```txt
 /Desktop/tpm2-tools
 ```
+<<<<<<< HEAD
 -->
+=======
+
+>>>>>>> 58f00eb... Init raspberry test chapter
 ### First, install the **tpm2-tools**
 ```console
 sudo apt install tpm2_tools
 ```
+<<<<<<< HEAD
 After that you could run all the tools which are described at: [tpm2-tools
 /man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
+=======
+### After that you could run all the tools which are described at: [tpm2-tools/man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
+>>>>>>> 58f00eb... Init raspberry test chapter
 For example: <br />
 
 * Example 1:
