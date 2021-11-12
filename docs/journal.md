@@ -42,3 +42,6 @@
 - investigation of lib tpm2-tss and tpm2-pytss behaviour and wrong packet
 reception
 
+10.11.2021
+
+- Raspberry Pi demonstration with TPM module
