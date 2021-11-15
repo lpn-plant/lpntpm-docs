@@ -12,7 +12,7 @@ Just clone it with git...
 ```shell
 git clone --recurse-submodules git@github.com:lpn-plant/ms-tpm-20-ref.git
 cd ms-tpm-20-ref
-git checkout samples_stm32cubeide
+git checkout cmd_parsing
 git submodule update
 ```
 
