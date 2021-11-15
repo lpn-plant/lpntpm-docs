@@ -53,7 +53,7 @@ sudo systemctl disable ModemManager
 
 ### Sample command execution
 
-As being said, the communication to the TPM core is done using Nuceo's USB CDC
+As being said, the communication to the TPM core is done using Nucleo's USB CDC
 Port. In the original implementation VCOM - Windows application was created for
 this purpose. We choose a different approach and provide several ways to talk to
 a TPM. Host applications and scripts for experimenting with the protocol are
