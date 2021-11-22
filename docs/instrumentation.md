@@ -158,7 +158,7 @@ Test if dynamic debug option is enabled
 ```shell
 ssh $RASPI_IP sudo modprobe configs
 ssh $RASPI_IP "zcat /proc/config.gz | grep DYNAMIC_DEBUG"
-# you sould get the following output: 
+# you should get the following output: 
 # CONFIG_DYNAMIC_DEBUG=y
 # CONFIG_DYNAMIC_DEBUG_CORE=y
 ```
