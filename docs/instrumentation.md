@@ -86,6 +86,9 @@ sudo apt install libncurses5-dev                # menuconfig
 cd git
 git clone –-depth=1 https://github.com/raspberrypi/linux
 cd linux
+# at the moment of writing we are using rpi-5.10.y branch specifically
+# 581049d718caf95f5feb00607ac748d5841cf27c commit
+git checkout 581049d718caf95f5feb00607ac748d5841cf27c
 ```
 
 **Patch kernel**
