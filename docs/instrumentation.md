@@ -75,7 +75,7 @@ ssh $RASPI_IP echo "success"
 
 Ubuntu 20.04 LTS was used in this example.
 
-Install dependencies and get source code.
+Install dependencies on your host machine and get source code.
 ```shell
 sudo apt install crossbuild-essential-armhf     # default toolchain
 sudo apt install python-is-python3              # no python2 in ubuntu 20 fix
@@ -99,6 +99,8 @@ The rest of this patch is the code instrumentation functions themself.
 [instrument.patch](data/instrument.patch)
 
 **Build kernel**
+
+On your host machine:
 
 ```shell
 cd git
@@ -133,6 +135,8 @@ cp $BUILD_DIR/arch/arm/boot/dts/overlays/*.dtb $BOOT_PART_TMP/overlays
 ```
 
 **Deploy**
+
+On your host machine:
 
 ```shell
 export PI_HOME=/home/pi
@@ -183,6 +187,8 @@ ssh $RASPI_IP sudo mv tpm_tis_spi.ko $MOD_DST;
 
 At this point, we need to enable device tree overlay for tpm.
 
+In Raspberry Pi ssh terminal:
+
 ```shell
 sudo nano /boot/config.txt
 
@@ -203,6 +209,8 @@ traces in `dmesg`.
 
 Example trace:
 
+In Raspberry Pi ssh terminal:
+
 ```console
 $ dmesg  | grep tpm_addr
 [    9.358361] tpm_addr_enter: 0x7f0ee070 0x801022a4 
@@ -217,7 +225,7 @@ $ dmesg  | grep tpm_addr
 Last step to get execution traces is to use provided scripts located in
 `ms-tpm-20-ref/Samples/Nucleo-TPM/scripts/kfunc_tracer`
 
-Pull logs:
+Pull logs from your host machine:
 ```console
 $ ./pull_logs.sh 
 RASPI_IP: pi@192.168.8.170
@@ -231,6 +239,7 @@ collecting tpm related /proc/modules entries
 Get function names.
 Below you can see the full call stack of tpm module failing due to not
 connected hardware of tpm module.
+To be executed on your host machine.
 ```console
 $ python get_call_stack.py 
 tpm_tis_spi.ko: tpm_tis_spi_driver_probe()
