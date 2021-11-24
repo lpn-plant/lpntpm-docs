@@ -69,7 +69,7 @@ ssh $RASPI_IP echo "success"
 # should echo success without prompting user to enter password
 ```
 
-### Kernel compinaltion
+### Kernel compilation
 
 **Prepare build environment.**
 
@@ -84,7 +84,7 @@ sudo apt install qtbase5-dev pkg-config         # xconfig
 sudo apt install libncurses5-dev                # menuconfig
 
 cd git
-git clone –-depth=1 https://github.com/raspberrypi/linux
+git clone --depth=1 https://github.com/raspberrypi/linux
 cd linux
 # at the moment of writing we are using rpi-5.10.y branch specifically
 # 581049d718caf95f5feb00607ac748d5841cf27c commit
