@@ -31,6 +31,7 @@ For make this task necessary are:<br />
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 * The first step is Raspberry Pi OS installation using [Imager](https://www.
 raspberrypi.com/software/) program. 
 <br />Please choose: **Download for Windows**
@@ -60,6 +61,10 @@ converter has the right voltage support! **3.3V** is recommended!
 * First step is Raspberry Pi OS installation using [Imager](https://www.
 raspberrypi.com/software/) program. <br />Pleas choose: **Download for Windows**
 >>>>>>> 7414617... Correction of rpi mkdocs files
+=======
+* The first step is Raspberry Pi OS installation using [Imager](https://www.
+raspberrypi.com/software/) program. <br />Please choose: **Download for Windows**
+>>>>>>> 5389369... grammarly
 <br />
 
 * Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_
@@ -74,7 +79,8 @@ one more additional line as the line below:
 ```txt
 enable_uart=1
 ```
-*Recommended is to add above line at the bottom of config.txt file.* <br />
+*Recommended is to add the above line at the bottom of the config.txt file.* 
+<br />
 <br />
 
 <<<<<<< HEAD
@@ -92,6 +98,7 @@ converter has the right voltage support! **3.3V** is recommended!
 * Run [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Set the parameters as below. <br />*Important is to choose the serial option, 
 the right COM port and speed.* 
 =======
@@ -99,6 +106,9 @@ the right COM port and speed.*
 >>>>>>> 58f00eb... Init raspberry test chapter
 =======
 * Set the parameters as below. <br />*Important is choose the serial option, 
+=======
+* Set the parameters as below. <br />*Important is to choose the serial option, 
+>>>>>>> 5389369... grammarly
 the right COM port and speed.* 
 >>>>>>> 7414617... Correction of rpi mkdocs files
 
@@ -107,6 +117,7 @@ the right COM port and speed.*
 ![puTTY](images/putty2.png)
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 After that open the serial port and plug the power supply into your RPi. Now you 
@@ -124,6 +135,9 @@ as /dev/tpm0 using the following commands:
 After that open the serial port and plug the power supply to your RPi. Now you will work in the terminal.
 =======
 After that open the serial port and plug the power supply to your RPi. Now you 
+=======
+After that open the serial port and plug the power supply into your RPi. Now you 
+>>>>>>> 5389369... grammarly
 will work in the terminal.
 >>>>>>> 7414617... Correction of rpi mkdocs files
 
@@ -145,10 +159,14 @@ $ sudo apt-get update && sudo apt-get upgrade
 $ sudo nano /boot/config.txt
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 Necessary is to add these two lines at the bottom of the document:
 =======
 Necessary is to add this two lines at the bottom of the document:
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+Necessary is to add these two lines at the bottom of the document:
+>>>>>>> 5389369... grammarly
 
 ```txt
 dtparam=spi=on
@@ -157,6 +175,7 @@ dtoverlay=tpm-slb9670
 ```console
 $ sudo reboot
 ```
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 To make sure that the initialization process was successful please check if you 
@@ -168,6 +187,10 @@ To make sure that initialization process was successful please check if you have
 To make sure that initialization process was successful please check if you have
  available:
 >>>>>>> 7414617... Correction of rpi mkdocs files
+=======
+To make sure that the initialization process was successful please check if you 
+have available:
+>>>>>>> 5389369... grammarly
 ```txt
 /dev/tpm0
 ```
