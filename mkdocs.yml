@@ -18,6 +18,7 @@ nav:
       - 'Intro': how_to.md
       - 'Building flashing and debugging': building.md
       - 'Running': running.md
+      - 'TPM driver instrumentation': instrumentation.md
     - 'Target TPM hardware interfaces': hardware_interfaces.md
     - 'Current issues': issues.md
     - 'TPM modules pinout': tpm_modules_pinout.md
