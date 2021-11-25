@@ -1,8 +1,8 @@
 # FAQ & Good to know
 ###Which chip does the TPM use?
-Lets Trust TPM module [https://www.pi3g.com](https://www.pi3g.com) use the 
+Let's Trust TPM module [https://www.pi3g.com](https://www.pi3g.com) use the 
 **Infineon OPTIGA SLB 9670 TPM 2.0** Firmware 7.85 or later. This chip is 
-compliant to the TCG TPM 2.0 Specification, revision 1.38. Starting with 
+compliant with the TCG TPM 2.0 Specification, revision 1.38. Starting with 
 Firmware Version 7.85 the SLB 9670 is certified with Common Criteria EAL4+ and 
 FIPS 140-2.
 

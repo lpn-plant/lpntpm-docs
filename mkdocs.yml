@@ -22,5 +22,5 @@ nav:
     - 'Journal': journal.md
     - 'RaspberryPi demonstration with TPM module':
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
-      - 'Runnig TPM 2.0 module on Raspberry Pi': rpi.md
+      - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
       - 'FAQ': rpi_faq.md
