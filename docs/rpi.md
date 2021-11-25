@@ -9,7 +9,7 @@ This chapter shows the TPM test procedure using the **Raspberry Pi 3** module.
 #### 2. Install LetsTrust TPM module
 **Installation precedure :** <br />
 
-* First insert the additional female header starting with pin 1 (on the far 
+* First, insert the additional female header starting with pin 1 (on the far 
 left side) into the Raspberry Pi GPIO header. The supplied female header helps 
 to plug in the TPM module in the right position. After mounting it, could be 
 removed. <br />
@@ -20,7 +20,7 @@ removed. <br />
 ![rpiTpm](images/rpiTpm.jpg)
 
 
-LetsTrust TPM module is also compatible with other Raspberry Pi modules.
+The LetsTrust TPM module is also compatible with other Raspberry Pi modules.
 
 **All connections should be done while the power supply is switched OFF!**
 <br /><br />
@@ -37,10 +37,10 @@ available:
 | [https://github.com/Infineon/eltt2](https://github.com/Infineon/eltt2)| ELTT2 Infineon Embedded Linux TPM Toolbox 2 for TPM 2.0 - test, diagnostics and essential changing of the Infineon TPM chip  p |
 | [https://github.com/PaulKissinger/LetsTrust](https://github.com/PaulKissinger/LetsTrust) |Useful resources and script to get you started with the TPM and compilation/installation of the TPM 2.0 Tools.|
 
-Application samples, documentation, and a lot of additional information from the 
-the community is available at [www.letsTrust.de](https://www.letsTrust.de).
+Application samples, documentation, and a lot of additional information from 
+the community are available at [www.letsTrust.de](https://www.letsTrust.de).
 
-To report your own examples and develop applications send an e-mail at 
+To report your examples and develop applications send an e-mail at 
 **<support@pi3g.com>** or **<info@letstrust.de>**. 
 
 <!---## For check out the whole process, there was executed test using the 
@@ -58,8 +58,8 @@ The repository was downloaded into:
 ```console
 sudo apt install tpm2_tools
 ```
-### After that you could run all the tools which are described at: [tpm2-tools
-###/man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
+After that you could run all the tools which are described at: [tpm2-tools
+/man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
 For example: <br />
 
 * Example 1:

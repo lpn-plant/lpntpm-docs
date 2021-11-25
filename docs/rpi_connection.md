@@ -16,7 +16,8 @@ For make this task necessary are:<br />
 ## Guide
 
 * The first step is Raspberry Pi OS installation using [Imager](https://www.
-raspberrypi.com/software/) program. <br />Please choose: **Download for Windows**
+raspberrypi.com/software/) program. 
+<br />Please choose: **Download for Windows**
 <br />
 
 * Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_
