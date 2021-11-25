@@ -2,6 +2,7 @@
 For make this task necessary are:<br />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - [Raspberry Pi 3 Model B](https://www.raspberrypi.com/products/raspberry-pi-3
 -model-b/)
 
@@ -12,6 +13,13 @@ For make this task necessary are:<br />
 
 - [USB/UART Converter](https://botland.com.pl/konwertery-usb-uart-rs232-rs485/4501-konwerter-usb-uart-pl2303-wtyk-usb-waveshare-4037.html)
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+- [Raspberry Pi 3 Model B](https://www.raspberrypi.com/products/raspberry-pi-3
+-model-b/)
+
+- [USB/UART Converter](https://botland.com.pl/konwertery-usb-uart-rs232-rs485/
+4501-konwerter-usb-uart-pl2303-wtyk-usb-waveshare-4037.html)
+>>>>>>> 7414617... Correction of rpi mkdocs files
 
 - [TPM module](https://pi3g.com/products/industrial/letstrust-tpm/)
 
@@ -21,6 +29,7 @@ For make this task necessary are:<br />
 
 ## Guide
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 * The first step is Raspberry Pi OS installation using [Imager](https://www.
 raspberrypi.com/software/) program. 
@@ -47,20 +56,34 @@ enable_uart=1
 converter has the right voltage support! **3.3V** is recommended!
 =======
 * First step is Raspberry Pi OS installation using [Imiger](https://www.raspberrypi.com/software/) program. <br />Pleas choose: **Download for Windows**
+=======
+* First step is Raspberry Pi OS installation using [Imager](https://www.
+raspberrypi.com/software/) program. <br />Pleas choose: **Download for Windows**
+>>>>>>> 7414617... Correction of rpi mkdocs files
 <br />
 
-* Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_full_armhf/images/raspios_full_armhf-2021-11-08/2021-10-30-raspios-bullseye-armhf-full.zip)
+* Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_
+full_armhf/images/raspios_full_armhf-2021-11-08/2021-10-30-raspios-bullseye-
+armhf-full.zip)
 
-* Connect the SD card reader to the USB port and run the file flashing procedure via Imiger software. 
+* Connect the SD card reader to the USB port and run the file flashing procedure
+ via Imager software. 
 
-* Find and edit **config.txt** file. Please make sure that after edit you have one more additional line as the line below:
+* Find and edit **config.txt** file. Please make sure that after edit you have 
+one more additional line as the line below:
 ```txt
 enable_uart=1
 ```
-*Rocommended is to add above line at the bottom of config.txt file.* <br /><br />
+*Recommended is to add above line at the bottom of config.txt file.* <br />
+<br />
 
+<<<<<<< HEAD
 * After that plug uSD card into the Raspberry Pi socket. Make sure that your converter has the right voltage support! **3.3V** is recommended!
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+* After that plug uSD card into the Raspberry Pi socket. Make sure that your 
+converter has the right voltage support! **3.3V** is recommended!
+>>>>>>> 7414617... Correction of rpi mkdocs files
 
 
 * Connect the USB/UART converter to the USB port at your PC. <br />
@@ -68,17 +91,23 @@ enable_uart=1
 
 * Run [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Set the parameters as below. <br />*Important is to choose the serial option, 
 the right COM port and speed.* 
 =======
 * Set the parameters as below. <br />*Important is choose the serial option, the right COM port and speed.* 
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+* Set the parameters as below. <br />*Important is choose the serial option, 
+the right COM port and speed.* 
+>>>>>>> 7414617... Correction of rpi mkdocs files
 
 ![puTTY](images/putty1.png)
 
 ![puTTY](images/putty2.png)
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 After that open the serial port and plug the power supply into your RPi. Now you 
 will work in the terminal.
@@ -93,12 +122,24 @@ further information. Update to the latest Raspbian Stretch and active the TPM
 as /dev/tpm0 using the following commands:
 =======
 After that open the serial port and plug the power supply to your RPi. Now you will work in the terminal.
+=======
+After that open the serial port and plug the power supply to your RPi. Now you 
+will work in the terminal.
+>>>>>>> 7414617... Correction of rpi mkdocs files
 
-* Log into Raspberry Pi. The default login is: **pi** and password: **raspberry**.<br /><br />
+* Log into Raspberry Pi. The default login is: **pi** and password: 
+**raspberry**.<br /><br />
 
 ## Configuration and activation under Raspbian
+<<<<<<< HEAD
 The LetsTrust TPM module is supported directly by Linux, starting with Kernel 4.14.85. Please refer to [www.letsTrust.de](https://www.letsTrust.de) for further information. Update to the latest Raspbian Stretch and active the TPM as /dev/tpm0 using the following commands:
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+The LetsTrust TPM module is supported directly by Linux, starting with Kernel 
+4.14.85. Please refer to [www.letsTrust.de](https://www.letsTrust.de) for 
+further information. Update to the latest Raspbian Stretch and active the TPM 
+as /dev/tpm0 using the following commands:
+>>>>>>> 7414617... Correction of rpi mkdocs files
 ```console
 $ sudo apt-get update && sudo apt-get upgrade
 $ sudo nano /boot/config.txt
@@ -117,11 +158,16 @@ dtoverlay=tpm-slb9670
 $ sudo reboot
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 To make sure that the initialization process was successful please check if you 
 have available:
 =======
 To make sure that initialization process was successful please check if you have available:
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+To make sure that initialization process was successful please check if you have
+ available:
+>>>>>>> 7414617... Correction of rpi mkdocs files
 ```txt
 /dev/tpm0
 ```

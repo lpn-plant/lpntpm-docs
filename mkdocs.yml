@@ -21,11 +21,15 @@ nav:
     - 'Current issues': issues.md
     - 'Journal': journal.md
 <<<<<<< HEAD
+<<<<<<< HEAD
     - 'RaspberryPi demonstration with TPM module':
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
 =======
     - 'RaspberryPi demonstrating with TPM module':
+=======
+    - 'RaspberryPi demonstration with TPM module':
+>>>>>>> 7414617... Correction of rpi mkdocs files
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Runnig TPM 2.0 module on Raspberry Pi': rpi.md
 >>>>>>> 58f00eb... Init raspberry test chapter
