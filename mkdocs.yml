@@ -25,6 +25,7 @@ nav:
     - 'RaspberryPi demonstration with TPM module':
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
+<<<<<<< HEAD
 =======
     - 'RaspberryPi demonstrating with TPM module':
 =======
@@ -33,4 +34,6 @@ nav:
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Runnig TPM 2.0 module on Raspberry Pi': rpi.md
 >>>>>>> 58f00eb... Init raspberry test chapter
+=======
+>>>>>>> 83d760b... grammar check
       - 'FAQ': rpi_faq.md

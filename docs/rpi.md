@@ -20,6 +20,7 @@ This chapter shows the TPM test procedure using the **Raspberry Pi 3** module.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 * First, insert the additional female header starting with pin 1 (on the far 
 left side) into the Raspberry Pi GPIO header. The supplied female header helps 
 to plug in the TPM module in the right position. After mounting it, could be 
@@ -30,6 +31,9 @@ to plug in the TPM module at the right position. After mountage it could be
 >>>>>>> 7414617... Correction of rpi mkdocs files
 =======
 * First insert the additional female header starting with pin 1 (on the far 
+=======
+* First, insert the additional female header starting with pin 1 (on the far 
+>>>>>>> 83d760b... grammar check
 left side) into the Raspberry Pi GPIO header. The supplied female header helps 
 to plug in the TPM module in the right position. After mounting it, could be 
 >>>>>>> 5389369... grammarly
@@ -50,6 +54,7 @@ removed. <br />
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 The LetsTrust TPM module is also compatible with other Raspberry Pi modules.
 
 **All connections should be done while the power supply is switched OFF!**
@@ -65,6 +70,9 @@ LetsTrust TPM module is also compatible with other raspberry Pi modules.
 =======
 LetsTrust TPM module is also compatible with other Raspberry Pi modules.
 >>>>>>> 5389369... grammarly
+=======
+The LetsTrust TPM module is also compatible with other Raspberry Pi modules.
+>>>>>>> 83d760b... grammar check
 
 **All connections should be done while the power supply is switched OFF!**
 <br /><br />
@@ -94,6 +102,7 @@ available:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Application samples, documentation, and a lot of additional information from 
 the community are available at [www.letsTrust.de](https://www.letsTrust.de).
 
@@ -112,8 +121,12 @@ community are available at [www.letsTrust.de](https://www.letsTrust.de).
 Application samples, documentation, and a lot of additional information from the 
 the community is available at [www.letsTrust.de](https://www.letsTrust.de).
 >>>>>>> 5389369... grammarly
+=======
+Application samples, documentation, and a lot of additional information from 
+the community are available at [www.letsTrust.de](https://www.letsTrust.de).
+>>>>>>> 83d760b... grammar check
 
-To report your own examples and develop applications send an e-mail at 
+To report your examples and develop applications send an e-mail at 
 **<support@pi3g.com>** or **<info@letstrust.de>**. 
 
 <<<<<<< HEAD
@@ -146,6 +159,7 @@ sudo apt install tpm2_tools
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 After that you could run all the tools which are described at: [tpm2-tools
 /man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
 =======
@@ -155,6 +169,10 @@ After that you could run all the tools which are described at: [tpm2-tools
 ### After that you could run all the tools which are described at: [tpm2-tools
 ###/man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
 >>>>>>> 7414617... Correction of rpi mkdocs files
+=======
+After that you could run all the tools which are described at: [tpm2-tools
+/man/](https://github.com/tpm2-software/tpm2-tools/tree/master/man)
+>>>>>>> 83d760b... grammar check
 For example: <br />
 
 * Example 1:

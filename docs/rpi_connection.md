@@ -63,8 +63,13 @@ raspberrypi.com/software/) program. <br />Pleas choose: **Download for Windows**
 >>>>>>> 7414617... Correction of rpi mkdocs files
 =======
 * The first step is Raspberry Pi OS installation using [Imager](https://www.
+<<<<<<< HEAD
 raspberrypi.com/software/) program. <br />Please choose: **Download for Windows**
 >>>>>>> 5389369... grammarly
+=======
+raspberrypi.com/software/) program. 
+<br />Please choose: **Download for Windows**
+>>>>>>> 83d760b... grammar check
 <br />
 
 * Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_
