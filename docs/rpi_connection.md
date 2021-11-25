@@ -15,8 +15,8 @@ For make this task necessary are:<br />
 
 ## Guide
 
-* First step is Raspberry Pi OS installation using [Imager](https://www.
-raspberrypi.com/software/) program. <br />Pleas choose: **Download for Windows**
+* The first step is Raspberry Pi OS installation using [Imager](https://www.
+raspberrypi.com/software/) program. <br />Please choose: **Download for Windows**
 <br />
 
 * Please download the OS: [RPI OS](https://downloads.raspberrypi.org/raspios_
@@ -31,7 +31,8 @@ one more additional line as the line below:
 ```txt
 enable_uart=1
 ```
-*Recommended is to add above line at the bottom of config.txt file.* <br />
+*Recommended is to add the above line at the bottom of the config.txt file.* 
+<br />
 <br />
 
 * After that plug uSD card into the Raspberry Pi socket. Make sure that your 
@@ -42,7 +43,7 @@ converter has the right voltage support! **3.3V** is recommended!
 
 
 * Run [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
-* Set the parameters as below. <br />*Important is choose the serial option, 
+* Set the parameters as below. <br />*Important is to choose the serial option, 
 the right COM port and speed.* 
 
 ![puTTY](images/putty1.png)
@@ -50,7 +51,7 @@ the right COM port and speed.*
 ![puTTY](images/putty2.png)
 
 
-After that open the serial port and plug the power supply to your RPi. Now you 
+After that open the serial port and plug the power supply into your RPi. Now you 
 will work in the terminal.
 
 * Log into Raspberry Pi. The default login is: **pi** and password: 
@@ -65,7 +66,7 @@ as /dev/tpm0 using the following commands:
 $ sudo apt-get update && sudo apt-get upgrade
 $ sudo nano /boot/config.txt
 ```
-Necessary is to add this two lines at the bottom of the document:
+Necessary is to add these two lines at the bottom of the document:
 
 ```txt
 dtparam=spi=on
@@ -74,8 +75,8 @@ dtoverlay=tpm-slb9670
 ```console
 $ sudo reboot
 ```
-To make sure that initialization process was successful please check if you have
- available:
+To make sure that the initialization process was successful please check if you 
+have available:
 ```txt
 /dev/tpm0
 ```
