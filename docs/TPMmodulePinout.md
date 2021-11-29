@@ -16,7 +16,7 @@ Interface: LPC</br>
 [User Manual X470](https://download.asrock.com/Manual/X470D4U.pdf) </br>
 [User Manual ROMED8-2T](https://download.asrock.com/Manual/ROMED8-2T.pdf) </br>
 [User Manual EPC621D8A](https://download.asrock.com/Manual/EPC621D8A.pdf)
-![Flash](images/pinouts/AsRock Rack X470 D4U Server.svg)
+![Flash](images/pinouts/AsRock_Rack_X470_D4U_Server.svg)
 
 ## 3. Asus M5A99FX Pro r2.0, MAXIMUS VII HERO, Z87 PLUS, MAXIMUS VII RANGER
 Interface: LPC</br>
@@ -24,25 +24,25 @@ Interface: LPC</br>
 [User Manual MAXIMUS VII HERO](http://dlcdnet.asus.com/pub/ASUS/mb/LGA1150/MAXIMUS-VII-HERO/E9192_Maximus_Vii_Hero.pdf) </br>
 [User Manual Z87 PLUS](https://images10.newegg.com/UploadFilesForNewegg/itemintelligence/ASUS/E7831_Z87_PLUS1403687574304.pdf) </br>
 [User Manual MAXIMUS VII RANGER](https://dlcdnets.asus.com/pub/ASUS/mb/LGA1150/MAXIMUS-VII-RANGER/E9798_maximus_vii_ranger_ug_v2_WEB.pdf)
-![Flash](images/pinouts/Asus-M5A99FX Pro r2.0.svg)
+![Flash](images/pinouts/Asus-M5A99FX_Pro_r2.0.svg)
 
 ## 4. Asus MAXIMUS IX FORMULA, CROSSHAIR VIII DARK HERO, ROG STRIX B450-F Gaming
 Interface: LPC</br>
 [User Manual MAXIMUS IX FORMULA](http://dlcdnet.asus.com/pub/ASUS/mb/LGA1151/MAXIMUS_IX_FORMULA/E12314_MAXIMUS_IX_FORMULA_UM_V3_WEB.pdf)</br>
 [User Manual ROG CROSSHAIR](https://media.s-bol.com/Bnx1GRw6DXXo/original.pdf)</br>
 [User Manual B450-F](https://www.bhphotovideo.com/lit_files/403638.pdf)
-![Flash](images/pinouts/Asus-MAXIMUS IX FORMULA.svg)
+![Flash](images/pinouts/Asus-MAXIMUS_IX_FORMULA.svg)
 
 ## 5. Asus TPM-M R2.0, Z97 PRO GAMER
 Interface: LPC</br>
 [User Manual TPM-M](https://www.manualslib.com/manual/1447187/Asus-Tpm-M-R2-0.html)</br>
 [User Manual Z97 PRO GAMER](https://dlcdnets.asus.com/pub/ASUS/mb/LGA1150/Z97-PRO_GAMER/E10265_Z97-PRO_GAMER_Guide_v2_web_hi_res.pdf)
-![Flash](images/pinouts/Asus-TPM-M R2.0.svg)
+![Flash](images/pinouts/Asus-TPM-M_R2.0.svg)
 
 ## 6. Asus-ROG STRIX X570-F GAMING
 Interface: SPI</br>
 [User Manual](https://gamingprofy.com/wp-content/uploads/2021/06/E15827_ROG_STRIX_X570-F_GAMING_UM_v2_WEB.pdf)
-![Flash](images/pinouts/Asus-ROG STRIX X570-F GAMING.svg)
+![Flash](images/pinouts/Asus-ROG_STRIX_X570-F_GAMING.svg)
 
 ## 7. Asus-B550 PLUS TUF GAMING
 Interface: SPI</br>
@@ -74,22 +74,22 @@ Interface: LPC</br>
 ## 11. MSI Z590 PRO WiFi
 Interface: SPI</br>
 [User Manual Z590](https://www.msi.com/Motherboard/Z590-PRO-WIFI/support#down-manual)
-![Flash](images/pinouts/MSI-Z590 PRO WiFi.svg)
+![Flash](images/pinouts/MSI-Z590_PRO_WiFi.svg)
 
 ## 12. Gigabyte Z590 AORUS MASTER
 Interface: SPI</br>
 [User Manual](https://download.gigabyte.com/FileList/Manual/mb_manual_z590-aorus-master_1002_e.pdf)
-![Flash](images/pinouts/Gigabyte-Z590 AORUS MASTER.svg)
+![Flash](images/pinouts/Gigabyte-Z590_AORUS_MASTER.svg)
 
 ## 13. Supermicro MBD M12SWA
 Interface: LPC</br>
 [User Manual](https://www.supermicro.com/Aplus/support/resources/results.cfm)
-![Flash](images/pinouts/Supermicro MBD M12SWA.svg)
+![Flash](images/pinouts/Supermicro_MBD_M12SWA.svg)
 
 ## 14. Supermicro X10DAL-i
 Interface: LPC</br>
 [User Manual](https://www.supermicro.com/manuals/motherboard/C600/MNL-1701.pdf)
-![Flash](images/pinouts/Supermicro X10DAL-i.svg)
+![Flash](images/pinouts/Supermicro_X10DAL-i.svg)
 
 ## Summary
 There is a relation between TPM modules pinouts at the same vendors. For typical
