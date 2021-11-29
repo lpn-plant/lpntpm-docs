@@ -9,7 +9,7 @@ Research is based on the best sellers positions form
 ## 1. AsRock H170M PRO4 - LPC
 Interface: LPC</br>
 [User Manual H170M](https://download.asrock.com/Manual/H170M%20Pro4.pdf)
-![Flash](images/pinouts/Asrock-H170M PRO4.svg)
+![Flash](images/pinouts/Asrock-H170M_PRO4.svg)
 
 ## 2. AsRock Rack X470 D4U, ROMED8-2T Server Motherboards, EPC621D8A
 Interface: LPC</br>
