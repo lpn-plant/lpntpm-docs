@@ -19,7 +19,9 @@ As one of our requirements is to communicate with motherboards using SPI, we
 should also implement such communication.
 
 [TCG PC Client Platform TPM Profile Specification for TPM 2.0](https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p04_r0p37_pub-1.pdf)
-page 127 - 7.4.1 Clocking
+document greatly explains the actual requirements of SPI interface. On page
+`127` in the `7.4.1 Clocking` section, we can find the following must-have
+conditions for SPI bus speed.
 
 ```
 1. The TPM SHALL support an SPI clock frequency range of 10 - 24MHz.
