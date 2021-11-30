@@ -29,15 +29,19 @@ conditions for SPI bus speed.
 3. The TPM SHOULD support higher frequencies
 ```
 
+Let's focus on STM32L476 and its integrated SPI peripheral.
+As mentioned on page `1450` of the
+[STM32 RM0351 Reference manual](https://www.st.com/resource/en/reference_manual/rm0351-stm32l47xxx-stm32l48xxx-stm32l49xxx-and-stm32l4axxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
 STM32L4 limits SPI speed up to `APB2/2`, thus our maximum speed of the SPI
-interface theoretically is 40MHz so we are good to go.
-
-[RM0351 Reference manual](https://www.st.com/resource/en/reference_manual/rm0351-stm32l47xxx-stm32l48xxx-stm32l49xxx-and-stm32l4axxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
+interface is 40MHz.
 
 ```
 42.2 SPI main features:
   - Slave mode frequency up to fPCLK/2
 ```
+
+Taking into account the TPM requirements we should be good to
+initiate communication.
 
 ## Low pin count interface
 
