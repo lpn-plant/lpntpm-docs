@@ -65,6 +65,18 @@ In our opinion bit-banging of such a fast interface (33MHz) will not be
 reasonable and will require us to choose a faster processor, as STM32L4 runs at
 a maximum 80MHz.
 
+We have found an example of
+[Low-Pin Count bus slave state machine IO driver](https://github.com/eddiecorrigall/LPCSlave)
+so it can be a great starting point for our development of software
+emulation of the LPC bus.
+
+The actual throughput of LPC bus is `2.47MB` -
+[Table 18: Peripheral Initiated Memory Read Cycle](https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf)
+so in case of bit-banging of the LPC interface we have to choose a
+microcontroller like
+[STM32G4 Series](https://www.st.com/en/microcontrollers-microprocessors/stm32g4-series.html)
+with the maximum CPU clock speed of 170 MHz.
+
 ### Using SPI/LPC converters
 
 From what we found the one and only chip converter that is out there, to convert
