@@ -1,0 +1,6 @@
+RASPI_IP: pi@192.168.4.44
+creating ./logs directory
+entering ./logs directory
+cleaning ./logs directory
+collecting dmesg tpm_addr logs
+collecting tpm related /proc/modules entries
