@@ -46,7 +46,7 @@ it is tied to GND which means always asserted (clock is always running). </br>
 Below there are two different pinouts that could be treated as interchangeable.
 </br>
 **Interface: SPI**</br>
-[User Manual STRIX X570-F](https://gamingprofy.com/wp-content/uploads/2021/06/E15827_ROG_STRIX_X570-F_GAMING_UM_v2_WEB.pdf)
+[User Manual STRIX X570-F](https://gamingprofy.com/wp-content/uploads/2021/06/E15827_ROG_STRIX_X570-F_GAMING_UM_v2_WEB.pdf)</br>
 [User Manual B550 PLUS](https://dlcdnets.asus.com/pub/ASUS/mb/SocketAM4/TUF_GAMING_B550-PLUS/E16576_TUF_GAMING_B550-PLUS_UM_WEB.pdf)
 ![Flash](images/pinouts/Asus-ROG_STRIX_X570-F_GAMING.svg)
 ![Flash](images/pinouts/Asus-B550-PLUS.svg)
