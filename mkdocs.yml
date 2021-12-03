@@ -19,5 +19,5 @@ nav:
       - 'Building flashing and debugging': building.md
       - 'Running': running.md
     - 'Current issues': issues.md
-    - 'TPM modules pinout': TPMmodulePinout.md
+    - 'TPM modules pinout': TPM_module_Pinout.md
     - 'Journal': journal.md
