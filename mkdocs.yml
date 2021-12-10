@@ -18,5 +18,6 @@ nav:
       - 'Intro': how_to.md
       - 'Building flashing and debugging': building.md
       - 'Running': running.md
+    - 'Target TPM hardware interfaces': hardware_interfaces.md
     - 'Current issues': issues.md
     - 'Journal': journal.md
