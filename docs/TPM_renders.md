@@ -25,10 +25,26 @@ more existing mechanical design.
 
 ## Assembly
 According to the adapter PCB, we consider a straight or angled connector. The 
-size of PCBs is indicative.
+size of PCBs is indicative. An important assumption is to cut the protruding THT
+pins.
 <center>![Flash](images/renders/9.png)</center>
 <center>![Flash](images/renders/7.png){: style="height:425px"}</center>
 
 ## Example of connection with motherboar
 <center>![Flash](images/renders/MB1.png)</center>
 <center>![Flash](images/renders/MB2.png)</center>
+
+## Concept of slim adapter
+Because of limited space on the motherboard, we decided to design the slim 
+variant of the TPM module. Dimensions are shown in the attached graphics below.
+### The main module:
+<center>![Flash](images/renders/Main.PNG)</center>
+### The adapter:
+<center>![Flash](images/renders/adapter.PNG)</center>
+### The assembly:
+<center>![Flash](images/renders/assembly.PNG)</center>
+### An example of usage with motherboard:
+<center>![Flash](images/renders/MB2_ss.PNG)</center>
+Thanks for that design the widest element (connector that connects the whole 
+design with motherboard socket) measures 5mm. That allowed to get slim contour. 
+The length of the design is indicative and might be changed.
