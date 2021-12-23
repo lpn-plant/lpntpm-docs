@@ -85,3 +85,6 @@ investigation the root cause of tpm2_tool @ /dev/ACM* failures.
 - Hardware interfaces requirements - documentation.
   https://github.com/lpn-plant/lpntpm-docs/pull/6/files
 
+10.11.2021
+
+- Raspberry Pi demonstration with TPM module
