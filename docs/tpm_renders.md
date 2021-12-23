@@ -6,15 +6,6 @@ PCBs. One is the main PCB with the MCU and SPI or LPC configured socket and the
 second is the adapter that fits the motherboards pinouts.
 ![Flash](images/renders/koncepcja_TPM_adapter.svg)
 
-## The adapter
-This PCB is the second part to fit the SPI or LPC pinout to the motherboard 
-pinouts. There will be created many variants (according to the pinout research) 
-of adapters. We consider creating a straight and angled socket to be ready for
-more existing mechanical design.
-<center>![Flash](images/renders/4.png)</center>
-<center>![Flash](images/renders/5.png)</center>
-<center>![Flash](images/renders/6.png)</center>
-<center>![Flash](images/renders/8.png)</center>
 
 ## Concept of slim adapter
 Because of limited space on the motherboard, we decided to design the slim 
