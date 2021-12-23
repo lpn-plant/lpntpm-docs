@@ -4,7 +4,7 @@ module which can fit the motherboard pinout. There was the consideration of
 two kinds of the interface (SPI and LPC). The whole setup would be made of two 
 PCBs. One is the main PCB with the MCU and SPI or LPC configured socket and the 
 second is the adapter that fits the motherboards pinouts.
-![Flash](images/renders/koncepcja_TPM_adapter.svg)
+![Flash](images/renders/concept_tpm.svg)
 
 
 ## Concept of slim adapter
