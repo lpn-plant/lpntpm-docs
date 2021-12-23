@@ -19,13 +19,14 @@ nav:
       - 'Building flashing and debugging': building.md
       - 'Running': running.md
       - 'TPM driver instrumentation': instrumentation.md
+      - 'RaspberryPi demonstration with TPM module':
+        - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
+        - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
+        - 'FAQ': rpi_faq.md
     - 'Target TPM hardware interfaces': hardware_interfaces.md
-    - 'Current issues': issues.md
-    - 'lpnTPM mechanical design':
+    - 'Mechanical design':
       - 'TPM modules pinout': tpm_modules_pinout.md
       - 'TPM modules renders': tpm_renders.md
+    - 'Current issues': issues.md
     - 'Journal': journal.md
-    - 'RaspberryPi demonstration with TPM module':
-      - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
-      - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
-      - 'FAQ': rpi_faq.md
+    
