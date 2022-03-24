@@ -296,15 +296,8 @@ tpm.ko: tpm_dev_release()
 ```
 
 ### Whole logs from the test procedure
-These logs will be created after running the python get_call_stack.py and 
-pull_logs.sh, according to the chapter above. Logs will be displayed in the 
-terminal window by default. </br>
-```concole
-$ ./pull_logs.sh
-```
-[Log file with  or without TPM module plugged in](./logs_tpm_module/log_with_tpm_pull_logs.txt)</br>
-```concole
-$ python get_call_stack.py 
-```
-[Log file with TPM module plugged in](./logs_tpm_module/log_with_tpm_get_call_stack.txt)</br>
-[Log file without TPM](./logs_tpm_module/log_without_tpm_get_call_stack.txt)</br>
+
+Below we have collected call stack for Raspberry Pi TPM driver startup. </br>
+
+- [Log file with TPM module plugged in](./logs_tpm_module/log_with_tpm_get_call_stack.txt)
+- [Log file without TPM](./logs_tpm_module/log_without_tpm_get_call_stack.txt)
