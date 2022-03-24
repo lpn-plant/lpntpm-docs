@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="koncepcja_TPM_adapter.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 212 239"
+   height="239mm"
+   width="212mm">
+  <defs
+     id="defs2">
+    <rect
+       id="rect1842"
+       height="18.520832"
+       width="61.043156"
+       y="127.18899"
+       x="221.11607" />
+    <rect
+       id="rect839"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-9" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect852" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-8" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1058" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-2" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1103" />
+    <rect
+       id="rect839-8-6"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1106"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-8-9"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1236"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-1" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1280" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-8-9-7" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1324" />
+    <rect
+       id="rect839-8-9-7-5"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1369"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-8-9-0" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1399" />
+    <rect
+       id="rect839-1-9"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1402"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-8-9-7-3"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1405"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-8-9-7-5-7" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1408" />
+    <rect
+       id="rect839-1-2"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1559"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-8-9-7-51"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1588"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-8-9-7-54"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1588-6"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-8-9-7-8"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1588-8"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect839-1-3"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1758"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect839-0" />
+    <rect
+       x="84.288689"
+       y="61.043156"
+       width="40.632442"
+       height="13.607143"
+       id="rect1945" />
+    <rect
+       id="rect839-0-9"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+    <rect
+       id="rect1974"
+       height="13.607143"
+       width="40.632442"
+       y="61.043156"
+       x="84.288689" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
+     inkscape:snap-text-baseline="true"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="464.62713"
+     inkscape:cx="351.5617"
+     inkscape:zoom="0.7"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Warstwa 1">
+    <rect
+       rx="0.070158236"
+       y="4.2707496"
+       x="7.835813"
+       height="71.093697"
+       width="48.242149"
+       id="rect835"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       transform="translate(-74.406631,2.8163042)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text837"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">TPM LPC</tspan></tspan></text>
+    <rect
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect875-3"
+       width="12.828938"
+       height="12.561667"
+       x="25.018581"
+       y="46.610798"
+       rx="0.070158243" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 22.790621,49.186856 h 3.590774"
+       id="path877-8" />
+    <path
+       id="path877-5-67"
+       d="m 22.743374,51.454706 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-6-54"
+       d="m 22.722064,53.760257 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-9-8"
+       d="m 22.722064,56.165676 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-2-6"
+       d="m 36.762772,49.311847 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 36.715525,51.579696 h 3.590774"
+       id="path877-5-8-3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 36.694215,53.885247 h 3.590774"
+       id="path877-6-5-6" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 36.694215,56.290666 h 3.590774"
+       id="path877-9-4-4" />
+    <path
+       id="path877-64-1"
+       d="m 27.994664,61.814776 v -3.59078"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 30.262515,61.862026 v -3.59078"
+       id="path877-5-6-4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 32.568065,61.883336 v -3.59078"
+       id="path877-6-4-8" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 34.973485,61.883336 v -3.59078"
+       id="path877-9-3-8" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 27.852922,47.546176 v -3.59078"
+       id="path877-64-8-6" />
+    <path
+       id="path877-5-6-8-4"
+       d="M 30.120773,47.593427 V 44.002646"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-6-4-6-9"
+       d="M 32.426324,47.614737 V 44.023956"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-9-3-1-6"
+       d="M 34.831744,47.614737 V 44.023956"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <rect
+       rx="0.070158236"
+       y="8.0849018"
+       x="11.358964"
+       height="9.8889723"
+       width="41.159508"
+       id="rect1047"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#2162ff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       id="text837-56"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8);fill:#2162ff;fill-opacity:0.996078;stroke:none;"
+       transform="translate(-70.111466,-55.656752)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#2162ff;fill-opacity:0.996078">connector LPC</tspan></tspan></text>
+    <rect
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect835-2"
+       width="48.242149"
+       height="71.093697"
+       x="5.9827113"
+       y="128.94878"
+       rx="0.070158243" />
+    <text
+       xml:space="preserve"
+       id="text837-4"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-2);fill:#000000;fill-opacity:1;stroke:none;"
+       transform="translate(-76.259735,127.49432)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">TPM SPI</tspan></tspan></text>
+    <rect
+       rx="0.070158251"
+       y="171.28882"
+       x="23.165482"
+       height="12.561667"
+       width="12.828938"
+       id="rect875-3-5"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       id="path877-8-9"
+       d="m 20.93752,173.86487 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 20.890273,176.13272 h 3.590774"
+       id="path877-5-67-0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 20.868963,178.43827 h 3.590774"
+       id="path877-6-54-2" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 20.868963,180.84369 h 3.590774"
+       id="path877-9-8-3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 34.90967,173.98986 h 3.590775"
+       id="path877-2-6-7" />
+    <path
+       id="path877-5-8-3-0"
+       d="m 34.862424,176.25771 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-6-5-6-9"
+       d="m 34.841114,178.56326 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-9-4-4-1"
+       d="m 34.841114,180.96868 h 3.590774"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 26.141563,186.49279 v -3.59078"
+       id="path877-64-1-9" />
+    <path
+       id="path877-5-6-4-5"
+       d="m 28.409414,186.54004 v -3.59078"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-6-4-8-3"
+       d="m 30.714964,186.56135 v -3.59078"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-9-3-8-3"
+       d="m 33.120383,186.56135 v -3.59078"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       id="path877-64-8-6-2"
+       d="m 25.999821,172.22419 v -3.59078"
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 28.267672,172.27144 v -3.59078"
+       id="path877-5-6-8-4-3" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 30.573223,172.29275 v -3.59078"
+       id="path877-6-4-6-9-4" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 32.978643,172.29275 v -3.59078"
+       id="path877-9-3-1-6-9" />
+    <rect
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#2162ff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1047-7"
+       width="41.159508"
+       height="9.8889723"
+       x="9.5058622"
+       y="132.76292"
+       rx="0.070158243" />
+    <text
+       transform="translate(-71.964568,69.021267)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-6);fill:#2162ff;fill-opacity:0.996078;stroke:none;"
+       id="text837-56-5"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#2162ff;fill-opacity:0.996078">connector SPI</tspan></tspan></text>
+    <rect
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:0.867634;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect835-3"
+       width="48.446297"
+       height="53.292927"
+       x="81.286888"
+       y="7.0004277"
+       rx="0.070455134" />
+    <rect
+       transform="rotate(90)"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#2162ff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1047-4"
+       width="41.159508"
+       height="9.8889723"
+       x="17.343723"
+       y="-92.971237"
+       rx="0.070158243" />
+    <text
+       transform="rotate(90,110.58399,46.13134)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9);fill:#2162ff;fill-opacity:0.996078;stroke:none;"
+       id="text837-56-3"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#2162ff;fill-opacity:0.996078">connector LPC</tspan></tspan></text>
+    <rect
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect835-6"
+       width="48.242149"
+       height="71.093697"
+       x="155.27376"
+       y="6.9242845"
+       rx="0.070158243" />
+    <text
+       xml:space="preserve"
+       id="text837-3"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-1);fill:#000000;fill-opacity:1;stroke:none;"
+       transform="translate(75.270876,4.4937132)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Motherboard LPC</tspan></tspan></text>
+    <rect
+       rx="0.070158251"
+       y="-169.08073"
+       x="11.586267"
+       height="9.8889723"
+       width="41.159508"
+       id="rect1047-4-3"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#11bc68;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       transform="rotate(90)" />
+    <text
+       xml:space="preserve"
+       id="text837-56-3-6"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9-7);fill:#11bc68;fill-opacity:0.996078;stroke:none;"
+       transform="rotate(90,152.25866,80.89138)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#11bc68;fill-opacity:0.996078">connector MB LPC</tspan></tspan></text>
+    <rect
+       transform="rotate(90)"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#11bc68;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1047-4-3-5"
+       width="41.159508"
+       height="9.8889723"
+       x="17.15661"
+       y="-127.41203"
+       rx="0.070158251" />
+    <rect
+       rx="0.070455134"
+       y="131.4859"
+       x="81.758797"
+       height="53.474754"
+       width="48.446297"
+       id="rect835-3-5"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:0.869112;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       rx="0.070158251"
+       y="-93.443153"
+       x="142.01102"
+       height="9.8889723"
+       width="41.159508"
+       id="rect1047-4-9"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#2162ff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       transform="rotate(90)" />
+    <text
+       xml:space="preserve"
+       id="text837-56-3-9"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9-0);fill:#2162ff;fill-opacity:0.996078;stroke:none;"
+       transform="rotate(90,48.486292,108.70094)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#2162ff;fill-opacity:0.996078">connector SPI</tspan></tspan></text>
+    <rect
+       rx="0.070158251"
+       y="131.59157"
+       x="155.74567"
+       height="71.093697"
+       width="48.242149"
+       id="rect835-6-3"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       transform="rotate(90)"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#11bc68;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1047-4-3-3"
+       width="41.159508"
+       height="9.8889723"
+       x="136.25356"
+       y="-169.55264"
+       rx="0.070158251" />
+    <rect
+       rx="0.070158251"
+       y="-127.88394"
+       x="141.8239"
+       height="9.8889723"
+       width="41.159508"
+       id="rect1047-4-3-5-7"
+       style="opacity:0.996;fill:#ffffff;fill-opacity:0.205955;stroke:#11bc68;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       transform="rotate(90)" />
+    <text
+       transform="translate(75.117382,129.06052)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-1-2);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text837-3-7"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Motherboard SPI</tspan></tspan></text>
+    <text
+       transform="rotate(90,128.49321,62.715138)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9-7-51);fill:#11bc68;fill-opacity:0.996078;stroke:none;"
+       id="text837-56-3-6-4"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#11bc68;fill-opacity:0.996078">connector MB LPC</tspan></tspan></text>
+    <text
+       transform="rotate(90,89.985095,143.30156)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9-7-54);fill:#11bc68;fill-opacity:0.996078;stroke:none;"
+       id="text837-56-3-6-0"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#11bc68;fill-opacity:0.996078">connector MB SPI</tspan></tspan></text>
+    <text
+       transform="rotate(90,66.573808,125.37149)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-8-9-7-8);fill:#11bc68;fill-opacity:0.996078;stroke:none;"
+       id="text837-56-3-6-8"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#11bc68;fill-opacity:0.996078">connector MB SPI</tspan></tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 68.968514,30.553326 v 12.56167"
+       id="path1640-9" />
+    <path
+       id="path1640-5-5"
+       d="m 62.754504,36.733947 h 12.56166"
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 141.53994,31.403773 v 12.56167"
+       id="path1640-51" />
+    <path
+       id="path1640-5-51"
+       d="m 135.32593,37.584393 h 12.56166"
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 68.02206,157.11581 v 12.56167"
+       id="path1640-90" />
+    <path
+       id="path1640-5-50"
+       d="M 61.80805,163.29643 H 74.36971"
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 143.33532,157.45882 v 12.56167"
+       id="path1640-6" />
+    <path
+       id="path1640-5-0"
+       d="m 137.12131,163.63944 h 12.56166"
+       style="fill:none;stroke:#000000;stroke-width:1.3445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-4"
+       cx="178.83742"
+       cy="85.026131"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-7"
+       cx="178.88466"
+       cy="90.506783"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-6"
+       cx="178.90828"
+       cy="95.940186"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="68.247299"
+       cx="104.48038"
+       id="path1699-4-0"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="73.727951"
+       cx="104.52763"
+       id="path1699-7-1"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="79.161354"
+       cx="104.55125"
+       id="path1699-6-2"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       transform="translate(33.863297,38.648244)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-1-3);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text837-3-8"
+       xml:space="preserve" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="152.00914"
+       y="104.2938"
+       id="text1780-9"><tspan
+         id="tspan1808"
+         sodipodi:role="line"
+         x="152.00914"
+         y="104.2938"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.995;stroke-width:0.264583">Exists many variants of</tspan></text>
+    <text
+       id="text1814"
+       y="109.68925"
+       x="163.5786"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.58611px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         y="109.68925"
+         x="163.5786"
+         id="tspan1812"
+         sodipodi:role="line">MB connector</tspan></text>
+    <text
+       id="text1780-9-1"
+       y="89.410187"
+       x="75.602974"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.995;stroke-width:0.264583"
+         y="89.410187"
+         x="75.602974"
+         sodipodi:role="line"
+         id="tspan1808-0">For design many variants</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="75.510994"
+       y="94.950729"
+       id="text1814-4"><tspan
+         sodipodi:role="line"
+         id="tspan1812-3"
+         x="75.510994"
+         y="94.950729"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">depends on MB connector</tspan></text>
+    <text
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1842);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text1840"
+       xml:space="preserve" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-4-0-3"
+       cx="105.17261"
+       cy="193.26489"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-7-1-7"
+       cx="105.21986"
+       cy="198.74554"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <ellipse
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1699-6-2-9"
+       cx="105.24348"
+       cy="204.17894"
+       rx="1.0161916"
+       ry="0.99281383" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="76.295212"
+       y="214.42778"
+       id="text1780-9-1-6"><tspan
+         id="tspan1808-0-9"
+         sodipodi:role="line"
+         x="76.295212"
+         y="214.42778"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.995;stroke-width:0.264583">For design many variants</tspan></text>
+    <text
+       id="text1814-4-5"
+       y="219.96831"
+       x="76.203232"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         y="219.96831"
+         x="76.203232"
+         id="tspan1812-3-0"
+         sodipodi:role="line">depends on MB connector</tspan></text>
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="208.63356"
+       cx="179.16772"
+       id="path1699-4-6"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="214.11421"
+       cx="179.21497"
+       id="path1699-7-7"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <ellipse
+       ry="0.99281383"
+       rx="1.0161916"
+       cy="219.54759"
+       cx="179.23859"
+       id="path1699-6-7"
+       style="opacity:0.996;fill:#000000;fill-opacity:0.996078;stroke:#000000;stroke-width:0.638286;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       id="text1780-9-9"
+       y="227.90123"
+       x="152.33945"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:0.995;stroke-width:0.264583"
+         y="227.90123"
+         x="152.33945"
+         sodipodi:role="line"
+         id="tspan1808-3">Exists many variants of</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="163.90891"
+       y="233.29668"
+       id="text1814-6"><tspan
+         sodipodi:role="line"
+         id="tspan1812-0"
+         x="163.90891"
+         y="233.29668"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.5861px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583">MB connector</tspan></text>
+    <text
+       xml:space="preserve"
+       id="text837-46"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-0);fill:#000000;fill-opacity:1;stroke:none;"
+       transform="translate(7.5201832,-56.540299)"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Adapter</tspan></tspan></text>
+    <text
+       transform="translate(8.1921944,67.786217)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect839-0-9);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text837-46-9"
+       xml:space="preserve"><tspan
+         x="84.289062"
+         y="70.406708"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Adapter</tspan></tspan></text>
+  </g>
+</svg>
