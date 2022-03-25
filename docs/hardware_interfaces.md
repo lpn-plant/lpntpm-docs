@@ -1,4 +1,4 @@
-## Target TPM hardware interfaces
+# Target TPM hardware interfaces
 
 As we are designing a universal TPM device, we are targeting multiple
 communication interfaces to talk to TPM. Our requirements are to use the most
@@ -23,7 +23,7 @@ document greatly explains the actual requirements of SPI interface. On page
 `127` in the `7.4.1 Clocking` section, we can find the following must-have
 conditions for SPI bus speed.
 
-```
+```text
 1. The TPM SHALL support an SPI clock frequency range of 10 - 24MHz.
 2. The TPM MAY support running at lower frequencies.
 3. The TPM SHOULD support higher frequencies
@@ -35,7 +35,7 @@ As mentioned on page `1450` of the
 STM32L4 limits SPI speed up to `APB2/2`, thus our maximum speed of the SPI
 interface is 40MHz.
 
-```
+```text
 42.2 SPI main features:
   - Slave mode frequency up to fPCLK/2
 ```
@@ -86,7 +86,7 @@ SPI to LPC is
 It uses Enhanced `Serial Peripheral Interface (eSPI)`, which is a slightly
 modified version of the SPI interface.
 
-This outcome and FPGA one, listed below would reduce the need for main 
+This outcome and FPGA one, listed below would reduce the need for main
 uC computing power.
 
 ### Custom made FPGA converter
@@ -98,5 +98,3 @@ solution to create some kind of SPI>LPC converter.
 
 Lattice XO2 series, avaliable in WLCSP25/WLCSP36 package (2,5mm x 2,5mm) would
 be sufficient.
-
-

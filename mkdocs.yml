@@ -1,29 +1,30 @@
+---
 site_name: lpnTPM Documentation
 site_url: https://lpntpm.lpnplant.io/
 theme:
-    name: material
+  name: material
 # TODO: provide logo and styling
 #     favicon: images/favicon.png
 #     logo: images/logo.png
 # extra_css:
 #     - stylesheets/extra.css
 markdown_extensions:
-    - pymdownx.highlight
-    - pymdownx.superfences
-    - pymdownx.keys
-    - attr_list
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.keys
+  - attr_list
 nav:
-    - 'About': index.md
-    - 'How to':
+  - 'About': index.md
+  - 'How to':
       - 'Intro': how_to.md
       - 'Building flashing and debugging': building.md
       - 'Running': running.md
       - 'TPM driver instrumentation': instrumentation.md
-    - 'Target TPM hardware interfaces': hardware_interfaces.md
-    - 'Current issues': issues.md
-    - 'TPM modules pinout': tpm_modules_pinout.md
-    - 'Journal': journal.md
-    - 'RaspberryPi demonstration with TPM module':
+  - 'Target TPM hardware interfaces': hardware_interfaces.md
+  - 'Current issues': issues.md
+  - 'TPM modules pinout': tpm_modules_pinout.md
+  - 'Journal': journal.md
+  - 'RaspberryPi demonstration with TPM module':
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
       - 'FAQ': rpi_faq.md

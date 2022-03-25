@@ -1,4 +1,4 @@
-## How to
+# How to
 
 lpnTPM is developed around [Official TPM 2.0 Reference Implementation
 (by Microsoft)](https://github.com/microsoft/ms-tpm-20-ref).
