@@ -22,7 +22,9 @@ nav:
       - 'TPM driver instrumentation': instrumentation.md
   - 'Target TPM hardware interfaces': hardware_interfaces.md
   - 'Current issues': issues.md
-  - 'TPM modules pinout': tpm_modules_pinout.md
+  - 'Mechanical design':
+      - 'TPM modules pinout': tpm_modules_pinout.md
+      - 'TPM modules renders': tpm_renders.md
   - 'Journal': journal.md
   - 'RaspberryPi demonstration with TPM module':
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md

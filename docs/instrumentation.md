@@ -296,4 +296,12 @@ tpm_tis_spi.ko: tpm_tis_spi_probe()
 tpm_tis_spi.ko: tpm_tis_spi_driver_probe()
 tpm.ko: tpm_dev_release()
 tpm.ko: tpm_dev_release()
+
 ```
+
+### Whole logs from the test procedure
+
+Below we have collected call stack for Raspberry Pi TPM driver startup. </br>
+
+- [Log file with TPM module plugged in](./logs_tpm_module/log_with_tpm_get_call_stack.txt)
+- [Log file without TPM](./logs_tpm_module/log_without_tpm_get_call_stack.txt)
