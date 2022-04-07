@@ -1,4 +1,4 @@
-## About
+# About
 
 [lpnTPM](https://nlnet.nl/project/lpnTPM/) is Open Source Software (OSS),
 and Open Source Hardware (OSHW) Trusted Platform Module (TPM, also known as

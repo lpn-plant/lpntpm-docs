@@ -1,4 +1,4 @@
-## Journal
+# Journal
 
 04-08.10.2021
 
@@ -72,7 +72,7 @@ investigation the root cause of tpm2_tool @ /dev/ACM* failures.
 
 04.11.2021
 - Writing how-to for kernel instrumentation.
-  https://github.com/lpn-plant/lpntpm-docs/pull/7
+  <https://github.com/lpn-plant/lpntpm-docs/pull/7>
 
 05-09.11.2021
 - Raspberry Pi / STM32 SPI communication.
@@ -83,7 +83,7 @@ investigation the root cause of tpm2_tool @ /dev/ACM* failures.
 
 22.11.2021
 - Hardware interfaces requirements - documentation.
-  https://github.com/lpn-plant/lpntpm-docs/pull/6/files
+  <https://github.com/lpn-plant/lpntpm-docs/pull/6/files>
 
 10.11.2021
 

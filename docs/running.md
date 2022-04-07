@@ -1,4 +1,4 @@
-## Running
+# Running
 
 The project is using three communication interfaces to debug and talk to TPM core.
 
@@ -9,7 +9,8 @@ See
 - `fprintf(stderr, *)` could be received on port 0 of ITM SWV.
 - `dbgPrint` uses port 1 of  ITM SWV.
 
-### ITM trace configuration
+## ITM trace configuration
+
 For now, ITM trace output is available only through STM32CubeIDE. We are
 planning to add this feature using command-line tools like `openocd` or
 `STM32_Programmer_CLI`.
@@ -35,7 +36,7 @@ Now you should see trace debug output like in the picture below.
 
 ![Trace output](images/eclipse_itm_output.png)
 
-### USB CDC configuration
+## USB CDC configuration
 
 On some platforms (Ubuntu in my case) '/dev/ttyACM*' ports automatically receive
 AT commands just after plugging USB cable.
@@ -51,7 +52,7 @@ systemctl stop ModemManager
 sudo systemctl disable ModemManager
 ```
 
-### Sample command execution
+## Sample command execution
 
 As being said, the communication to the TPM core is done using Nucleo's USB CDC
 Port. In the original implementation VCOM - Windows application was created for
@@ -59,7 +60,7 @@ this purpose. We choose a different approach and provide several ways to talk to
 a TPM. Host applications and scripts for experimenting with the protocol are
 located in `ms-tpm-20-ref/Samples/Nucleo-TPM/scripts` directory.
 
-```
+```text
 scripts
 |   lpntpn_cmd              - main python script for tpm communication
 |                             see ./lpntpn_cmd --help for more info
@@ -110,7 +111,7 @@ waiting for response...
 
 And following output in SWV ITM Data window
 
-```
+```console
 ITM port 0:
 
 =========================
@@ -152,7 +153,6 @@ unsigned char RspBuf[10] = {
 
 ```
 
-
 An example, changing command type, serial port, and enabling legacy mode.
 
 ```console
@@ -163,4 +163,3 @@ executing shutdown command...
 	 sending: b'Tpm2\x06\x00\x00\x00\x14\x00\x00\x00\x00\x00\x00\x00\x0c\x00\x00\x00\x80\x01\x00\x00\x00\x0c\x00\x00\x01E\x00\x00'
 waiting for response...
 ```
-

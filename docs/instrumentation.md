@@ -1,4 +1,4 @@
-## TPM driver instrumentation
+# TPM driver instrumentation
 
 For development purposes, a set of scripts was created that allows for the
 instrumentation of a specific module, allowing for tracing the execution
@@ -29,7 +29,7 @@ kernel modules. For this purpose we are using a simple readelf call:
 This process requires kernel recompilation, execution of module startup and
 parsing of resulting trace files.
 
-### Prepare Raspberry Pi
+## Prepare Raspberry Pi
 
 We are using Raspberry Pi 3, but with minor modifications, this process could
 be used on different targets.
@@ -62,6 +62,7 @@ Environmental variable `RASPI_IP` will be used several more times during this
 guide.
 
 Run on your host machine to test ssh connection.
+
 ```shell
 export RASPI_IP=pi@192.168.8.170
 ssh-copy-id -i ~/.ssh/id_rsa.pub $RASPI_IP
@@ -76,6 +77,7 @@ ssh $RASPI_IP echo "success"
 Ubuntu 20.04 LTS was used in this example.
 
 Install dependencies on your host machine and get source code.
+
 ```shell
 sudo apt install crossbuild-essential-armhf     # default toolchain
 sudo apt install python-is-python3              # no python2 in ubuntu 20 fix
@@ -109,7 +111,7 @@ export KERNEL=kernel7
 # output build directories
 export BUILD_DIR=build
 export INSTALL_PATH=install_tmp
-# temp directory for new content of the /boot and /root partion 
+# temp directory for new content of the /boot and /root partion
 export BOOT_PART_TMP=$BUILD_DIR/$INSTALL_PATH/boot
 
 # make modules_install will create build/install_tmp/root/lib directory during
@@ -123,7 +125,7 @@ mkdir -p $BOOT_PART_TMP/overlays
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4 O=$BUILD_DIR bcm2709_defconfig
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4 O=$BUILD_DIR scripts prepare modules_prepare
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4 O=$BUILD_DIR zImage modules dtbs
-make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4 O=$BUILD_DIR modules_install INSTALL_MOD_PATH=$ROOT_PART_TMP 
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j4 O=$BUILD_DIR modules_install INSTALL_MOD_PATH=$ROOT_PART_TMP
 
 # export K_VERSION variable
 export K_VERSION=$(make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- O=$BUILD_DIR -s kernelrelease)
@@ -158,7 +160,7 @@ Test if dynamic debug option is enabled
 ```shell
 ssh $RASPI_IP sudo modprobe configs
 ssh $RASPI_IP "zcat /proc/config.gz | grep DYNAMIC_DEBUG"
-# you should get the following output: 
+# you should get the following output:
 # CONFIG_DYNAMIC_DEBUG=y
 # CONFIG_DYNAMIC_DEBUG_CORE=y
 ```
@@ -213,21 +215,22 @@ In Raspberry Pi ssh terminal:
 
 ```console
 $ dmesg  | grep tpm_addr
-[    9.358361] tpm_addr_enter: 0x7f0ee070 0x801022a4 
-[    9.358546] tpm_addr_enter: 0x7f0ee000 0x7f0ee15c 
-[    9.359167] tpm_addr_exit: 0x7f0ee000 0x7f0ee15c 
-[    9.359180] tpm_addr_exit: 0x7f0ee070 0x801022a4 
-[    9.420744] tpm_addr_enter: 0x7f09f000 0x801022a4 
+[    9.358361] tpm_addr_enter: 0x7f0ee070 0x801022a4
+[    9.358546] tpm_addr_enter: 0x7f0ee000 0x7f0ee15c
+[    9.359167] tpm_addr_exit: 0x7f0ee000 0x7f0ee15c
+[    9.359180] tpm_addr_exit: 0x7f0ee070 0x801022a4
+[    9.420744] tpm_addr_enter: 0x7f09f000 0x801022a4
 ```
 
-### Collect traces and get function names from addresses
+## Collect traces and get function names from addresses
 
 Last step to get execution traces is to use provided scripts located in
 `ms-tpm-20-ref/Samples/Nucleo-TPM/scripts/kfunc_tracer`
 
 Pull logs from your host machine:
+
 ```console
-$ ./pull_logs.sh 
+$ ./pull_logs.sh
 RASPI_IP: pi@192.168.8.170
 creating ./logs directory
 entering ./logs directory
@@ -240,8 +243,9 @@ Get function names.
 Below you can see the full call stack of tpm module failing due to not
 connected hardware of tpm module.
 To be executed on your host machine.
+
 ```console
-$ python get_call_stack.py 
+$ python get_call_stack.py
 tpm_tis_spi.ko: tpm_tis_spi_driver_probe()
 tpm_tis_spi.ko: tpm_tis_spi_probe()
 tpm_tis_spi.ko: tpm_tis_spi_init()

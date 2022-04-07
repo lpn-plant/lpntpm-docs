@@ -16,7 +16,7 @@ index 84db4fb3a9c9..37d265b4a722 100644
  tpm-y += eventlog/tpm1.o
  tpm-y += eventlog/tpm2.o
 +tpm-y += tpm-instr.o
- 
+
  tpm-$(CONFIG_ACPI) += tpm_ppi.o eventlog/acpi.o
  tpm-$(CONFIG_EFI) += eventlog/efi.o
 diff --git a/drivers/char/tpm/tpm-instr.c b/drivers/char/tpm/tpm-instr.c

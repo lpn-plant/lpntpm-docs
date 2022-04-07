@@ -1,6 +1,6 @@
-## Current issues
+# Current issues
 
-### tpm2-tools incompatibility with tty devices
+## tpm2-tools incompatibility with tty devices
 
 tpm2-tools are not compatible with the current tpm implementation, which uses
 USB CDC, `/dev/tty*` device as a communication interface.
@@ -11,7 +11,8 @@ Apparently, tpm_tools expects a slightly different behavior and are designed to
 work with a particular tpm driver
 
 The actual line of code in `tpm-tss` library, causing failures in communication.
-```
+
+```text
 https://github.com/tpm2-software/tpm2-tss/blob/master/src/tss2-tcti/tcti-device.c#L466
 ```
 
@@ -31,7 +32,7 @@ compiled with provided Makefile
 Some additional information could be found in
 [Scripts readme file](https://github.com/lpn-plant/ms-tpm-20-ref/blob/cmd_parsing/Samples/Nucleo-TPM/scripts/README.md)
 
-### Investigate possible security issues
+## Investigate possible security issues
 
 As Jeremy Boone mention @
 [slack trusted-computing channel](https://slack.osfw.dev/), we should
@@ -41,11 +42,12 @@ investigate possible flaws in NVMem implementation.
 > If you are persisting data to external flash then you need confidentiality,
 > integrity, rollback-protection, and replay-protection.
 
-### Incoming data reception and decoding
+## Incoming data reception and decoding
 
 Data sent from VCOM application always get received as full command located in
 one incoming buffer. Parsing commands make use of this feature, letting the
 application execute only commands, that are received at once.
+
 ```C
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
@@ -58,8 +60,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 }
 ```
 
-
-### Protocol analysis - early conclusions
+## Protocol analysis - early conclusions
 
 Getting STM32 to communicate with
 [VCOM](https://github.com/lpn-plant/ms-tpm-20-ref/tree/master/Samples/Nucleo-TPM/VCOM)
@@ -68,6 +69,7 @@ application leads us to a current yet not resolved problem.
 Right now we are able to execute commands on TPM, but an error occurs when the
 host device verifies the response data. Specifically, this line of code causes
 an error:
+
 ```C
 *((unsigned int*)&response[sizeof(unsigned short) + sizeof(unsigned int)]) == 0
 ```
@@ -78,6 +80,7 @@ For now, it's not clear what the response data of TPM_Startup command should
 look like and what each byte of command represents.
 
 Command and response data looks as follows.
+
 ```C
 unsigned char CmdBuf[12] = {
 0x80, 0x01, 0x00, 0x00, 0x00, 0x0c, 0x00, 0x00, 0x01, 0x44, 0x00, 0x00
@@ -96,23 +99,24 @@ Startup command data is hardcoded in VCOM application
 [here](https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L192)
 what makes it hard to reason about its origins.
 
-
 Raw data dumped from `CDC_Receive_FS` shows some similarities between VCOM
 sent command and test run of `tpm2_startup -T device:/dev/ttyACM1` application.
 
 VCOM Startup command received
-```
-0x54 0x70 0x6d 0x32 0x3 0x0 0x0 0x0 0x4 0x0 0x0 0x0 0xac 0x44 0x69 0x61 
-0x54 0x70 0x6d 0x32 0x6 0x0 0x0 0x0 0x14 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0xc 0x0 0x0 0x0 0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x0 
+
+```text
+0x54 0x70 0x6d 0x32 0x3 0x0 0x0 0x0 0x4 0x0 0x0 0x0 0xac 0x44 0x69 0x61
+0x54 0x70 0x6d 0x32 0x6 0x0 0x0 0x0 0x14 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0xc 0x0 0x0 0x0 0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x0
 ```
 
 tpm2_startup received command
-```
-0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x1 
+
+```text
+0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x1
 ```
 
 As you can see VCOM sends much more bytes. Presumably two commands (?) as new
-the line gets appended to the log after a new pack of data gets received by 
+the line gets appended to the log after a new pack of data gets received by
 `CDC_Receive_FS` function.
 
 ```C
@@ -127,14 +131,14 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 ```
 
 What's interesting is the last 12 bytes of the received buffer, which differs
-only in the last byte between VCOM and tpm2_startup. 
+only in the last byte between VCOM and tpm2_startup.
 
 Software simulator [tpm-js](https://google.github.io/tpm-js/) shows exactly the
 same command and response data, as ITM debug output when using VCOM application.
 
 tpm-js output:
 
-```
+```text
 PowerOn
 ManufactureReset
 Startup
@@ -146,6 +150,7 @@ Response buffer (10):
 ```
 
 ITM port 2 output:
+
 ```C
 //2021.10.14-08:52:37.000GMT
 unsigned char CmdBuf[12] = {
@@ -160,7 +165,7 @@ unsigned char RspBuf[12] = {
 From what I discovered, the first 4 bytes of VCOM communication are the
 magic signal values from `TpmDevice.h`
 
-```
+```C
 0x54 0x70 0x6d 0x32
 
 #define SIGNALMAGIC (0x326d7054) //Tpm2
@@ -187,11 +192,11 @@ Chapter 6
 
 The incoming data sent from VCOM application decodes as follows:
 
-```
-54 70 6d 32 6 0 0 0 14 0 0 0 0 0 0 0 c 0 0 0 80 1 0 0 0 c 0 0 1 44 0 0 
+```text
+54 70 6d 32 6 0 0 0 14 0 0 0 0 0 0 0 c 0 0 0 80 1 0 0 0 c 0 0 1 44 0 0
 ```
 
-```
+```C
 sizeof(signalWrapper_t)
 {
 sig->s.magic    '\x54\x70\x6d\x32'	uint32_t hardcoded magic value
@@ -213,8 +218,8 @@ actual TPM command			Global.h:1098
 Probably all of those header values are redundant and should be decoded using
 unmarshal mechanism.
 
+## Memory usage
 
-### Memory usage
 Memory limitations hit us right at the beginning preventing us from building the
 project for STM32L476RG on both Linux STM32CubeIDE and Windows Atollic Studio.
 
@@ -227,15 +232,15 @@ execution of TPM command.
 At the moment of writing, we are almost out of memory.
 ![Build analysis](images/memory_usage.png)
 
+## Outdated repository
 
-### Outdated repository
 After struggling a lot with build errors while compiling the `master` branch we
 decided to roll back the repo. Chosen commit is the one, that adds STM32
 samples. Plans involve updating the repo, eventually hitting most actual
 changes.
 
+## Differences between STM32 and Simulator implementation of command parsing
 
-### Differences between STM32 and Simulator implementation of command parsing
 Dealing with the actual communication with TPM core we are facing some minor
 problems.
 
@@ -250,7 +255,7 @@ This point needs additional investigation, but a quick glance at received data
 sent by using `tpm2_startup -T device -d/dev/ttyACM1 --state` command ensures us
 about it. By /dev/ACM1 port we mean STM32 USB CDC.
 
-### Possible bug in build system
+## Possible bug in build system
 
 According to the project assumptions, whole configuration is done using
 `user_settings.h` file. Previously encountered
