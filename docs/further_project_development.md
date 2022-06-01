@@ -123,13 +123,13 @@ The best candidate for new MCU seems this particular device:
 
 The "GigaDevice" company also provides basic firmware: CMSIS library and few tools
 (for example programer, profiler). The reference IDE/Compiler for these GD32 MCU
-is "Keil uvision" ("Segger Studio for ARM" is also on list). There is also hardware
+is "Keil uVision" ("Segger Studio for ARM" is also on list). There is also hardware
 programmer/debugger (JTAG) available.
 
 There is one difficulty with this GD32F4xx MCU family, there is not available "HAL"
 library for these devices. "Gigadevice" company id providing instead "HAL" libraries
 "Standard Peripheral" libray. "Standard Peripheral" libray was higher-level hardware
 abstraction library, before ST company write newer "HAL" library. "Standard Peripheral"
-library id from several years deprecated and what worse it's API is different fro "HAL"
+library is from several years deprecated and what worse it's API is different from "HAL"
 API. This fact has impact on time estitmate for re-writing code for new MCU - all
 hardware dependent code have to be re-writing. So time estimates will be higher.
