@@ -104,8 +104,8 @@ it will appear as
 
 Even if register boundary were crossed this doesn't make any difference for TPM.
 In case of SPI data payload of a single transfer cannot be bigger than size of
-register and cannot cross register boundary.
-TBD: how should this be handled? TPM specification says:
+register and cannot cross register boundary. Still, this must be handled, TPM
+specification does not define clearly what the behaviour should be.
 > For SPI, if a TPM receives an access request with a length that exceeds the
 > size of the register specified in the transaction address:
 > (...)
@@ -119,6 +119,10 @@ TBD: how should this be handled? TPM specification says:
 > The TPM SHOULD NOT abort (as defined in Section 6.5.1.1 Bus Aborts) an entire
 > transaction that crosses a register boundary.
 
+We choosed to write as many registers as possible, if register write is dropped
+(such as when register is not present or read-only) bus abort is raised (see
+section 6.5.1.1). This stops write on the register which triggered error and
+further registers are not updated.
 
 TPM must implement the following registers (non-exauhstive list):
 - TPM_DID_VID_x - contains Vendor and Device ID of the TPM, see **Table 13** for
