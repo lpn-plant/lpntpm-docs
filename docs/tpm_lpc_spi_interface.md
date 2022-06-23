@@ -147,4 +147,4 @@ in status register. Host can now read response from `TPM_DATA_FIFO_x`.
 
 There is also `TPM_XDATA_FIFO_x` register which allows for writes that span
 multiple bytes, this is especially useful for SPI as it can send more than one
-byte in a single packet.
+dword in a single packet.
