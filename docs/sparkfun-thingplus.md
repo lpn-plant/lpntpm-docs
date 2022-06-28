@@ -19,7 +19,14 @@ by pressing the user button. Green LED should start breathing. If LED blinks
 blue and green then an error has occurred (this happened on the firmware that
 came pre-installed on the device, flashing through SWD was required).
 
-TBD: describe UART0 quirk
+Device came with broken firmware version, which prevents firmware flashing,
+please see [Recovering from bad flash](#recovering-from-bad-flash) section -
+recovery process involves reflashing bootloader and USB FPGA with a working
+properly working version.
+
+> Note: original bootloader version had a weird quirk - having UART connected,
+> was causing bootloader to actually enter download mode, however attempt to
+> flash m4app resulted in corrupting bootloader and USB FPGA.
 
 ### Flashing through OpenOCD
 
@@ -137,7 +144,7 @@ button or by downloading bootloader through OpenOCD which has been described in
 sections above. Then to flash Zephyr use the following command
 
 ```shell
-qfprog --mode fpga-m4 --m4app build/zephyr/zephyr.bin
+qfprog --mode m4 --m4app build/zephyr/zephyr.bin
 ```
 
 > To boot from flash you need to take off jumpers and also to boot into Zephyr
@@ -149,7 +156,7 @@ to `44/TX` and `45/RX` pins on J6 connector (you may also see official
 documentation linked at the top of this document).
 
 [Qorc SDK](https://github.com/QuickLogic-Corp/qorc-sdk) has an example app
-(`qf_fpgauart_app`) which may be used to get USB UART working on Zephyr.
+(`qf_uart2usbser`) which may be used to get USB UART working on Zephyr.
 
 ## Other components, bootloader, FPGAs
 
@@ -161,8 +168,7 @@ QuickLogic EOS comes with few components available as part of
 - Cortex-M4 - target application to run on Cortex-M4, Qorc SDK contains a few
   applications, including `qf_helloworldsw` which is the diag application that
   comes preinstalled.
-- bootfpga, TBD: documentation says this is used for device flashing, what's the
-  purpose of this component? (USB serial is somewhere else)
+- bootfpga - this is USB serial FPGA. See the section below for how to recover.
 - FPGA for user application - FPGA which can be used for any purpose.
 
 ![](/images/qorc-flash-memory-map-addresses.svg)
@@ -170,3 +176,82 @@ QuickLogic EOS comes with few components available as part of
 Qorc SDK comes with `envsetup.sh` script that automatically downloads all
 required components (compilers, etc.) and configures environment, tested on
 Ubuntu 20.04 with Qorc SDK rev `6968338b8778cb129ae441f6944444c9a1298390`.
+
+`qfprog` can flash a few types of image
+
+```shell
+usage: tinyfpga-programmer-gui.py [-h] [--mode [fpga-m4]] [--m4app app.bin] [--appfpga appfpga.bin] [--bootloader boot.bin] [--bootfpga fpga.bin] [--reset] [--port /dev/ttySx] [--crc] [--checkrev]
+                                  [--update] [--mfgpkg qf_mfgpkg/]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --mode [fpga-m4]      operation mode - m4/fpga/fpga-m4
+  --m4app app.bin       m4 application program
+  --appfpga appfpga.bin
+                        application FPGA binary
+  --bootloader boot.bin, --bl boot.bin
+                        m4 bootloader program WARNING: do you really need to do this? It is not common, and getting it wrong can make you device non-functional
+  --bootfpga fpga.bin   FPGA image to be used during programming WARNING: do you really need to do this? It is not common, and getting it wrong can make you device non-functional
+  --reset               reset attached device
+  --port /dev/ttySx     use this port
+  --crc                 print CRCs
+  --checkrev            check if CRC matches (flash is up-to-date)
+  --update              program flash only if CRC mismatch (not up-to-date)
+  --mfgpkg qf_mfgpkg/   directory containing all necessary binaries
+```
+
+For device to boot, bootloader, m4app and bootfpga partitions are required.
+Bootfpga is actually USB serial FPGA and it is required for programming device
+and for booting application that use serial over USB.
+
+## Recovering from bad flash
+
+`qf_loadflash` doesn't require a valid USB serial FPGA in SPI flash as it
+contains its own embedded USB FPGA, so it can be used for recovering from
+corrupted flash.
+
+To recover from bad flash you have to flash `bootloader` and `bootfpga`.
+`qf_bootfpga` provided in `quick-feather-dev-board` repo is broken and device
+will hang when attempting to load, but `qf_bootfpga` can be built as part
+`qf_bootloader`. To built it go to `qorc-sdk` directory, run `envsetup.sh`, then
+go to `qf_apps/qf_bootloader` and run `make`. Then flash resulting binaries
+
+```shell
+qfprog --mode m4 --bootloader GCC_Project/output/qf_bootloader.bin
+qfprog --mode m4 --bootfpga GCC_Project/output/qf_bootfpga.bin
+```
+
+## FPGA synthesis
+
+QuickLogic uses its own SymbiFlow fork for synthesis. `qorc-sdk` contains
+Verilog sources for usb2serial among others (located in `s3-gateware`
+directory). Sources for many components can built without problems by simply
+running `make`.
+
+## FPGA demo applications
+
+`qf_apps` contains a few applications using a custom FPGA, including
+`qf_helloworldhw` and `qf_advancedfpga`. These applications can be flashed
+through bootloader as any other application.
+
+Despite using FPGA, the two applications must be flashed in m4 mode.
+`qf_advancedfpga` uses UART0 instead of USB. Applications must be told to power
+on the LED, please see
+[Qorc SDK readme](https://github.com/QuickLogic-Corp/qorc-sdk#lesson-3-advanced-fpga-m4--fpga-qf_advancedfpga)
+
+QuickLogic has 3 modes of operation: `m4`, `fpga` and `fpga-m4`. This controls
+bootloader behaviour, so that bootloader loads either Cortex-M4 application,
+FPGA or both. In case of applications that load FPGA by themselves, mode should
+be `m4`.
+
+> Note: You can use `qfprog --mode` to get current mode.
+
+If operation mode is set to `fpga` or `fpga-m4` bootloader loads FPGA from the
+`appfpga` region, see relevant code
+[here](https://github.com/QuickLogic-Corp/qorc-sdk/blob/6968338b8778cb129ae441f6944444c9a1298390/qf_apps/qf_bootloader/src/appfpga_loader.c#L113)
+
+## Resources
+
+- [Thing+ guide](https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide) -
+  Getting started for Sparkfun Thing+, contains HW overview, including images
+  and detailed pin descriptions, schematics and other useful resources.
