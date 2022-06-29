@@ -147,4 +147,23 @@ in status register. Host can now read response from `TPM_DATA_FIFO_x`.
 
 There is also `TPM_XDATA_FIFO_x` register which allows for writes that span
 multiple bytes, this is especially useful for SPI as it can send more than one
-dword in a single packet.
+dword in a single packet. See section 6.3.1 for details.
+
+> Unlike LPC, the SPI bus does not limit transfers to a single byte. The
+> extended size data register (TPM_XDATA_FIFO_x) and CRB data buffer allow a
+> single write to offset 0x0080h up to the maximum transfer size reported by
+> TPM_INTF_Capability_x.DataTransferSizeSupport, without requiring Software to
+> increment the address.
+
+TPM is **required** to accept at least 1 byte transfers through
+`TPM_XDATA_FIFO_x`
+
+> The TPM SHALL accept transactions to offset 0x0080h that are of any length
+> from 1 byte to the maximum supported length (as reported in the Interface
+> Capability register, Section 6.5.2.7 Interface Capability).
+
+According to **Table 12** `TPM_XDATA_FIFO_x` spans only a 4 byte region
+(followed by reserved region), this raises doubts how big transfer should be
+handled as usually address is increased after each byte. Until this is clarified
+TPM should not report sizes bigger that 4 bytes in
+`TPM_INTF_Capability_x.DataTransferSizeSupport`.
