@@ -30,3 +30,4 @@ nav:
       - 'Connecting Raspberry Pi with Windows OS': rpi_connection.md
       - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
       - 'FAQ': rpi_faq.md
+  - 'Development on SparkFun Thing+': sparkfun-thingplus.md
