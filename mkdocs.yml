@@ -31,3 +31,5 @@ nav:
       - 'Running TPM 2.0 module on Raspberry Pi': rpi.md
       - 'FAQ': rpi_faq.md
   - 'Development on SparkFun Thing+': sparkfun-thingplus.md
+  - 'Considerations on hardware replacement': further_project_development.md
+  - 'TPM hardware interface documentation': tpm_lpc_spi_interface.md
