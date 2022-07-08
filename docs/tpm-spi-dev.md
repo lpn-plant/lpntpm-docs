@@ -1,13 +1,55 @@
-# TPM communication over SPI
+# Intro
+
+The goal of this document is to describe the current state of the lpnTPM
+communication over SPI interface and what are the further plans ins this area.
+
+## Replacing USB CDC with SPI communication in ms-tpm-20-ref
+
+[Initally](https://lpntpm.lpnplant.io/running/) we have enabled the sample code
+from the `ms-tpm-20-ref`, which provided the USB CDC communication channel. Our
+first goal towards the SPI communication was to replace the USB CDC channel
+with SPI one.
 
 We have added basic support for communication with TPM over SPI and dropped CDC
 support (code available
 [here](https://github.com/lpn-plant/ms-tpm-20-ref/tree/cmd_parsing_spi)).
-Currently, communication protocol does not follow the protocol as defined in TCG
-PC Client Specification. Due to problems with programming STM32 SPI controller
-by using directly HAL, resulting instability in communication and the fact that
-we are moving to Zephyr based implementation, we have dropped HAL based SPI
-attempts.
+Currently, communication protocol does not follow the protocol as defined in the
+[TCG PC Client Specification](https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf).
+This is planned for futher milestones of the project to be fully comatible with
+existing TPM SPI drivers.
+
+### TBD
+
+TBD: add more description
+- how we can run this
+- add some photos - how it was connected
+- add some description of the master (RPI?)
+  - how it was setup, where are the test scripts, etc
+- we need to provide whole procedure how one could reproduce our problems if
+  needed
+
+### Summary of the HAL-based approach
+
+The STM32 HAL approach was continued as it was the easiest path forward for
+idea verification. Unfortunataly, we faced several obstacles and decided not to
+continue this path, as this approach is not the target one for multiple
+reasons:
+- the STM32L476 is
+  [short on memory](https://lpntpm.lpnplant.io/issues/#memory-usage) when
+  running the `ms-tpm-20-ref` stack
+- the STM32L476 will not be able to provide LPC interface, which is common
+  interface for TPM modules
+- due to the global supply chain issues, the STM32L476 (as most of the others
+  STM32, and many more MCUs) is infeasible to source
+
+Some more considerations on the hardware replaceement could be found
+[here](https://lpntpm.lpnplant.io/further_project_development/).
+
+One of the path to move forward is to port the `ms-tpm-20-ref` stack to some
+RTOS (such as [Zephyr](https://zephyrproject.org/)) to gain some more
+flexibility in tems of hardware switching in the current global situation.
+
+## Prototyping TPM SPI communication with Zephyr
 
 Further SPI work has been done on Zephyr, the code is available
 [here](https://github.com/lpn-plant/zephyr-spi-app). This code tests
@@ -27,6 +69,8 @@ of filling RX buffer one byte at a time we can do this in 2 transfers
 > TPM spec. Mode is not present and, on read,  TPM always sends full register,
 > ignoring header size field.
 
+TBD: provde some graphic with definition of this header
+
 Currently, there are 3 registers (mininum required to send command and receive
 response):
 
@@ -36,7 +80,7 @@ response):
 - TPM_REG_RESP - response, there is no FIFO so response must be read during a
   single transfer
 
-## Testing SPI communication
+### Testing SPI communication
 
 We have provided `tpmctl` available in
 [zephyr-spi-app](https://github.com/lpn-plant/zephyr-spi-app) repo which can be
