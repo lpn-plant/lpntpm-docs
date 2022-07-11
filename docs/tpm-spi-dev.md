@@ -5,7 +5,7 @@ communication over SPI interface and what are the further plans ins this area.
 
 ## Replacing USB CDC with SPI communication in ms-tpm-20-ref
 
-[Initally](https://lpntpm.lpnplant.io/running/) we have enabled the sample code
+[Initially](https://lpntpm.lpnplant.io/running/) we have enabled the sample code
 from the `ms-tpm-20-ref`, which provided the USB CDC communication channel. Our
 first goal towards the SPI communication was to replace the USB CDC channel
 with SPI one.
@@ -15,18 +15,177 @@ support (code available
 [here](https://github.com/lpn-plant/ms-tpm-20-ref/tree/cmd_parsing_spi)).
 Currently, communication protocol does not follow the protocol as defined in the
 [TCG PC Client Specification](https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf).
-This is planned for futher milestones of the project to be fully comatible with
+This is planned for futher milestones of the project to be fully compatible with
 existing TPM SPI drivers.
 
-### TBD
+### Running
 
-TBD: add more description
-- how we can run this
-- add some photos - how it was connected
-- add some description of the master (RPI?)
-  - how it was setup, where are the test scripts, etc
-- we need to provide whole procedure how one could reproduce our problems if
-  needed
+To build and run this application you need latest
+[STM32Cube IDE](https://www.st.com/en/ecosystems/stm32cube.html) (at least
+version 1.10.0). Instructions for building and running has been described
+[here](https://lpntpm.lpnplant.io/building). TPM2 interface is exposed through
+SPI2. Following pins are used:
+
+| Pin  | Function |
+| ---- | -------- |
+| PC2  | MISO     |
+| PC3  | MOSI     |
+| PB10 | SCK      |
+| PB12 | CS       |
+
+STM32Cube IDE by default inserts breakpoint at `main()`, to resume program press
+F8. After resuming program you should see similar log in `SWV ITM Data Console`
+window
+
+```
+=========================
+= Nucleo-L476RG TPM 2.0 =
+=========================
+2000.01.01-00:00:00.003GMT: Generated tpmUnique
+    64d35b5495b2960f085a53af30aa2b68
+    1dcde64d11b81f1ba80207cd0546dbc8
+    937003faae4ee104769877877e8a9f8b
+    30a3ce2621641a56c9d3ce1ff95b9eee
+2000.01.01-00:00:00.324GMT: Initialized 16kb NVFile.
+2000.01.01-00:00:00.324GMT: NVFile loaded (16kb, 1970.01.01-00:00:00GMT created, 0 writes, NEVER last)
+2000.01.01-00:00:00.327GMT: TPM_Manufacture(1) requested.
+2000.01.01-00:00:00.654GMT: NVFile written (16kb, 1970.01.01-00:00:00GMT created, 0 writes, NEVER last)
+2000.01.01-00:00:00.654GMT: _plat__SetNvAvail().
+2000.01.01-00:00:00.654GMT: _plat__Signal_PowerOn().
+2000.01.01-00:00:00.654GMT: _plat__Signal_Reset().
+```
+
+![](/images/tpm_spi2_con.jpg)
+
+As SPI master we use Raspberry PI 3B, TPM is connected to RPI SPI1. To be able
+to send test commands to TPM `spidev` driver must be enabled and bound to SPI1.
+To enable `spidev`, modify `config.txt` in RPI boot partition by adding
+`dtoverlay=spi1-1cs`. This line has to be added before any section starts,
+preferably on top of file.
+
+Device should be visible as `/dev/spidev1.0`.
+
+### Testing
+
+Basic testing can be done using
+[spidev](https://github.com/STMicroelectronics/linux/blob/v5.10-stm32mp/tools/spi/spidev_test.c)
+test tool.
+
+Commands are sent after 4-byte header. Header first byte determines size of
+transfer and second byte determines which register to read/write. There are 4
+registers:
+
+- 0x00 - write TPM command into buffer without executing it
+- 0x01 - execute TPM command stored in buffer
+- 0x02 - read TPM response
+- 0x03 - send test response: TPM always responds with
+  `0x42, 0x43, 0xab, 0xcd, 0xde, 0xef`
+- 0x04 - read TPM response size
+
+To do a simple test, first, send special request
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x06\x03\x00\x00'
+spi mode: 0x0
+bits per word: 8
+max speed: 100000 Hz (100 kHz)
+TX | 06 03 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |....|
+RX | 00 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |....|
+```
+
+TPM should start printing `SPI TX error: 3` which means it cannot send response
+due to timeout, this is because host is not waiting for transfer. To receive
+data, next transfer must be initiated. SPI works in duplex mode simultaneously
+so some data must be transferred to TPM while receiving response. Here we send
+NULL bytes.
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x00\x00\x00\x00\x00\x00'
+spi mode: 0x0
+bits per word: 8
+max speed: 100000 Hz (100 kHz)
+TX | 00 00 00 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |......|
+RX | 42 43 AB CD DE EF __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |BC....|
+```
+
+> Note: number of NULLs must match the number declared in header (here 6 bytes).
+
+To send real TPM command (here TPM_Startup) it must be first written into buffer
+(normally TPM would use FIFO but here we use a simple buffer).
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x0c\x00\x00\x00\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00'
+spi mode: 0x0
+bits per word: 8
+max speed: 100000 Hz (100 kHz)
+TX | 0C 00 00 00 80 01 00 00 00 0C 00 00 01 44 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |.............D..|
+RX | DE DE DE DE DE DE DE DE DE DE DE DE DE DE DE DE __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |................|
+```
+
+> Note: on RX we receive some junk. This is because test app does not enqueue
+> TX transfer while receiving data and controller re-transfers remnants of
+> previous transfer. This can be (partially) solved by always providing a NULL
+> filled buffer, and using HAL_SPI_TransmitReceive instead of HAL_SPI_Receive.
+> Zephyr (see the section below) already does that which partially solves the
+> problem. However, if TPM does not enqueue transfer right in time, this causes
+> noise on SPI.
+
+And now, execute command:
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x01\x01\x00\x00\x01'
+```
+
+You should see something like this on SWV console
+
+```shell
+TPM command: 80 01 00 00 00 0c 00 00 01 44 00 00
+2000.01.01-00:20:18.201GMT: Executing command TPM_CC_Startup()
+2000.01.01-00:20:18.525GMT: NVFile written (16kb, 1970.01.01-00:00:00GMT created, 0 writes, NEVER last)
+2000.01.01-00:20:18.525GMT: Completion time 0'0" with ReturnCode {TPM_RC_SUCCESS}
+Response size: 10
+```
+
+To read response, type:
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x04\x04\x00\x00\x00\x00\x00\x00'
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x00\x00\x00\x00'
+spi mode: 0x0
+bits per word: 8
+max speed: 100000 Hz (100 kHz)
+TX | 00 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |....|
+RX | 0A 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |....|
+```
+
+Response size is 10, so we need to send 4 byte header and then prepare 10 byte
+transfer
+
+```shell
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x04\x02\x00\x00\x00\x00\x00\x00'
+$ spitest -v -D /dev/spidev1.0 -s 100000 -p '\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+spi mode: 0x0
+bits per word: 8
+max speed: 100000 Hz (100 kHz)
+TX | 00 00 00 00 00 00 00 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |..........|
+RX | 80 01 00 00 00 0A 00 00 00 00 __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  |..........|
+```
+
+Examples above show successful communication attempt, however communication is
+unstable and it tends to fail frequently. Failure can be simply reproduced by
+trying commands multiple times.
+
+Also, please note that SPI is running at 100 kHz, where TPM specification
+requires TPM to operate at range 1 MHz - 24 MHz. Currently, upon receiving
+command TPM is waiting for host to receive response and will not accept further
+commands until response is received. Before sending command and receiving
+response there is a delay caused by executing `spitest` separately. `spitest`
+calls may be chained together, but this may result in TPM not responding right
+in time.
+
+STM32 HAL does not provide API to sample SPI chip select, but TPM specification
+requires some actions to be taken based on CS value. Neither Zephyr does such an
+API, except for GPIO chip select, which may not be usable from within SPI slave.
 
 ### Summary of the HAL-based approach
 
@@ -69,7 +228,12 @@ of filling RX buffer one byte at a time we can do this in 2 transfers
 > TPM spec. Mode is not present and, on read,  TPM always sends full register,
 > ignoring header size field.
 
-TBD: provde some graphic with definition of this header
+| Byte | Usage            |
+| ---- | ---------------- |
+| 0    | Size of transfer |
+| 1    | Register address |
+| 2    | Unused (zero)    |
+| 3    | Unused (zero)    |
 
 Currently, there are 3 registers (mininum required to send command and receive
 response):
@@ -79,6 +243,44 @@ response):
 - TPM_REG_STATUS - status register, currently contains only response size
 - TPM_REG_RESP - response, there is no FIFO so response must be read during a
   single transfer
+
+## Running Zephyr sample
+
+Zephyr sample communicates SPI1 (there problems in getting SPI2 to work under
+Zephyr). Following pins are used:
+
+| Pin | Function |
+| --- | -------- |
+| PA5 | SCK      |
+| PA6 | MISO     |
+| PA7 | MOSI     |
+
+> Note: Zephyr uses GPIO chip select on SPI1 which works only for master, not
+> slave.
+
+![](/images/tpm_spi1_con.jpg)
+
+To run Zephyr sample, use the following commands:
+
+```shell
+$ docker run -ti \
+    --privileged \
+    -v /dev:/dev \
+    -u $(id -u) \
+    -v $PWD:/workdir \
+    -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+    -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK  \
+    ghcr.io/zephyrproject-rtos/zephyr-build:v0.23.3
+(docker)$ west init -m git@github.com:lpn-plant/zephyr-spi-app.git --mr spi zephyr-spi-workspace
+(docker)$ cd zephyr-spi-workspace
+(docker)$ west update
+(docker)$ export ZEPHYR_BASE=$PWD/zephyr
+(docker)$ west build -p auto -b nucleo_l476rg -s zephyr-spi-app/app/
+(docker)$ west flash
+```
+
+> Note: Zephyr outputs to emulated UART over USB which should be visible as
+> /dev/ttyACM*
 
 ### Testing SPI communication
 
