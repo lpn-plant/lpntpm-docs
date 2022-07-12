@@ -37,7 +37,7 @@ STM32Cube IDE by default inserts breakpoint at `main()`, to resume program press
 F8. After resuming program you should see similar log in `SWV ITM Data Console`
 window
 
-```
+```text
 =========================
 = Nucleo-L476RG TPM 2.0 =
 =========================
@@ -184,8 +184,26 @@ calls may be chained together, but this may result in TPM not responding right
 in time.
 
 STM32 HAL does not provide API to sample SPI chip select, but TPM specification
-requires some actions to be taken based on CS value. Neither Zephyr does such an
-API, except for GPIO chip select, which may not be usable from within SPI slave.
+requires some actions to be taken based on the CS value.
+
+> From [TCG PC Client Platform TPM Profile Specification](https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf)
+> section 6.5.1.1:
+>
+> 1. For Read Cycles, the TPM SHALL abort a cycle by driving 1 on MISO and
+>    continue to hold MISO at 1 until its CS# signal is deasserted.
+
+Also, TPM needs a way to recover to interrupted transfers. TPM data transfer
+happens in a few byte chunks (header and data payload of size defined by
+header). When TPM is deselected, transfer is aborted and TPM should go back into
+idle state. This may require TPM firmware to sample CS state in order to update
+its internal state machine.
+
+TPM specification defines a custom flow control protocol - TPM may insert wait
+states to delay transfer from Host to TPM. Flow control is non-standard
+behaviour and depending on implementation may require to sample CS.
+
+Neither Zephyr provides such an API, except for GPIO chip select, which may not
+be usable from within SPI slave.
 
 ### Summary of the HAL-based approach
 
@@ -193,6 +211,7 @@ The STM32 HAL approach was continued as it was the easiest path forward for
 idea verification. Unfortunataly, we faced several obstacles and decided not to
 continue this path, as this approach is not the target one for multiple
 reasons:
+
 - the STM32L476 is
   [short on memory](https://lpntpm.lpnplant.io/issues/#memory-usage) when
   running the `ms-tpm-20-ref` stack
@@ -246,8 +265,8 @@ response):
 
 ## Running Zephyr sample
 
-Zephyr sample communicates SPI1 (there problems in getting SPI2 to work under
-Zephyr). Following pins are used:
+Zephyr sample communicates SPI1 (there were problems in getting SPI2 to work
+under Zephyr). Following pins are used:
 
 | Pin | Function |
 | --- | -------- |
@@ -256,7 +275,9 @@ Zephyr). Following pins are used:
 | PA7 | MOSI     |
 
 > Note: Zephyr uses GPIO chip select on SPI1 which works only for master, not
-> slave.
+> slave. So, device is always selected and listening on the bus and there is no
+> need to attach CS. In real world scenario CS is required, in that case SPI
+> controller dedicated CS should be used instead of GPIO.
 
 ![](/images/tpm_spi1_con.jpg)
 
@@ -286,7 +307,16 @@ $ docker run -ti \
 
 We have provided `tpmctl` available in
 [zephyr-spi-app](https://github.com/lpn-plant/zephyr-spi-app) repo which can be
-used to send TPM command and receive response. Command is sent by piping raw,
+used to send TPM command and receive response. `tpmctl` by can be built simply
+by invoking GCC as it does not depend on any external libraries. If cross
+compiling you can use `arm-linux-gnueabihf-gcc` or build directly on the target
+device.
+
+```shell
+$ gcc tpmctl.c -o tpmctl
+```
+
+Command is sent by piping raw,
 binary command to `tpmctl`, output can be either in binary form or hexdump:
 
 ```shell
