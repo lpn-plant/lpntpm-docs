@@ -316,8 +316,8 @@ device.
 $ gcc tpmctl.c -o tpmctl
 ```
 
-Command is sent by piping raw,
-binary command to `tpmctl`, output can be either in binary form or hexdump:
+Command is sent by piping raw, binary command to `tpmctl`, output can be either
+in binary form or hexdump:
 
 ```shell
 $ printf '\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00' | tpmctl -H
