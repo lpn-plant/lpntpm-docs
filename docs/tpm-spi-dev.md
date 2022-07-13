@@ -1,7 +1,7 @@
 # Intro
 
 The goal of this document is to describe the current state of the lpnTPM
-communication over SPI interface and what are the further plans ins this area.
+communication over SPI interface and what are the further plans in this area.
 
 ## Replacing USB CDC with SPI communication in ms-tpm-20-ref
 
@@ -16,7 +16,9 @@ support (code available
 Currently, communication protocol does not follow the protocol as defined in the
 [TCG PC Client Specification](https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf).
 This is planned for futher milestones of the project to be fully compatible with
-existing TPM SPI drivers.
+existing TPM SPI drivers. For implementation to be compliant with TPM protocol
+we must use the same header format (current format has only slight differences),
+and implement full TPM register interface.
 
 ### Running
 
@@ -61,7 +63,7 @@ As SPI master we use Raspberry PI 3B, TPM is connected to RPI SPI1. To be able
 to send test commands to TPM `spidev` driver must be enabled and bound to SPI1.
 To enable `spidev`, modify `config.txt` in RPI boot partition by adding
 `dtoverlay=spi1-1cs`. This line has to be added before any section starts,
-preferably on top of file.
+preferably on top of file. RPI must be rebooted for the changes to take effect.
 
 Device should be visible as `/dev/spidev1.0`.
 
@@ -176,7 +178,7 @@ unstable and it tends to fail frequently. Failure can be simply reproduced by
 trying commands multiple times.
 
 Also, please note that SPI is running at 100 kHz, where TPM specification
-requires TPM to operate at range 1 MHz - 24 MHz. Currently, upon receiving
+requires TPM to operate at range 10 MHz - 24 MHz. Currently, upon receiving
 command TPM is waiting for host to receive response and will not accept further
 commands until response is received. Before sending command and receiving
 response there is a delay caused by executing `spitest` separately. `spitest`
@@ -197,10 +199,6 @@ happens in a few byte chunks (header and data payload of size defined by
 header). When TPM is deselected, transfer is aborted and TPM should go back into
 idle state. This may require TPM firmware to sample CS state in order to update
 its internal state machine.
-
-TPM specification defines a custom flow control protocol - TPM may insert wait
-states to delay transfer from Host to TPM. Flow control is non-standard
-behaviour and depending on implementation may require to sample CS.
 
 Neither Zephyr provides such an API, except for GPIO chip select, which may not
 be usable from within SPI slave.
@@ -223,7 +221,7 @@ reasons:
 Some more considerations on the hardware replaceement could be found
 [here](https://lpntpm.lpnplant.io/further_project_development/).
 
-One of the path to move forward is to port the `ms-tpm-20-ref` stack to some
+One of the paths to move forward is to port the `ms-tpm-20-ref` stack to some
 RTOS (such as [Zephyr](https://zephyrproject.org/)) to gain some more
 flexibility in tems of hardware switching in the current global situation.
 
@@ -307,10 +305,9 @@ $ docker run -ti \
 
 We have provided `tpmctl` available in
 [zephyr-spi-app](https://github.com/lpn-plant/zephyr-spi-app) repo which can be
-used to send TPM command and receive response. `tpmctl` by can be built simply
-by invoking GCC as it does not depend on any external libraries. If cross
-compiling you can use `arm-linux-gnueabihf-gcc` or build directly on the target
-device.
+used to send TPM command and receive response. `tpmctl` can be built simply by
+invoking GCC as it does not depend on any external libraries. If cross compiling
+you can use `arm-linux-gnueabihf-gcc` or build directly on the target device.
 
 ```shell
 $ gcc tpmctl.c -o tpmctl
@@ -382,7 +379,7 @@ SPI currently runs at 100 KHz where TPM specification requires support for
 ## Further work
 
 SPI stability problems must be solved and device must be able to reliably
-operate at 24 MHz (TPM specification recommends larger frequencies, however
+operate at 24 MHz (TPM specification recommends higher frequencies, however
 these are not mandatory currently).
 
 TPM specific SPI extensions must be implemented, such as wait states and bus
