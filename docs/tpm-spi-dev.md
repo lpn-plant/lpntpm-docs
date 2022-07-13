@@ -255,7 +255,7 @@ of filling RX buffer one byte at a time we can do this in 2 transfers
 Currently, there are 3 registers (mininum required to send command and receive
 response):
 
-- TPM_REG_CMD - register used for sending command, there is no FIFO, entire
+- TPM_REG_CMD - register used for sending command, there is no  TPM FIFO, entire
   command is executed immediatelly after transfer is complete
 - TPM_REG_STATUS - status register, currently contains only response size
 - TPM_REG_RESP - response, there is no FIFO so response must be read during a
