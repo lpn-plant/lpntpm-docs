@@ -21,6 +21,7 @@ nav:
       - 'Running': running.md
       - 'TPM driver instrumentation': instrumentation.md
   - 'Target TPM hardware interfaces': hardware_interfaces.md
+  - 'Open-source tools for FPGA synthesis': symbiflow_investigation.md
   - 'Current issues': issues.md
   - 'Mechanical design':
       - 'TPM modules pinout': tpm_modules_pinout.md
