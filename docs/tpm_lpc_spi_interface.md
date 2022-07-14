@@ -53,12 +53,14 @@ SPI has been described in-depth in section 7.4.
   - TPM may insert wait state to delay data transfer (from Host to TPM).
   - TPM **must** insert wait state when it's internal FIFO is full or accept the
     transaction.
+
     > The TPM, if it doesn’t insert a wait state at the designated point must
     > accept the transaction, if the transaction doesn’t cross a register
     > boundary. If the transaction crosses a register boundary, the TPM may
     > choose to accept all the data and discard the data that exceeds the size
     > limit for that register as long as doing so does not cause a change to the
-    > state of any adjacent register. 
+    > state of any adjacent register.
+
   - Usually TPM is allowed to insert as many wait states (each wait state is 8
     clock cycles) as it wants, except during read of a few registers where it is
     allowed to insert only one wait cycle. TPM cannot insert more than 1 wait
@@ -67,9 +69,11 @@ SPI has been described in-depth in section 7.4.
     TPM_DID, TPM_VID.
   - TPM **must** insert wait state if Host attempts to write data while TPM is
     busy - Host should check TPM status register to see if TPM is ready.
+
     > For writes, the TPM is required to insert wait states if software
     > attempts to write data without waiting for the TPM to transition to the
     > Ready state.
+
 - Data transmission (see section 7.4.6 for details)
   - TPM uses SPI mode 0 (CPHA=0, CPOL=0), no other modes are supported.
   - SPI packet is outlined in Table 48
@@ -106,6 +110,7 @@ Even if register boundary were crossed this doesn't make any difference for TPM.
 In case of SPI data payload of a single transfer cannot be bigger than size of
 register and cannot cross register boundary. Still, this must be handled, TPM
 specification does not define clearly what the behaviour should be.
+
 > For SPI, if a TPM receives an access request with a length that exceeds the
 > size of the register specified in the transaction address:
 > (...)
