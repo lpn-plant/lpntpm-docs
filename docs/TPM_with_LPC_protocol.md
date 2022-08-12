@@ -178,4 +178,24 @@ signals states for every phase of LPC cycle.
 |   output  | wire |        |   o_io_rden_sm  |
 |   output  | wire |        |   o_io_wren_sm  |
 |   output  |  reg | [31:0] |      TDATA      |
-|   output  |  reg |        |      READY      |
+|   output  |  reg |        |      READY      | 
+##### And here is table with I/O ports descriptions of "LPC Peripheral" module
+| Port Name          |   Direction    | Description                                                                      |
+|--------------------|:--------------:|----------------------------------------------------------------------------------|
+| LPC Interface                                                                                                          |
+| lpc_lclk           |      Input     | LPC clock (33,3 MHz) from LPC Host                                                   |
+| lpc_lreset_n       |      Input     | Active-low reset signal                                                          |
+| lpc_lframe_n       |      Input     | Active-low frame signal                                                          |
+| lpc_lad_in         | Bi-directional | Multiplexed Command, Address and Data Bus                                        |
+| Back-end Interface                                                                                                     |
+| i_addr_hit         |      Input     |                                                                                  |
+| o_current_state    |     Output     | Current peripheral state                                                         |
+| i_din              |      Input     | Data sent when host requests a read                                              |
+| o_lpc_data_in      |     Output     | Data received by peripheral for writing                                          |
+| o_lpc_data_out     |     Output     | Data sent to host when a read is requested                                       |
+| o_lpc_addr         |     Output     | 16-bit LPC Peripheral Address                                                    |
+| o_lpc_en           |     Output     | Active-high status signal indicating the peripheral is ready for next operation. |
+| o_io_rden_sm       |     Output     | Active-high read status                                                          |
+| o_io_wren_sm       |     Output     | Active-high write status                                                         |
+| TDATA              |     Output     | 32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion        |
+| READY              |     Output     | Active-high status signal indicating that new cycle data is on TDATA             |
