@@ -112,8 +112,29 @@ Here is link to "Icarus Verilog":
 
 ["GTKWave" application](http://gtkwave.sourceforge.net/)
 
+### Project Github repository
 
+Github repository with source code (Verilog RTL code and MCU C language program)
+is located at this URL:
 
+["TPM "LPC protocol" implementation](https://github.com/lpn-plant/lpntpm-lpc)
 
+There are four catalogs in this repository:
 
++ LPC_Peripheral_Verilog_Implementation
++ LPC_Peripheral_Verilog_Simulation
++ SOC_EOS_S3_Application_Test_comunication
++ SOC_EOS_S3_Application_With_LPC_peripheral
 
+In first catalog is Verilog implementation of "LPC Peripheral" (I/O LPC Cycles). In second catalog are source needed for performing simulation in "Icarus Verilog" ("LPC Peripheral" impl. "LPC Host" impl. and verilog test-bench). In third catalog is application for SOC "EOS S3" (Quicklogic) testing internal comunication between FPGA and MCU parts using in this purpose "Wisbone Bus" and interrupts. In fourth catalog is application for SOC "EOS S3" (Quicklogic) with embedded "LPC Protocol Peripheral" (implemented in FPGA part). Aplication is reading I/O LPC cycles (using I/O ports from FPGA sockets) and displaying these cycles data (LPC Address, LPC Data, and cycle type) by UART in SOC MCU part.
+
+### Verilog (FPGA based) implementation of "Low Pin Count" (LPC) protocol
+
+Beacause in TPM  part of project we only need handle I/O or TPM cycle of LPC protocol
+we develop minimalistic implementation of "LPC Peripheral". Before writing RTL 
+code in Verilog we study several open-source implementation of LPC protocol.
+
+The basic reference for implementing LPC protocol was Intel company "Intel Low Pin
+Count(LPC) interface Specification" document available at such WWW address:
+
+["Intel Low Pin Count(LPC) interface Specification"](https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf)
