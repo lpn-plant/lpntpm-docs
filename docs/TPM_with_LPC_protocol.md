@@ -160,7 +160,6 @@ phases of LPC protocol cycle. There is also code for handling I/O ports and inte
 signals states for every phase of LPC cycle.
 
 ##### Here is table with all I/O ports of "LPC Peripheral" module
-
 | Direction | Type | Bus    | Port name       |
 |-----------|------|--------|-----------------|
 |   input   | wire |        |     lpc_lclk    |
@@ -200,3 +199,40 @@ signals states for every phase of LPC cycle.
 | o_io_wren_sm       |     Output     | Active-high write status                                                         |
 | TDATA              |     Output     | 32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion        |
 | READY              |     Output     | Active-high status signal indicating that new cycle data is on TDATA             |
+
+As one can see in I/O ports of "LPC Peripheral" module there are four common 
+signal of LPC protocol (LPC Host is connected to Peperipheral by these lines). 
+These signals are:
++ lpc_lclk
++ lpc_lreset_n
++ lpc_lframe_n
++ lpc_lad_in  (this 4-bit bi-directional multiplexed bus)
+
+Other signals are used for control the module and displaying information.
+
+In this path in github repository is located Verilog file "lpc_peri_tb.v" with 
+test-bench for performing simulation of "LPC Peripheral" module:
+["LPC Peripheral Verilog source"](https://github.com/lpn-plant/lpntpm-lpc/tree/main/LPC_Peripheral_Verilog_Implementation)
+
+In this file (from line 59) is fragment of code setting the name of .vcd dump file
+with waveforms :
+```verilog
+initial
+begin
+ 	// Initialize
+    $dumpfile("lpc_peri_tb.vcd");
+    $dumpvars(0,lpc_peri_tb);
+
+```
+
+In line (106) there is for loop generating 128 I/O cycles (alternately write and read):
+```verilog
+for (i = 0; i <= 128; i = i + 1) begin 
+        // Perform write
+        #40  LFRAME_in  = 0;
+        IO_Read_Flag   = 0;
+. . .
+```
+In this test-bench file is also embedded implementation of module "LPC_Host" and 
+instantation of modules "LPC_Host" and "LPC_peri". All of them are needed for 
+carrying ot the simulation of "LPC Peripheral" module.
