@@ -138,3 +138,44 @@ The basic reference for implementing LPC protocol was Intel company "Intel Low P
 Count(LPC) interface Specification" document available at such WWW address:
 
 ["Intel Low Pin Count(LPC) interface Specification"](https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf)
+
+These three Verilog RTL modules had been implemented
++ LPC Peripheral (Slave) which is as final step embedded in SoC TPM application
++ LPC Host which is embedded in test-baench for LPC Peripheral
++ LPC Peripheral test-bench (connected together with LPC Host in one Verilog source
+  file
+
+This implemeentation of "LPC Peripheral" can handle such types of LPC cycles:
++ I/O LPC cycles (1 byte)
++ TPM LPC cycles (1 byte)
+
+Other cycles of LPC protocol (for example Memory, Firmware, DMA) are not supported
+by this implementation.
+
+The Verilog "LPC Peripheral" source is located at this path  in repository:
+
+["LPC Peripheral Verilog source"](https://github.com/lpn-plant/lpntpm-lpc/tree/main/LPC_Peripheral_Verilog_Implementation)
+
+This implementation is based on simple FSM (Finit state machine) handling individual
+phases of LPC protocol cycle. There is also code for handling I/O ports and internal
+signals states for every phase of LPC cycle.
+
+##### Here is table with all I/O ports of "LPC Peripheral" module
+
+| Direction | Type | Bus    | Port name       |
+|-----------|------|--------|-----------------|
+|   input   | wire |        |     lpc_lclk    |
+|   input   | wire |        |   lpc_lreset_n  |
+|   input   | wire |        |   lpc_lframe_n  |
+|   inout   | wire | [ 3:0] |    lpc_lad_in   |
+|   input   | wire |        |    i_addr_hit   |
+|   output  |  reg | [ 4:0] | o_current_state |
+|   input   | wire | [ 7:0] |      i_din      |
+|   output  |  reg | [ 7:0] |  o_lpc_data_in  |
+|   output  | wire | [ 3:0] |  o_lpc_data_out |
+|   output  | wire | [15:0] |    o_lpc_addr   |
+|   output  | wire |        |     o_lpc_en    |
+|   output  | wire |        |   o_io_rden_sm  |
+|   output  | wire |        |   o_io_wren_sm  |
+|   output  |  reg | [31:0] |      TDATA      |
+|   output  |  reg |        |      READY      |
