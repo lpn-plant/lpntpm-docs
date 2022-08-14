@@ -35,3 +35,4 @@ nav:
   - 'Considerations on hardware replacement': further_project_development.md
   - 'TPM hardware interface documentation': tpm_lpc_spi_interface.md
   - 'SPI interface - implementation': tpm-spi-dev.md
+  - 'LPC driver - implementation': TPM_with_LPC_protocol.md
