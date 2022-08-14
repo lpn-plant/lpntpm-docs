@@ -100,10 +100,13 @@ following parts:
 
 "QORC SDK" is in all it's parts open-source.
 
-"QORC SDK" is only one software tool needed for development of all parts of
-application for SoC "EOS S3". However there is also very useful software for making
-Verilog RTL code simulation. We used for simulating this project open-source
-Verilog simulator called "Icarus Verilog". We also used open-source viewer for
+Here is link to "QORC-SDK" Github repository:["QORC-SDK Github repository"](https://github.com/QuickLogic-Corp/qorc-sdk)
+and here is link to "Quicklogic Corporation" github repositories:["Quicklogic Corporation" Github repositories"](https://github.com/QuickLogic-Corp) 
+
+"QORC SDK" is only one software tool needed for development of all parts of 
+application for SoC "EOS S3". However there is also very useful software for making 
+Verilog RTL code simulation. We used for simulating this project open-source 
+Verilog simulator called "Icarus Verilog". We also used open-source viewer for 
 .vcd files called "GTKWave".
 
 Here is link to "Icarus Verilog":
