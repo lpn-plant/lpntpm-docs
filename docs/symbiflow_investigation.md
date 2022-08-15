@@ -1,4 +1,5 @@
 ## Getting acquainted with the open-source "Symbiflow" package for
+
 synthesizing, implementing and generating the FPGA configuration file
 
 Here is a link to the main Github repository for the **Symbiflow** software
@@ -13,13 +14,13 @@ for Symbiflow) from this report:
 
 Installation carried out according to the instructions on the main page of this
 repository. Yosys is only for FPGA synthesis phase. A list of Verilog primitive
-connections is created in ** JSON ** format.
+connections is created in **JSON** format.
 
 The next tool is for the implementation phase (map processes, placement and
-routing). For this phase you need a "user constaraints" file in ** Pcf **
+routing). For this phase you need a "user constaraints" file in **Pcf**
 format for the selected FPGA.
 
-Here is the link to the ** nextpnr ** tool repository used to implement and
+Here is the link to the **nextpnr** tool repository used to implement and
 create a "bitstream" (binary configuration file) for a given FPGA chip:
 
 [Github nextpnr Symbiflow repository](https://github.com/SymbiFlow/nextpnr)
@@ -65,6 +66,7 @@ ICE40 chips. It's also not bad for the Lattice ECP5 family. The bitstream
 generation for Xilinx's Artix-7 family of FPGAs is partial.
 
 #### An attempt to implement and generate bitstream for the Lattice ICE40
+
 family of FPGAs
 
 Since full support for FPGA implementation and bitstream generation is
@@ -158,4 +160,3 @@ being able to use an LED diode. The simulator worked correctly. I have used
 Verilator in the past and I know how to use it to generate a VCD file with
 simulation timing diagrams, which can then be analyzed with the "GTKWave"
 program.
-

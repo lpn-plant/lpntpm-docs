@@ -80,6 +80,7 @@ USB cable and then type the following command
 ```
 
 Green LED should immediatelly light up and host should detect new CDC ACM device
+
 ```
 [881016.294497] usb 3-2: new full-speed USB device number 25 using xhci_hcd
 [881016.443375] usb 3-2: New USB device found, idVendor=1d50, idProduct=6130, bcdDevice= 0.00
