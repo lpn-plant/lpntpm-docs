@@ -20,6 +20,7 @@ chosen as the hardware platform. This hardware was Dual-Core Tensilica LX6 with
 240 MHz clock and 512 KB SRAM, which is quite a powerful MCU. Here is a picture 
 of test circuit:
 ![Circuit used for test](images/ESP32_board.png)
+
 We started our test with a very simple application in "Arduino IDE" for switching
 the output GPIO pin using an interrupt assigned to another GPIO (Input) pin. For this 
 input pin, there was a 33 Mhz clock signal attached. In the interrupt routine, the state 
@@ -42,41 +43,38 @@ combine these two MCU and FPGA in one chip.
 
 ## Hardware platform for this project
 
-The most serious issue in our previous attempts to implement TPM module was lack
-off enough SRAM memory amount available for MCU, so one of basic requirement for 
-new hardware platform is big amount of SRAM memory. The second assumption for new
-hardware is existence of programmble logic (FPGA) and fast bus connecting FPGA 
-and MCU. The third assumption is efficient MCU with needed peripherals. The last
-requirement is possibility of use open-source software for development applications
-for this hardware.
+The most serious issue in our previous attempts to implement the TPM module was 
+the lack of enough SRAM memory amount available for MCU, so one of the basic 
+requirements for a new hardware platform is the big amount of SRAM memory. The 
+second assumption for new hardware is the existence of programmable logic (FPGA)
+and a fast bus connecting FPGA and MCU. The third assumption is efficient MCU with
+needed peripherals. The last requirement is the possibility of using open-source
+software for the development applications for this hardware.
 
-Our choice for new hardware platform for this project is 
-"QuickLogic EOS™ S3 MCU + eFPGA SoCs". It combine ARM Cortex-M4 MCU with 512 KB 
+Our choice of new hardware platform for this project is 
+"QuickLogic EOS™ S3 MCU + eFPGA SoCs". It combines ARM Cortex-M4 MCU with 512 KB 
 of SRAM (max. clock frequency is 80 Mhz) and FPGA.FPGA and MCU are connected by 
-fast "Wisbone Bus" and can handle interrupts from FPGA to MCU. The MCU has many
-peripherals like "SPI controllers", "I2C controllers", UARTs, Timers, Wtchdog timer.
+a fast "Wishbone Bus" and can handle interrupts from FPGA to MCU. The MCU has many
+peripherals like "SPI controllers", "I2C controllers", UARTs, Timers, Watchdog timers.
 
-"Quicklogic EOS S3 MCU + eFPGA SoC" had been chosen for hardware part of this 
-project because it fulfills all requirements related to amount of RAM memory and 
-overall performance. Here is link to description of this SoC:
+`Quicklogic EOS S3 MCU + eFPGA SoC` had been chosen for the hardware part of this 
+project because it fulfills all requirements related to the amount of RAM and 
+overall performance. Here is the link to the description of this SoC
 
 [Quicklogic EOS S3 SoC](https://www.mouser.pl/new/quicklogic/quicklogic-eos-s3-mcu-efpga-socs/)
 
-We carried out all development on open-hardware board called "Sparkfun QuickLogic
-Thing Plus - EOS S3". This board is based on Quicklogic "EOS S3" SoC - here is
-link to this product:
-
+We carried out all development on an open-hardware board called `Sparkfun QuickLogic
+Thing Plus - EOS S3`. This board is based on Quicklogic `EOS S3` SoC - here is
+the link to this product:
 ["Sparkfun QuickLogic Thing Plus - EOS S3"](https://www.sparkfun.com/products/17273)
 
 Here is hardware manual from Quicklogic company:
 
-["QuickLogic EOS S3 Ultra Low Power multicore MCU datasheet"]
-(https://cdn.sparkfun.com/assets/7/a/c/c/e/QL-EOS-S3-Ultra-Low-Power-multicore-MCU-Datasheet-v3_3d.pdf)
+["QuickLogic EOS S3 Ultra Low Power multicore MCU datasheet"](https://cdn.sparkfun.com/assets/7/a/c/c/e/QL-EOS-S3-Ultra-Low-Power-multicore-MCU-Datasheet-v3_3d.pdf)
 
 And here is "Hookup Guide" for "Sparkfun QuickLogic Thing Plus - EOS S3" board:
 
-["QuickLogic Thing Plus (EOS S3) Hookup Guide"]
-(https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide#hardware-overview)
+["QuickLogic Thing Plus (EOS S3) Hookup Guide"](https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide#hardware-overview)
 
 Below is picture of circuit used for development of this project:
 
@@ -103,23 +101,20 @@ following parts:
 + FreeRTOS
 + Zephyr-RTOS
 
-"QORC SDK" is in all it's parts open-source.
+"QORC SDK" is in all its parts open-source.
 
 Here is link to "QORC-SDK" Github repository:["QORC-SDK Github repository"](https://github.com/QuickLogic-Corp/qorc-sdk)
 and here is link to "Quicklogic Corporation" github repositories:["Quicklogic Corporation" Github repositories"](https://github.com/QuickLogic-Corp) 
 
-"QORC SDK" is only one software tool needed for development of all parts of 
-application for SoC "EOS S3". However there is also very useful software for making 
+`QORC SDK"` is only one software tool needed for the development of all parts of 
+the application for SoC "EOS S3". However, there is also very useful software for making 
 Verilog RTL code simulation. We used for simulating this project open-source 
-Verilog simulator called "Icarus Verilog". We also used open-source viewer for 
+Verilog simulator called "Icarus Verilog". We also used an open-source viewer for 
 .vcd files called "GTKWave".
 
 Here is link to "Icarus Verilog":
-
 ["Icarus Verilog simulator"](http://iverilog.icarus.com/)
-
 , and here is link to "GTKWave" application:
-
 ["GTKWave" application](http://gtkwave.sourceforge.net/)
 
 ### Project Github repository
