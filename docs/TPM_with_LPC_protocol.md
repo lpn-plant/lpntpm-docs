@@ -1,60 +1,60 @@
 ## TPM module with "Low Pin Count Protocol" build on SoC
 ### Introduction
-The main goal of this document is showing the current state of development of TPM 
+The main goal of this document is showing the current state of development of TPM
 module with "LPC Protocol" based on SoC (System on Chip), and also documenting
 work carried out so far.
 ## Motivation for doing this project
 We still see the necessity of making TPM module with the "Low Pin Count" protocol.
-There are still many computers on the market (especially servers) that have 
-motherboards supporting LPC protocol. We considered possible hardware platforms 
+There are still many computers on the market (especially servers) that have
+motherboards supporting LPC protocol. We considered possible hardware platforms
 in the past in this document[Target TPM hardware interfaces](https://lpntpm.lpnplant.io/hardware_interfaces/#low-pin-count-interface)
-Outside of fast `SPI Bus` and even `I2C` protocol it is relatively easy to 
-implement on MCU hardware just "LPC protocol" makes it difficult to implement on 
+Outside of fast `SPI Bus` and even `I2C` protocol it is relatively easy to
+implement on MCU hardware just "LPC protocol" makes it difficult to implement on
 MCU.
 ## Previous attempt to implement the LPC protocol on the MCU
-We attempted to implement "LPC protocol" (LPC Peripheral) on MCU, but 
-this attempt hasn't been successfully completed. "ESP32-WROOM32" board has been 
+We attempted to implement "LPC protocol" (LPC Peripheral) on MCU, but
+this attempt hasn't been successfully completed. "ESP32-WROOM32" board has been
 chosen as the hardware platform. This hardware was Dual-Core Tensilica LX6 with
-240 MHz clock and 512 KB SRAM, which is quite a powerful MCU. Here is a picture 
+240 MHz clock and 512 KB SRAM, which is quite a powerful MCU. Here is a picture
 of test circuit:
 ![Circuit used for test](images/ESP32_board.png)
 
 We started our test with a very simple application in "Arduino IDE" for switching
-the output GPIO pin using an interrupt assigned to another GPIO (Input) pin. For this 
-input pin, there was a 33 Mhz clock signal attached. In the interrupt routine, the state 
-of the output GPIO pin had been negated. Here is screen-shot from logic analyzer 
+the output GPIO pin using an interrupt assigned to another GPIO (Input) pin. For this
+input pin, there was a 33 Mhz clock signal attached. In the interrupt routine, the state
+of the output GPIO pin had been negated. Here is screen-shot from logic analyzer
 software:
 ![Circuit used for test](images/PinInterrupt_Analizator.png)
 The signal in channel 0 is a 33 Mhz clock, and the signal in channel 2 is an output GPIO
 pin. The maximum frequency of switching GPIO pins we could reach on this hardware
-was close to 380 Khz. The main reason for such bad results had been big latency 
-in interrupts handling. We also considered some versions of STM32 family MCUs, 
+was close to 380 Khz. The main reason for such bad results had been big latency
+in interrupts handling. We also considered some versions of STM32 family MCUs,
 but resulting from the documentation that it is not possible to get much better results
 than this of "ESP32" hardware.
 
 We concluded that the best way of implementing "LPC protocol" would
-be the use of a programmable device like an FPGA or CPDL. But we also need a CPU for 
+be the use of a programmable device like an FPGA or CPDL. But we also need a CPU for
 implementation of TPM module logic and a quite much amount of RAM. So the need of
-using together MCU and FPGA ICs in one project causes a large size of PCB for TPM 
+using together MCU and FPGA ICs in one project causes a large size of PCB for TPM
 module. Fortunately, last years appeared ICs called SoC (System on Chip) which
 combine these two MCU and FPGA in one chip.
 ## Hardware platform for this project
-The most serious issue in our previous attempts to implement the TPM module was 
-the lack of enough SRAM memory amount available for MCU, so one of the basic 
-requirements for a new hardware platform is the big amount of SRAM memory. The 
+The most serious issue in our previous attempts to implement the TPM module was
+the lack of enough SRAM memory amount available for MCU, so one of the basic
+requirements for a new hardware platform is the big amount of SRAM memory. The
 second assumption for new hardware is the existence of programmable logic (FPGA)
 and a fast bus connecting FPGA and MCU. The third assumption is efficient MCU with
 needed peripherals. The last requirement is the possibility of using open-source
 software for the development applications for this hardware.
 
-Our choice of new hardware platform for this project is 
-"QuickLogic EOS™ S3 MCU + eFPGA SoCs". It combines ARM Cortex-M4 MCU with 512 KB 
-of SRAM (max. clock frequency is 80 Mhz) and FPGA.FPGA and MCU are connected by 
+Our choice of new hardware platform for this project is
+"QuickLogic EOS™ S3 MCU + eFPGA SoCs". It combines ARM Cortex-M4 MCU with 512 KB
+of SRAM (max. clock frequency is 80 Mhz) and FPGA.FPGA and MCU are connected by
 a fast "Wishbone Bus" and can handle interrupts from FPGA to MCU. The MCU has many
 peripherals like "SPI controllers", "I2C controllers", UARTs, Timers, Watchdog timers.
 
-`Quicklogic EOS S3 MCU + eFPGA SoC` had been chosen for the hardware part of this 
-project because it fulfills all requirements related to the amount of RAM and 
+`Quicklogic EOS S3 MCU + eFPGA SoC` had been chosen for the hardware part of this
+project because it fulfills all requirements related to the amount of RAM and
 overall performance. Here is the link to the description of this SoC
 
 [Quicklogic EOS S3 SoC](https://www.mouser.pl/new/quicklogic/quicklogic-eos-s3-mcu-efpga-socs/)
@@ -85,11 +85,11 @@ It consist of such parts:
 - USB 2 UART converter
 
 Note that we used for programming and debugging "SEGGER J-Link" JTAG debugger,
-but one can use instead of it different JTAG debugger (or simple board based on 
+but one can use instead of it different JTAG debugger (or simple board based on
 FTDI IC (FT232Rl)) and "OpenOCD" software for this purpose.
 ### Software needed for development of this project
 All development - both FPGA Verilog RTL part and ARM Cortex-M4 MCU development
-had been carried out using "Qiucklogic QORC SDK". "QORC SDK" consist of the 
+had been carried out using "Qiucklogic QORC SDK". "QORC SDK" consist of the
 following parts:
 
 - Symbiflow package for making FPGA synthessis (Yosys) and "place and route" tool
@@ -101,12 +101,12 @@ following parts:
 "QORC SDK" is in all its parts open-source.
 
 Here is link to "QORC-SDK" Github repository:["QORC-SDK Github repository"](https://github.com/QuickLogic-Corp/qorc-sdk)
-and here is link to "Quicklogic Corporation" github repositories:["Quicklogic Corporation" Github repositories"](https://github.com/QuickLogic-Corp) 
+and here is link to "Quicklogic Corporation" github repositories:["Quicklogic Corporation" Github repositories"](https://github.com/QuickLogic-Corp)
 
-`QORC SDK"` is only one software tool needed for the development of all parts of 
-the application for SoC "EOS S3". However, there is also very useful software for making 
-Verilog RTL code simulation. We used for simulating this project open-source 
-Verilog simulator called "Icarus Verilog". We also used an open-source viewer for 
+`QORC SDK"` is only one software tool needed for the development of all parts of
+the application for SoC "EOS S3". However, there is also very useful software for making
+Verilog RTL code simulation. We used for simulating this project open-source
+Verilog simulator called "Icarus Verilog". We also used an open-source viewer for
 .vcd files called "GTKWave".
 
 Here is link to "Icarus Verilog":
@@ -115,7 +115,7 @@ Here is link to "Icarus Verilog":
 ["GTKWave" application](http://gtkwave.sourceforge.net/)
 
 ### Project Github repositories
-Github repository with source code (Verilog RTL code) of `LPC peripheral` and all  
+Github repository with source code (Verilog RTL code) of `LPC peripheral` and all
 files needed to perform simulation are located at this URL:
 [TPM LPC protocol implementation](https://github.com/lpn-plant/lpntpm-lpc-verilog)
 
@@ -125,22 +125,22 @@ There are several files in this repository:
 -  lpc_host.v       (this is Verilog `LPC Host` implementation)
 -  lpc_defines.v    (this is auxiliary file with constans used in implementation)
 -  lpc_periph_tb.v    (this is test-bench for `LPC Peripheral` implementation)
-- 
-In second Github repository at address: 
+-
+In second Github repository at address:
 [`EOS S3` SoC applications](https://github.com/lpn-plant/lpntpm-eos-s3-examples)
 are placed applications (FPGA and ARM Cortex-M4 MCU) for Quicklogic SoC `EOS S3`.
 
-At this URL: [`EOS S3` test applications](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication) is located application for SOC 
-"EOS S3" (Quicklogic) testing internal communication between FPGA and MCU parts 
+At this URL: [`EOS S3` test applications](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication) is located application for SOC
+"EOS S3" (Quicklogic) testing internal communication between FPGA and MCU parts
 using in this purpose "Wishbone Bus" and interrupts.
 
 And finally at this URL: [`EOS S3 application with embedded LPC Peripheral](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication)
-is located application for SOC "EOS S3" (Quicklogic) with embedded "LPC Protocol 
-Peripheral" (implemented in FPGA part). Application is reading I/O LPC cycles 
+is located application for SOC "EOS S3" (Quicklogic) with embedded "LPC Protocol
+Peripheral" (implemented in FPGA part). Application is reading I/O LPC cycles
 (using I/O ports from FPGA sockets) and displaying these cycles data (LPC Address,
 LPC Data, and cycle type) by UART in SOC MCU part.
 ### Verilog (FPGA based) implementation of "Low Pin Count" (LPC) protocol
-Because in TPM part of a project we only need to handle the I/O or TPM cycle of LPC protocol we develop a minimalistic implementation of "LPC Peripheral". Before 
+Because in TPM part of a project we only need to handle the I/O or TPM cycle of LPC protocol we develop a minimalistic implementation of "LPC Peripheral". Before
 writing RTL code in Verilog we study several open-source implementations of LPC protocol.
 
 The basic reference for implementing LPC protocol was Intel company "Intel Low Pin
@@ -183,7 +183,7 @@ signals states for every phase of the LPC cycle
 |   output  | wire |        |   io_rden_sm_o  |
 |   output  | wire |        |   io_wren_sm_o  |
 |   output  |  reg | [31:0] |      TDATA      |
-|   output  |  reg |        |      READY      | 
+|   output  |  reg |        |      READY      |
 
 ##### And here is table with I/O ports descriptions of "LPC Peripheral" module
 
@@ -207,8 +207,8 @@ signals states for every phase of the LPC cycle
 | TDATA              |     Output     | 32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion        |
 | READY              |     Output     | Active-high status signal indicating that new cycle data is on TDATA             |
 
-As one can see in I/O ports of "LPC Peripheral" module there are four common 
-signals of LPC protocol (LPC Host is connected to Peperipheral by these lines). 
+As one can see in I/O ports of "LPC Peripheral" module there are four common
+signals of LPC protocol (LPC Host is connected to Peperipheral by these lines).
 These signals are:
 
 + clk_i
@@ -218,7 +218,7 @@ These signals are:
 
 Other signals are used for control the module and displaying information.
 
-In this path in github repository is located Verilog file `lpc_periph_tb.v` with 
+In this path in github repository is located Verilog file `lpc_periph_tb.v` with
 test-bench for performing simulation of `LPC Peripheral` module: [LPC Peripheral Verilog test-bench](https://github.com/lpn-plant/lpntpm-lpc-verilog/blob/main/lpc_periph_tb.v)
 
 In `lpc_periph_tb.v` file (from line 76) is fragment of code setting the name of .vcd
@@ -233,16 +233,16 @@ begin
 ```
 In line (121) there is for loop generating 128 I/O cycles (alternately write and read):
 ```verilog
-for (i = 0; i <= 128; i = i + 1) begin 
+for (i = 0; i <= 128; i = i + 1) begin
         // Perform write
         #40  LFRAME_in  = 0;
         IO_Read_Flag   = 0;
 . . .
 ```
-The test-bench file also uses implementation of module `lpc_host` and 
-instantiation of modules `lpc_host` and `lpc_periph`. All of them are needed for 
+The test-bench file also uses implementation of module `lpc_host` and
+instantiation of modules `lpc_host` and `lpc_periph`. All of them are needed for
 simulating the "LPC Peripheral" module. The accomplishment of simulation
-before tests on hardware (FPGA board) is very important and we carried out this 
+before tests on hardware (FPGA board) is very important and we carried out this
 process in great detail. Manual hot to simulate "LPC Peripheral"
 module is placed on this README file in the Github repository:[LPC Peripheral Verilog simulation](https://github.com/lpn-plant/lpntpm-lpc-verilog)
 
@@ -251,10 +251,10 @@ module is placed on this README file in the Github repository:[LPC Peripheral Ve
 ```verilog
 inout  wire [ 3:0] lad_bus
 ```
-This is a bi-directional (and tri-state) 4-bit bus. This bus is multiplexed and in 
-different time slots during handling of the LPC cycle this bus shows up various 
+This is a bi-directional (and tri-state) 4-bit bus. This bus is multiplexed and in
+different time slots during handling of the LPC cycle this bus shows up various
 data (for. example: 4-bit parts of LPC Address, LPC Data, etc.).
-  
+
 In source file `lpc_defines.v` are definitions of FSM states constans:
 ```verilog
 //---- FSM states definitions --------------------------
@@ -282,7 +282,7 @@ always @(*) begin
 . . .
 ```
 In lines from 99 to 111 of `lpc_periph.v` there is always block in which is determined
-when new cycle was started and when LPC cycle data are ready these data are packed and 
+when new cycle was started and when LPC cycle data are ready these data are packed and
 copied to 32-bit TDATA bus:
 ```verilog
 if (wasLpc_enHigh) begin
@@ -299,7 +299,7 @@ if (wasLpc_enHigh) begin
                     memoryLPC[0] <= dinAbuf;
                 end
 ```
-As one can see bits from [31:28] are filled with four zeros. On bits [27:12] there 
+As one can see bits from [31:28] are filled with four zeros. On bits [27:12] there
 is placed 16-bits LPC Address. On bits [11:4] is located 8-bit LPC Data. And finally
 on bits [3:0] is stored cycle type: 1 is written cycle and 0 is read cycle.
 In this last always block is also worked out READY signal. When READY is High (1'b1)
@@ -338,7 +338,7 @@ signals:
 + Peri_Address_out[15:0] - received from Host LPC address
 + Peri_Write_out[7:0] - received from Host LPC cycle data
 
-And finally one can see that LPC Address and LPC Data appear with some delay on 
+And finally one can see that LPC Address and LPC Data appear with some delay on
 TDATABou[31:0] - on this 32-bit bus are written LPC Address and LPC Data as has
 been described above. READYNET signal indicates that there is new data on TDATA
 bus. These two last signals (TDATA and READY) are used for sending LPC cycle data
@@ -350,7 +350,7 @@ to say that the tested circuit is working correctly.
 Quicklogic SoC "EOS S3" is rather complex circuit what you can see studying it's
 technical manual at this URL:[EOS S3 Technical Reference Manual](https://cdn.sparkfun.com/assets/f/2/a/c/5/QL-S3-Technical-Reference-Manual-revisionv1.1a.pdf)
 
-After reading this documentation we were missing a few important details that needed to 
+After reading this documentation we were missing a few important details that needed to
 implement SoC application which from FPGA part send data to ARM MCU program using
 internal "Wishbone Bus" to "AHB Bus" bridge and can set interrupt in FPGA part.
 Frankly speaking, we needed bi-directional communication between FPGA and MCU in SoC.
@@ -362,30 +362,30 @@ repository very valuable examples of application for "EOS S3" SoC. Here is this
 repository: ["EOS S3 SoC QORC-SDK example applications"](https://github.com/coolbreeze413/qorc-onion-apps)
 One of these examples located at this link: [EOS S3 SoC QORC-SDK example application](https://github.com/coolbreeze413/qorc-onion-apps/tree/master/qorc_fpga_compositeGPBTctrl) has been using such comunication between FPGA and MCU
 parts of SoC. Basing on this example we wrote simpler application using comunication
-between FPGA and MCU using "Wishbone Bus" and interrupts from FPGA to MCU. Here 
+between FPGA and MCU using "Wishbone Bus" and interrupts from FPGA to MCU. Here
 is link  to this test application: [EOS S3 SoC QORC-SDK example application](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication)
- 
+
 In top module of FPGA part of this application in file "AL4S3B_FPGA_Top.v" - see
 link: ["EOS S3 SoC QORC-SDK example top module"](https://github.com/lpn-plant/lpntpm-eos-s3-examples/blob/master/SOC_EOS_S3_Application_Test_comunication/fpga/rtl/AL4S3B_FPGA_Top.v)
 
 One can see that top module:
 ```verilog
 module AL4S3B_FPGA_Top (
-    
+
     // io_pad(s) from constraint file
     io_pad
 );
 ```
 hasn't declared clock and asynchronous reset. We found that needed clocks and other
 signals (for example resets, Wishbone bus signals, etc.) are injected into the top module
-by use of the "cell_macro" primitive. "cell_macro" is part of SoC hardware (Similiar 
+by use of the "cell_macro" primitive. "cell_macro" is part of SoC hardware (Similiar
 to IP core). It gave us the explanation of things that weren't clear before studying
-this example application. Here is the "cell_macro" used for generating clocks and other 
+this example application. Here is the "cell_macro" used for generating clocks and other
 important signals for SoC:
 ```verilog
 // Verilog model of QLAL4S3B
-qlal4s3b_cell_macro 
-    u_qlal4s3b_cell_macro 
+qlal4s3b_cell_macro
+    u_qlal4s3b_cell_macro
     (
         // AHB-To-FPGA Bridge
         .WBs_ADR                   ( WBs_ADR                        ), // output [16:0] | Address Bus                   to   FPGA
@@ -477,8 +477,8 @@ qlal4s3b_cell_macro
 ```
 As one can see there is much more than only clocks. There is one big disadvantage
 related to using the "cell_macro" construct. This "cell macro" is just a "black box"
-and we haven't any model of how it works. This fact makes it an impossible simulation of 
-FPGA is part of the application for SoC "EOS S3", so we can't determine this way if 
+and we haven't any model of how it works. This fact makes it an impossible simulation of
+FPGA is part of the application for SoC "EOS S3", so we can't determine this way if
 an application is working properly.
 We just check if communication between FPGA and ARM Cortex-M4 MCU using "Wishbone Bus"
 to "AHB" bridge and interrupts using hardware.
@@ -487,9 +487,9 @@ In Verilog source file "AL4S3B_FPGA_ONION_LPCCTRL.v" - see link:
 [EOS S3 SoC application module](https://github.com/lpn-plant/lpntpm-eos-s3-examples/blob/master/SOC_EOS_S3_Application_Test_comunication/fpga/rtl/AL4S3B_FPGA_ONION_LPCCTRL.v)
 we declared three 32-bit registers:
 ```verilog
-reg     [31:0]  BREATHE_0_CONFIG   = 32'h00000010;         
+reg     [31:0]  BREATHE_0_CONFIG   = 32'h00000010;
 reg     [31:0]  BREATHE_1_CONFIG   = 32'h00002000;
-reg     [31:0]  BREATHE_2_CONFIG   = 32'h03000000;     
+reg     [31:0]  BREATHE_2_CONFIG   = 32'h03000000;
 ```
 Then in always block:
 ```verilog
@@ -498,19 +498,19 @@ Then in always block:
        if ((cnt3 >= 1024000) && (cnt3 < 1024900))
        begin //period 1.25s
 	     if (cnt3==1024000)
-	     begin 	 
+	     begin
     	   BREATHE_0_CONFIG = BREATHE_0_CONFIG + 1;
     	   BREATHE_1_CONFIG = BREATHE_1_CONFIG + 1;
     	   BREATHE_2_CONFIG = BREATHE_2_CONFIG + 1;
-    	 end  
+    	 end
     	 TIMER_o = 4'b1111;  //activate interrupt for MCU part
        end
        else if (cnt3 >= 1024900)
        begin
 	      cnt3 = 20'h00000;
-	      TIMER_o = 4'b0000;  //deactivate interrupt for MCU part	   
+	      TIMER_o = 4'b0000;  //deactivate interrupt for MCU part
        end
-    end  
+    end
 ```
 we periodically increment these register and set TIMER_o = 4'b1111; signal which
 is interrupt vector passed to MCU. When MCU get this inttrupt it programatically
@@ -539,7 +539,7 @@ ISR routin. In task code we have such fragment:
 
                     break;
 ```
-In this code when message is detected, the values of these three registers are read 
+In this code when message is detected, the values of these three registers are read
 from FPGA and display by MCU UART.
 Short manual how to build this test application is on it's github page:
 [EOS S3 SoC test application](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication)
@@ -556,8 +556,8 @@ PGA - see screen:
 ### "EOS S3" SoC application with embedded "LPC Peripheral"
 In the final step of this part of the development, we embeded developed in an earlier step
 Verilog implementation of "LPC Peripheral" into SoC "EOS S3" application. As was
-mentioned we cannot simulate the FPGA part of the SoC application because of the use of 
-"black-box" "cell_macro" construction. This SoC application with embedded 
+mentioned we cannot simulate the FPGA part of the SoC application because of the use of
+"black-box" "cell_macro" construction. This SoC application with embedded
 "LPC Peripheral" is located in this path in the project repository:
 [SoC EOS S3 application with embedded LPC Peripheral](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_With_LPC_peripheral)
 On this WWW page is also located short manual how to build application.
@@ -571,10 +571,10 @@ module AL4S3B_FPGA_Top (
 	lpc_lreset_n_top     , // Reset - Active Low   (external from LPC Host)
 	lpc_lframe_n_top      , // Frame - Active Low   (external from LPC Host)
 	lpc_lad_in_top       , // Bi-directional 4-bit LAD bus (tri-state) (external from LPC Host)
-	
+
     // io_pad(s) from constraint file
     io_pad,
-	
+
 	//Wisbone bys clock 80 Mhz
 	clk80Mhz
 );
@@ -585,7 +585,7 @@ inout   wire    [15:0]   io_pad ; //Decreased from [31:0]
 
 // LPC Slave Interface
 input  wire        lpc_lclk_top         ; // LPC clock 33 Mhz
-input  wire        lpc_lreset_n_top     ; // Reset - Active Low 
+input  wire        lpc_lreset_n_top     ; // Reset - Active Low
 input  wire        lpc_lframe_n_top     ; // Frame - Active Low
 inout  wire [ 3:0] lpc_lad_in_top       ; // Bi-directional 4-bit LAD bus (tri-state)
 
@@ -594,7 +594,7 @@ inout  wire [ 3:0] lpc_lad_in_top       ; // Bi-directional 4-bit LAD bus (tri-s
 ```
 2. In module "AL4S3B_FPGA_IP" also ports of LPC protocol had been added:
 ```verilog
-module AL4S3B_FPGA_IP ( 
+module AL4S3B_FPGA_IP (
 
     // CLOCK/RESET
     CLK_IP_i,
@@ -618,20 +618,20 @@ module AL4S3B_FPGA_IP (
 
     // FPGA Interrupts
     FPGA_INTR,
-	
+
 	// LPC Slave Interface
 	lpc_lclk,     // LPC clock 33 Mhz
-	lpc_lreset_n, // Reset - Active Low 
+	lpc_lreset_n, // Reset - Active Low
 	lpc_lframe_n, // LPC Frame - Active Low
-    lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)	
-	
+    lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)
+
 );
 ```
 During instantation of "AL4S3B_FPGA_ONION_LPCCTRL" module in which is embbeded
 "LPC Peripheral" - these ports also had been added:
 ```verilog
 AL4S3B_FPGA_ONION_LPCCTRL
-    u_AL4S3B_FPGA_ONION_LPCCTRL 
+    u_AL4S3B_FPGA_ONION_LPCCTRL
     (
         // AHB-To_FPGA Bridge I/F
         .WBs_ADR_i          ( WBs_ADR                           ),
@@ -646,17 +646,17 @@ AL4S3B_FPGA_ONION_LPCCTRL
         .WBs_ACK_o          ( WBs_ACK_ONION_LPCCTRL             ),
 
         //System clk
-        .Sys_clk            ( CLK_IP_i                          ), //33 Mhz 
-		
+        .Sys_clk            ( CLK_IP_i                          ), //33 Mhz
+
 		//System reset
-		.Sys_reset          ( RST_IP_i                          ),  
+		.Sys_reset          ( RST_IP_i                          ),
 
         // BREATHE signals
         .BREATHE_o          ( FPGA_IP_LPC_o[31:0]               ),
 
         // TIMER output interrupts
         .TIMER_o            ( FPGA_INTR                         ),
-		
+
 		// LPC Slave Interface
 		.lpc_lclk           ( lpc_lclk                          ),   // LPC Frame input (active high)
 		.lpc_lreset_n       ( lpc_lreset_n                      ),      // LPC AD Output Enable
@@ -666,8 +666,8 @@ AL4S3B_FPGA_ONION_LPCCTRL
 ```
 3. In module "AL4S3B_FPGA_ONION_LPCCTRL" I/O ports looks like:
 ```verilog
-module AL4S3B_FPGA_ONION_LPCCTRL ( 
-    
+module AL4S3B_FPGA_ONION_LPCCTRL (
+
     // AHB-To_FPGA Bridge I/F
     WBs_ADR_i,
     WBs_CYC_i,
@@ -682,21 +682,21 @@ module AL4S3B_FPGA_ONION_LPCCTRL (
 
     // System clk 33 Mhz
     Sys_clk,
-	
+
 	//System reset
 	Sys_reset,
-            
+
     // BREATHE signals
     BREATHE_o,
-      
+
     // TIMER signals
     TIMER_o,
-	
+
 	// LPC Slave Interface
 	lpc_lclk,     // LPC clock 33 Mhz
-	lpc_lreset_n, // Reset - Active Low 
+	lpc_lreset_n, // Reset - Active Low
 	lpc_lframe_n, // LPC Frame - Active Low
-	lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)	
+	lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)
 );
 ```
 In lines from 289 there is instantation of developed earlier "LPC_Peri" module:
@@ -722,7 +722,7 @@ lpc_periph lpc_periph_inst(
 //----------------------------------
 .TDATA(TDATA_sig),
 .READY(READY_sig)
-);  
+);
 ```
 Caution: currently in module "AL4S3B_FPGA_ONION_LPCCTRL" we have two clock domains:
 + one: with WBs_CLK_i - it is 80 Mhz internal SoC Wishbone Bus clock
@@ -750,7 +750,7 @@ begin
   //end
 end
 ```
-Here is always block for generating interrupt signal from FPGA 2 MCU(this interrupt 
+Here is always block for generating interrupt signal from FPGA 2 MCU(this interrupt
 cause that MCU reads register with LPC cycle data from FPGA):
 ```verilog
 // Logic for determine cycle type and send cycle data
@@ -765,11 +765,11 @@ begin
 	 end
 	 else
 	 begin
-	   TIMER_o = 4'b0000;  //deactivate interrupt for MCU part		
+	   TIMER_o = 4'b0000;  //deactivate interrupt for MCU part
 	 end
   end
   else TIMER_o = 4'b0000;
-end 
+end
 ```
 Then in C source file "mininimal_task.c" is code which handle interrupt from FPGA
 and read register from FPGA and decode LPC Address, LPC Data, cycle type and prints
@@ -781,18 +781,18 @@ As we mentioned earlier we weren't able to simulate this code, because of using
 "cell_macro" construct.
 ### Further plans for development TPM module on Quicklogic "EOS S3" Soc
 The current development of this project is starting point for development of full
-"TPM" hardware module with LPC protocol support. 
+"TPM" hardware module with LPC protocol support.
 ###### In next steps we are going to:
-1. Test working LPC protocol with "EOS S3" application on hardware: "Sparkfun 
+1. Test working LPC protocol with "EOS S3" application on hardware: "Sparkfun
 QuickLogic Thing Plus - EOS S3" board. We implemented"LPC Host" Verilog module
-which is needed for the test of "LPC Peripheral" on hardware. We are going to run 
+which is needed for the test of "LPC Peripheral" on hardware. We are going to run
 "LPC Host" on second FPGA board connected by wires to "Quicklogic Thing Plus" board
-and test correctness of operation of LPC peripheral. We also planning to write 
-"Test Generator for LPC Host" as Verilog module - which will be able to generate 
+and test correctness of operation of LPC peripheral. We also planning to write
+"Test Generator for LPC Host" as Verilog module - which will be able to generate
 test signals.
 2. After determining that LPC cycles are properly detected and send to MCU in SoC
 application, we are going to extend it to send back response by LPC protocol lines
-in FPGA. We will define TPM registers in MCU and TPM cycles of LPC protocol should 
+in FPGA. We will define TPM registers in MCU and TPM cycles of LPC protocol should
 be able to write and read from these registers (FPGA + MCU) using LPC protocol.
 3. Next step is to develop full TPM module based on reference Microsoft TPM module
 sourcecode - see this repository: [Microsoft TPM module reference 2.0](https://github.com/lpn-plant/ms-tpm-20-ref)
