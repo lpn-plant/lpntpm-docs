@@ -1,15 +1,13 @@
 ## TPM module with "Low Pin Count Protocol" build on SoC
 ### Introduction
-
 The main goal of this document is showing the current state of development of TPM 
 module with "LPC Protocol" based on SoC (System on Chip), and also documenting
 work carried out so far.
-
 ## Motivation for doing this project
 We still see the necessity of making TPM module with the "Low Pin Count" protocol.
 There are still many computers on the market (especially servers) that have 
 motherboards supporting LPC protocol. We considered possible hardware platforms 
-in the past in this document["Target TPM hardware interfaces"](https://lpntpm.lpnplant.io/hardware_interfaces/#low-pin-count-interface)
+in the past in this document[Target TPM hardware interfaces](https://lpntpm.lpnplant.io/hardware_interfaces/#low-pin-count-interface)
 Outside of fast `SPI Bus` and even `I2C` protocol it is relatively easy to 
 implement on MCU hardware just "LPC protocol" makes it difficult to implement on 
 MCU.
@@ -40,9 +38,7 @@ implementation of TPM module logic and a quite much amount of RAM. So the need o
 using together MCU and FPGA ICs in one project causes a large size of PCB for TPM 
 module. Fortunately, last years appeared ICs called SoC (System on Chip) which
 combine these two MCU and FPGA in one chip.
-
 ## Hardware platform for this project
-
 The most serious issue in our previous attempts to implement the TPM module was 
 the lack of enough SRAM memory amount available for MCU, so one of the basic 
 requirements for a new hardware platform is the big amount of SRAM memory. The 
@@ -66,40 +62,41 @@ overall performance. Here is the link to the description of this SoC
 We carried out all development on an open-hardware board called `Sparkfun QuickLogic
 Thing Plus - EOS S3`. This board is based on Quicklogic `EOS S3` SoC - here is
 the link to this product:
-["Sparkfun QuickLogic Thing Plus - EOS S3"](https://www.sparkfun.com/products/17273)
+[Sparkfun QuickLogic Thing Plus - EOS S3](https://www.sparkfun.com/products/17273)
 
 Here is hardware manual from Quicklogic company:
 
-["QuickLogic EOS S3 Ultra Low Power multicore MCU datasheet"](https://cdn.sparkfun.com/assets/7/a/c/c/e/QL-EOS-S3-Ultra-Low-Power-multicore-MCU-Datasheet-v3_3d.pdf)
+[QuickLogic EOS S3 Ultra Low Power multicore MCU datasheet](https://cdn.sparkfun.com/assets/7/a/c/c/e/QL-EOS-S3-Ultra-Low-Power-multicore-MCU-Datasheet-v3_3d.pdf)
 
 And here is "Hookup Guide" for "Sparkfun QuickLogic Thing Plus - EOS S3" board:
 
-["QuickLogic Thing Plus (EOS S3) Hookup Guide"](https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide#hardware-overview)
+[QuickLogic Thing Plus (EOS S3) Hookup Guide](https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide#hardware-overview)
 
 Below is picture of circuit used for development of this project:
 
 ![Circuit used for development](images/QuickLogicThingPlus.png)
 
 It consist of such parts:
-+ "Sparkfun QuickLogic Thing Plus - EOS S3" board
-+ breadboard
-+ power adapter
-+ J-Link JTAG programmer/debugger
-+ USB 2 UART converter
+
+- "Sparkfun QuickLogic Thing Plus - EOS S3" board
+- breadboard
+- power adapter
+- J-Link JTAG programmer/debugger
+- USB 2 UART converter
 
 Note that we used for programming and debugging "SEGGER J-Link" JTAG debugger,
 but one can use instead of it different JTAG debugger (or simple board based on 
 FTDI IC (FT232Rl)) and "OpenOCD" software for this purpose.
 ### Software needed for development of this project
-
 All development - both FPGA Verilog RTL part and ARM Cortex-M4 MCU development
 had been carried out using "Qiucklogic QORC SDK". "QORC SDK" consist of the 
 following parts:
-+ Symbiflow package for making FPGA synthessis (Yosys) and "place and route" tool
+
+- Symbiflow package for making FPGA synthessis (Yosys) and "place and route" tool
   for implementation and generating bitstream for FPGA
-+ GCC-cross compiler for ARM Cortex
-+ FreeRTOS
-+ Zephyr-RTOS
+- GCC-cross compiler for ARM Cortex
+- FreeRTOS
+- Zephyr-RTOS
 
 "QORC SDK" is in all its parts open-source.
 
@@ -117,30 +114,31 @@ Here is link to "Icarus Verilog":
 , and here is link to "GTKWave" application:
 ["GTKWave" application](http://gtkwave.sourceforge.net/)
 
-### Project Github repository
+### Project Github repositories
+Github repository with source code (Verilog RTL code) of `LPC peripheral` and all  
+files needed to perform simulation are located at this URL:
+[TPM LPC protocol implementation](https://github.com/lpn-plant/lpntpm-lpc-verilog)
 
-Github repository with source code (Verilog RTL code and MCU C language program)
-is located at this URL:
+There are several files in this repository:
 
-["TPM "LPC protocol" implementation](https://github.com/lpn-plant/lpntpm-lpc)
+-  lpc_periph.v     (this is Verilog `LPC Peripheral` implementation)
+-  lpc_host.v       (this is Verilog `LPC Host` implementation)
+-  lpc_defines.v    (this is auxiliary file with constans used in implementation)
+-  lpc_periph_tb.v    (this is test-bench for `LPC Peripheral` implementation)
+- 
+In second Github repository at address: 
+[`EOS S3` SoC applications](https://github.com/lpn-plant/lpntpm-eos-s3-examples)
+are placed applications (FPGA and ARM Cortex-M4 MCU) for Quicklogic SoC `EOS S3`.
 
-There are four catalogs in this repository:
+At this URL: [`EOS S3` test applications](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication) is located application for SOC 
+"EOS S3" (Quicklogic) testing internal comunication between FPGA and MCU parts 
+using in this purpose "Wishbone Bus" and interrupts.
 
-+ LPC_Peripheral_Verilog_Implementation
-+ LPC_Peripheral_Verilog_Simulation
-+ SOC_EOS_S3_Application_Test_comunication
-+ SOC_EOS_S3_Application_With_LPC_peripheral
-
-In first catalog is Verilog implementation of "LPC Peripheral" (I/O LPC Cycles).
-In second catalog are sources needed for performing simulation in "Icarus Verilog"
-("LPC Peripheral" impl. "LPC Host" impl. and verilog test-bench). In third catalog
-is application for SOC "EOS S3" (Quicklogic) testing internal comunication between
-FPGA and MCU parts using in this purpose "Wisbone Bus" and interrupts. In fourth 
-catalog is application for SOC "EOS S3" (Quicklogic) with embedded "LPC Protocol 
+And finally at this URL: [`EOS S3 application with embedded LPC Peripheral](https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication)
+is located application for SOC "EOS S3" (Quicklogic) with embedded "LPC Protocol 
 Peripheral" (implemented in FPGA part). Aplication is reading I/O LPC cycles 
 (using I/O ports from FPGA sockets) and displaying these cycles data (LPC Address,
 LPC Data, and cycle type) by UART in SOC MCU part.
-
 ### Verilog (FPGA based) implementation of "Low Pin Count" (LPC) protocol
 
 Beacause in TPM part of project we only need handle I/O or TPM cycle of LPC protocol
