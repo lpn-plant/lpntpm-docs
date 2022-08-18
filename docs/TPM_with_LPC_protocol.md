@@ -195,23 +195,35 @@ I/O ports and internal signals states for every phase of the LPC cycle.
 
 Here is table with all I/O ports of the `LPC Peripheral` module:
 
-| Direction | Type | Bus    | Port name       |
-|-----------|------|--------|-----------------|
-|   input   | wire |        |     clk_i       |
-|   input   | wire |        |   nrst_i        |
-|   input   | wire |        |   lframe_i      |
-|   inout   | wire | [ 3:0] |    lad_bus      |
-|   input   | wire |        |    addr_hit_i   |
-|   output  |  reg | [ 4:0] | current_state_o |
-|   input   | wire | [ 7:0] |      din_i      |
-|   output  |  reg | [ 7:0] |  lpc_data_in_o  |
-|   output  | wire | [ 3:0] |  lpc_data_out_o |
-|   output  | wire | [15:0] |    lpc_addr_o   |
-|   output  | wire |        |     lpc_en_o    |
-|   output  | wire |        |   io_rden_sm_o  |
-|   output  | wire |        |   io_wren_sm_o  |
-|   output  |  reg | [31:0] |      TDATA      |
-|   output  |  reg |        |      READY      |
+| Direction | Type | Bus    | Port name       | Description                                                                      |
+|-----------|------|--------|-----------------|----------------------------------------------------------------------------------|
+|   input   | wire |        | clk_i           | LPC clock (33,3 MHz) from LPC Host                                               |
+|   input   | wire |        | nrst_i          | Active-low reset signal                                                          |
+|   input   | wire |        | lframe_i        | Active-low frame signal                                                          |
+|   inout   | wire | [ 3:0] | lad_bus         | Multiplexed Command, Address and Data Bus                                        |
+|   input   | wire |        | addr_hit_i      |                                                                                  |
+|   output  |  reg | [ 4:0] | current_state_o |  Current peripheral state  (FSM)                                                 |
+|   input   | wire | [ 7:0] | din_i           | Data sent when host requests a read                                              |
+|   output  |  reg | [ 7:0] | lpc_data_in_o   | Data received by peripheral for writing                                          |
+|   output  | wire | [ 3:0] | lpc_data_out_o  | Data sent to host when a read is requested                                       |
+|   output  | wire | [15:0] | lpc_addr_o      | 16-bit LPC Peripheral Address                                                    |
+|   output  | wire |        | lpc_en_o        |Active-high status signal indicating the peripheral is ready for next operation.  |
+|   output  | wire |        | io_rden_sm_o    | Active-high read status                                                          |
+|   output  | wire |        | io_wren_sm_o    | Active-high write status                                                         |
+|   output  |  reg | [31:0] | TDATA           | 32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion        |
+|   output  |  reg |        | READY           |  Active-high status signal indicating that new cycle data is on TDATA            |
+
+As one can see in I/O ports of the `LPC Peripheral` module, there are four
+common signals of the `LPC` protocol (`LPC Host` is connected to `LPC Peripheral
+by these lines). These signals are:
+
+* clk_i
+* nrst_i
+* lframe_i
+* lad_bus  (this 4-bit bi-directional multiplexed bus)
+
+Other signals are used to control the module and display information, or for
+internal purposes.
 
 #### Details
 
@@ -289,45 +301,6 @@ High `(1'b1)`, it means that there is new cycle data on `TDATA` bus. In target
 application for the `EOS S3 SoC`, cycle data from `TDATA` bus are sent by
 the internal `Wishbone` to the MCU when this data is displayed on `MCU UART`.
 
-### LPC Host
-
-#### I/O ports
-
-Here is table with I/O ports descriptions of the `LPC Host` module:
-
-
-| Port Name          |   Direction    | Description                                                                      |
-|--------------------|:--------------:|----------------------------------------------------------------------------------|
-| LPC Interface                                                                                                          |
-| clk_i              |      Input     | LPC clock (33,3 MHz) from LPC Host                                               |
-| nrst_i             |      Input     | Active-low reset signal                                                          |
-| lframe_i           |      Input     | Active-low frame signal                                                          |
-| lad_bus            | Bi-directional | Multiplexed Command, Address and Data Bus                                        |
-| Back-end Interface                                                                                                     |
-| addr_hit_i         |      Input     |                                                                                  |
-| current_state_o    |     Output     | Current peripheral state  (FSM)                                                  |
-| din_i              |      Input     | Data sent when host requests a read                                              |
-| lpc_data_in_o      |     Output     | Data received by peripheral for writing                                          |
-| lpc_data_out_o     |     Output     | Data sent to host when a read is requested                                       |
-| lpc_addr_o         |     Output     | 16-bit LPC Peripheral Address                                                    |
-| lpc_en_o           |     Output     | Active-high status signal indicating the peripheral is ready for next operation. |
-| io_rden_sm_o       |     Output     | Active-high read status                                                          |
-| io_wren_sm_o       |     Output     | Active-high write status                                                         |
-| TDATA              |     Output     | 32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion        |
-| READY              |     Output     | Active-high status signal indicating that new cycle data is on TDATA             |
-
-As one can see in I/O ports of the `LPC Peripheral` module, there are four
-common signals of the `LPC` protocol (`LPC Host` is connected to `LPC Peripheral
-by these lines). These signals are:
-
-* clk_i
-* nrst_i
-* lframe_i
-* lad_bus  (this 4-bit bi-directional multiplexed bus)
-
-Other signals are used to control the module and display information, or for
-internal purposes.
-
 ### Test bench
 
 Test-bench for performing simulation of the `LPC Peripheral` module is
@@ -400,9 +373,9 @@ Peripheral` signals:
 * Peri_Write_out[7:0] - received from Host LPC cycle data
 
 And finally, one can see that `LPC Address` and `LPC Data` appear with some
-delay on `TDATABou[31:0]`` - on this 32-bit bus are written `LPC Address` and
+delay on `TDATABou[31:0]` - on this 32-bit bus are written `LPC Address` and
 `LPC Data` as has been described above. `READYNET` signal indicates that there
-is new data on `TDATA` bus. These two last signals (`TDATA` and READY`)` are
+is new data on `TDATA` bus. These two last signals (`TDATA` and `READY`) are
 used for sending LPC cycle data from FPGA to the MCU part of the SoC
 application.
 
