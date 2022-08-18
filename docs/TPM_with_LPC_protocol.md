@@ -389,7 +389,7 @@ foundation to say that the tested circuit is working correctly.
 The goal of this application if to test the communication between FPGA and MCU
 by internal `Wishbone` (and using interrupts).
 
-`Quicklogic EOS S3` is rather complex circuitm what you can see studying
+`Quicklogic EOS S3` is rather complex circuit what you can see studying
 it's [Technical Reference Manual](https://cdn.sparkfun.com/assets/f/2/a/c/5/QL-S3-Technical-Reference-Manual-revisionv1.1a.pdf).
 
 After reading this documentation we were missing a few important details that
