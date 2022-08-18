@@ -339,7 +339,7 @@ simulate the `LPC Peripheral` module can be found in
 Let's first look at basic LPC protocol signals:
 
 * clk_i is LPC clock 33,3 Mhz
-* LRESET_in is LPC reset
+* LRESET is LPC reset - active low
 * LFRAME - Low state marks new LPC cycle
 * rd_flag - High state marks read cycle
 * wr_flag - high state marks write cycle
