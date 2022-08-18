@@ -338,17 +338,17 @@ simulate the `LPC Peripheral` module can be found in
 ![LPC Peripheral simulation 01](images/LPC_Peripheral_SIM_01.png)
 Let's first look at basic LPC protocol signals:
 
-* LCLK_in is LPC clock 33,3 Mhz
+* clk_i is LPC clock 33,3 Mhz
 * LRESET_in is LPC reset
-* LFRAME_in - Low state marks new LPC cycle
-* IO_Read_StatusO - High state marks read cycle
-* IO_Write_Status - high state marks write cycle
-* Host_Ready - tells that Host is ready to handle next cycle
-* peri_en - tells that LPC Peripheral is ready for next cycle
+* LFRAME - Low state marks new LPC cycle
+* rd_flag - High state marks read cycle
+* wr_flag - high state marks write cycle
+* host_ready - tells that Host is ready to handle next cycle
+* periph_en - tells that LPC Peripheral is ready for next cycle
 
 What is also very important:
 
-* current_peri_state[4:0] - this is 4-bit value of current peripheral FSM state
+* current_periph_state[4:0] - this is 4-bit value of current peripheral FSM state
 * current_host_state[4:0] - this is 4-bit value of current host FSM state
 
 One can see that states on the LPC peripheral mimics the states from LPC Host
@@ -363,14 +363,14 @@ simulation.
 On the second screen from `GTKWave` the time scale is a little different from
 the previous screen. Important signals here are:
 
-* Host_Address_in[15:0] - this is LPC address on LPC Host
-* Host_Write_in[7:0] - this is 8-bit LPC data on LPC Host
+* host_addr_i[15:0] - this is LPC address on LPC Host
+* host_wr_i[7:0] - this is 8-bit LPC data on LPC Host
 
 One can see that these address and data with some delay appears on `LPC
 Peripheral` signals:
 
-* Peri_Address_out[15:0] - received from Host LPC address
-* Peri_Write_out[7:0] - received from Host LPC cycle data
+* periph_addr_o[15:0] - received from Host LPC address
+* periph_wr_o[7:0] - received from Host LPC cycle data
 
 And finally, one can see that `LPC Address` and `LPC Data` appear with some
 delay on `TDATABou[31:0]` - on this 32-bit bus are written `LPC Address` and
