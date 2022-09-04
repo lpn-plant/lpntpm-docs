@@ -36,13 +36,160 @@ And we also see that whole `I/O`c cycle has a length of 13 clock cycles.
 
 Second we have description of `Memory R/W` cycles:
 ![LPC Memory cycles](images/LPC_Memory_Cycles_c1.png)
-![LPC Memory cycles](images/LPC_Memory_Cycles_c2.png)
+
+![LPC Memory cycles](images/LPC_Memory_cycles_c2.png)
+
 The most important here are also the `START` and `CYCTYPE` fields:
 
 + START has value: 0000b
 + CYCTYPE has values: 0100b or 0110b
 And we also see that whole `Memory R/W`c cycle has a length of 21(read) or 17(write)
-clock cycles. The field Address on LAD bus is longer comparing to `I/O` cycles.
+clock cycles. The field Address on LAD bus is longer compared to `I/O` cycles.
+
+## Changes in the "LPC Host" implementation regarding the handling of `Memory R/W` cycles
+
+1. First, we added the *ctrl_memory_cycle_i* input signal to the `lpc_host` port list.
+   see in code:
+```verilog
+
+`include "lpc_defines.v"
+
+module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
+                 ctrl_rd_status_i, ctrl_wr_status_i, ctrl_memory_cycle_i,
+                 ctrl_data_o, ctrl_ready_o, ctrl_host_state_o,
+                 LPC_LAD, LPC_LCLK, LPC_LRESET, LPC_LFRAME
+);
+
+    input  wire        clk_i;
+
+    // Control signals are used to drive the control the LPC host.
+    // Control signals (input)
+    input  wire [15:0] ctrl_addr_i;
+    input  wire [ 7:0] ctrl_data_i;
+    input  wire        ctrl_nrst_i;
+    input  wire        ctrl_lframe_i;
+    input  wire        ctrl_rd_status_i;
+    input  wire        ctrl_wr_status_i;
+    input  wire        ctrl_memory_cycle_i; // 1- means Memory cycle, 0 - means I/O cycle
+
+    // Control signals (output)
+    output reg  [ 7:0] ctrl_data_o;
+    output reg         ctrl_ready_o;
+    output wire [ 4:0] ctrl_host_state_o;
+
+    // LPC Host Interface
+    inout  wire [ 3:0] LPC_LAD;
+    output wire        LPC_LCLK;
+    output reg         LPC_LRESET;
+    output reg         LPC_LFRAME;
+```
+2. Secondly, in the `LPC_ST_START` phase of the LPC cycle (FSM machine), depending
+   on the state of the `ctrl_memory_cycle_i` input (high state means Memory cycle),
+   we changed the value of the CYCTYPE field on the LAD bus to the one appropriate for the `Memory`cycle - see code:
+
+```verilog
+      else if (fsm_host_state == `LPC_ST_START) begin //--------------------------------------------------
+           if (~ctrl_memory_cycle_i) begin
+                if (ctrl_lframe_i & ctrl_rd_status_i) begin
+                    LPC_LFRAME  = 1;
+                    lad_out = 4'b0000;
+                    fsm_host_state = `LPC_ST_CYCTYPE_RD;
+                end
+                else if (ctrl_lframe_i & ctrl_wr_status_i) begin
+                    LPC_LFRAME  = 1;
+                    lad_out = 4'b0010;
+                    fsm_host_state = `LPC_ST_CYCTYPE_WR;
+                end
+           end  if (ctrl_memory_cycle_i) begin
+                if (ctrl_lframe_i & ctrl_rd_status_i) begin
+                    LPC_LFRAME  = 1;
+                    lad_out = 4'b0100;
+                    fsm_host_state = `LPC_ST_CYCTYPE_MEMORY_RD;
+                end
+                else if (ctrl_lframe_i & ctrl_wr_status_i) begin
+                    LPC_LFRAME  = 1;
+                    lad_out = 4'b0110;
+                    fsm_host_state = `LPC_ST_CYCTYPE_MEMORY_WR;
+                end
+           end
+        end
+```
+3. Third, changes in two places in the FSM code - starting the Memory cycles:
+
+```verilog
+. . .
+     else if ((fsm_host_state == `LPC_ST_CYCTYPE_RD) || (fsm_host_state == `LPC_ST_CYCTYPE_MEMORY_RD)) begin //----------------------------------------------
+            lad_out = ctrl_addr_i[15:12];
+            fsm_host_state = `LPC_ST_ADDR_RD_CLK1;
+        end
+. . .
+        else if ((fsm_host_state == `LPC_ST_CYCTYPE_WR) || (fsm_host_state == `LPC_ST_CYCTYPE_MEMORY_WR)) begin
+            lad_out = ctrl_addr_i[15:12];
+            fsm_host_state = `LPC_ST_ADDR_WR_CLK1;
+        end
+. . .
+```
+
+## Changes in the `test bench` implementation regarding the handling of `Memory R/W` cycles
+
+1. In the test bench, firstly we added `memory_cycle_sig` to the list of internal signals of the `lpc_periph_tb` module:
+ 
+```verilog
+    reg  [15:0] u_addr;    //auxiliary host addres
+    reg   [7:0] u_data;    //auxiliary host data
+    integer i, j;
+    reg memory_cycle_sig;
+```
+2. Second, to the main loop sending the cycle data to module `lpc_host` we add 
+   second for loop for setting `memory_cycle_sig` signal value. In this way, the
+ `I/O` and `Memory` cycles are alternately sent:
+
+```verilog
+       for (i = 0; i <= 128; i = i + 1) begin
+          for(j = 0; j < 2; j = j + 1) begin
+            memory_cycle_sig = j; //Cycle type: Memory or I/O
+            // Perform write
+            #40  lframe_i  = 0;
+            rd_flag = 0;
+            wr_flag  = 1;
+            host_addr_i = u_addr+i;
+            host_wr_i  = u_data+i;
+            #40 lframe_i = 1;
+            #400 lframe_i = 0;
+. . .
+```
+## The results of the simulation of the `lpc-periph` module in Xilinx vivado 2019.1
+
+First, we will look at the simulation of the `lpc_periph` module for `I/O` cycles:
+
+![LPC I/O cycles](images/I_O_Cycle_OutDataChanged.png)
+
+As you can see in the screenshot from `Xilinx Vivado` (simulation) - the value of
+signal `memory_cycle_sig` is Low, meaning the `I/O` cycle. At the point marked 
+with a vertical (yellow) line, the output bus signal `TDATABOu [31: 0]` is changed
+to the values sent by the `LPC Host` and the pulse (high state) of the `READYNET`
+signal is generated (which means that there are new data on output bus).
+The states of the FSM machines for `LPC Host` and `LPC Peripheral` are also 
+important - you can see that here the FSM machine states from pripheral mimics these
+from host. It means that, complete `I/O` cycles are performed by `LPC Peripheral`.
+
+In the second screenshot we can see what the signals for the `Memory` cycle look
+like:
+![LPC I/O cycles](images/Memory_cycles_SIM.png)
+
+Signal `memory_cycle_sig` has High value this time. In the time slot marked with 
+a vertical (yellow) line you can see that the `LPC Peripheral` (its FSM) stops 
+the cycle execution in the phase of checking the value of the CYCTYPE field
+corresponding to the `Memory` cycle. The state of the LAD buses [3: 0] is then 0x6,
+which means the `Memory` cycle. Such `LPC Peripheral` reaction is expected - in 
+this case the execution of the` Memory` cycle is skipped.
+
+Now let's look at the third simulation screenshot:
+![LPC I/O cycles](images/Memory_cycle_03.png)
+
+We can also observe on the last simulation screenshot that while the state of the `memory_cycle_sig` signal is high (`Memory` cycle) there is never a change in the
+state of the output bus `TDATABOu [31: 0]`.
+Such behavior of `LPC Peripheral` was expected before simulating the `LPC pripheral` operation - `I/O` cycles should be recorded, other cycle types should be ignored.
 
 
 
