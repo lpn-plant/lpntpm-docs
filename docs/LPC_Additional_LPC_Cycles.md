@@ -48,8 +48,8 @@ clock cycles. The field Address on LAD bus is longer compared to `I/O` cycles.
 
 ## Changes in the "LPC Host" implementation regarding the handling of `Memory R/W` cycles
 
-1. First, we added the *ctrl_memory_cycle_i* input signal to the `lpc_host` port list.
-   see in code:
+1. First, we added the *ctrl_memory_cycle_i* input signal to the `lpc_host` port 
+list - see in code:
 ```verilog
 
 `include "lpc_defines.v"
@@ -85,10 +85,11 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 ```
 2. Secondly, in the `LPC_ST_START` phase of the LPC cycle (FSM machine), depending
    on the state of the `ctrl_memory_cycle_i` input (high state means Memory cycle),
-   we changed the value of the CYCTYPE field on the LAD bus to the one appropriate for the `Memory`cycle - see code:
+   we changed the value of the CYCTYPE field on the LAD bus to the one appropriate
+   for the `Memory`cycle - see code:
 
 ```verilog
-      else if (fsm_host_state == `LPC_ST_START) begin //--------------------------------------------------
+      else if (fsm_host_state == `LPC_ST_START) begin
            if (~ctrl_memory_cycle_i) begin
                 if (ctrl_lframe_i & ctrl_rd_status_i) begin
                     LPC_LFRAME  = 1;
@@ -118,7 +119,8 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 
 ```verilog
 . . .
-     else if ((fsm_host_state == `LPC_ST_CYCTYPE_RD) || (fsm_host_state == `LPC_ST_CYCTYPE_MEMORY_RD)) begin //----------------------------------------------
+     else if ((fsm_host_state == `LPC_ST_CYCTYPE_RD) || (fsm_host_state == `LPC_ST_CYCTYPE_MEMORY_RD)) begin 
+
             lad_out = ctrl_addr_i[15:12];
             fsm_host_state = `LPC_ST_ADDR_RD_CLK1;
         end
@@ -130,9 +132,53 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 . . .
 ```
 
+## Changes in the "LPC Peripheral" implementation regarding skipping of LPC cycles different than `I/O` or `TPM`
+
++  First, one internal signal has been added:
+
+```verilog
+reg skipCycle;               // 1 -indicates that this cycle is not I/O or TPM cycle, 0 - indicates I/O or TPM cycle
+```
++ On the main state machine (FSM) supporting LPC cycles - states `LPC_ST_IDLE`
+and` LPC_ST_START` were modified:
+
+```verilog
+        case(current_state_o)
+            `LPC_ST_IDLE:
+             begin
+                 skipCycle <= 1'b0;
+                 if (nrst_i == 1'b0) fsm_next_state <= `LPC_ST_IDLE;
+                 else if ((lframe_i == 1'b0) && (lad_bus == 4'h0)) fsm_next_state <= `LPC_ST_START;
+             end
+             `LPC_ST_START:
+              begin
+                  if ((lframe_i == 1'b0) && (lad_bus == 4'h0)) fsm_next_state <= `LPC_ST_START;
+                  else if ((lframe_i == 1'b1) && (lad_bus != 4'h0) && (lad_bus != 4'h2)) skipCycle = 1'b1;
+                  else if ((lframe_i == 1'b1) && (lad_bus == 4'h0)) fsm_next_state <= `LPC_ST_CYCTYPE_RD;
+                  else if ((lframe_i == 1'b1) && (lad_bus == 4'h2)) fsm_next_state <= `LPC_ST_CYCTYPE_WR;                
+              end
+```
+When in the `LPC_ST_START` state, the LAD bus does not have a CYCTYPE meaning I / O`
+or `Memory` cycles, the `skipCycle` signal becomes High.
+
++ In the rest of the code, the value of the `lpc_en_o` signal is worked out already
+using the signal state of the` skipCycle`
+
+```verilog
+   assign lpc_en_o = ((!skipCycle)&&(sync_en == 1'b1)) ? 1'h1 :
+                      ((!skipCycle)&&(tar_F == 1'b1 )) ? 1'h1 :
+                      (lframe_i == 1'b0 ) ? 1'h0 :
+                      ((!skipCycle)&&(rd_data_en[0] == 1'b1)) ? 1'b1 :
+                      ((!skipCycle)&&(rd_data_en[1] == 1'b1)) ? 1'b1 :
+                      1'h0;
+```
+This causes LPC cycle data not to be recorded on the output bus for cycles other
+ than `I/O` and` TPM`.
+
 ## Changes in the `test bench` implementation regarding the handling of `Memory R/W` cycles
 
-1. In the test bench, firstly we added `memory_cycle_sig` to the list of internal signals of the `lpc_periph_tb` module:
++ In the test bench, firstly we added `memory_cycle_sig` to the list of internal
+  signals of the `lpc_periph_tb` module:
  
 ```verilog
     reg  [15:0] u_addr;    //auxiliary host addres
@@ -140,7 +186,7 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
     integer i, j;
     reg memory_cycle_sig;
 ```
-2. Second, to the main loop sending the cycle data to module `lpc_host` we add 
++ Second, to the main loop sending the cycle data to module `lpc_host` we add 
    second for loop for setting `memory_cycle_sig` signal value. In this way, the
  `I/O` and `Memory` cycles are alternately sent:
 
@@ -162,34 +208,41 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 
 First, we will look at the simulation of the `lpc_periph` module for `I/O` cycles:
 
-![LPC I/O cycles](images/I_O_Cycle_OutDataChanged.png)
+![LPC I/O cycles](images/Icarusverilog_SIM_01.png)
 
-As you can see in the screenshot from `Xilinx Vivado` (simulation) - the value of
+As you can see in the screenshot from `Icarus verilog` (simulation) - the value of
 signal `memory_cycle_sig` is Low, meaning the `I/O` cycle. At the point marked 
-with a vertical (yellow) line, the output bus signal `TDATABOu [31: 0]` is changed
+with a vertical (pink) line, the output bus signal `TDATABOu [31:0]` is changed
 to the values sent by the `LPC Host` and the pulse (high state) of the `READYNET`
-signal is generated (which means that there are new data on output bus).
-The states of the FSM machines for `LPC Host` and `LPC Peripheral` are also 
-important - you can see that here the FSM machine states from pripheral mimics these
-from host. It means that, complete `I/O` cycles are performed by `LPC Peripheral`.
+signal is generated (which means that there are new data on output bus). Also signal
+`periph_en`(High) is generated. The states of the FSM machines for `LPC Host` 
+and `LPC Peripheral` are also important - you can see that here the FSM machine
+states from peripheral mimics these from host. It means that, complete `I/O`
+cycles are performed by `LPC Peripheral`.
 
 In the second screenshot we can see what the signals for the `Memory` cycle look
 like:
-![LPC I/O cycles](images/Memory_cycles_SIM.png)
+![LPC Memory cycles](images/Icarusverilog_SIM_02.png)
 
 Signal `memory_cycle_sig` has High value this time. In the time slot marked with 
-a vertical (yellow) line you can see that the `LPC Peripheral` (its FSM) stops 
-the cycle execution in the phase of checking the value of the CYCTYPE field
-corresponding to the `Memory` cycle. The state of the LAD buses [3: 0] is then 0x6,
-which means the `Memory` cycle. Such `LPC Peripheral` reaction is expected - in 
-this case the execution of the` Memory` cycle is skipped.
+a vertical (pink) line you can see that the `LPC Peripheral` do not generate 
+`periph_en`(High) signal. The state of the LAD bus is then 0x6 in CYCTYPE field
+which means the `Memory` cycle. Because signal `periph_en` hadn't been generated
+the cycle data sent by Host is not registered on output bus `TDATABOu [31:0]` nor
+`READYNET` signal was generated. Such `LPC Peripheral` reaction is expected - in 
+this case during the execution of the `Memory` cycle registering cycle data is 
+skipped.
 
 Now let's look at the third simulation screenshot:
-![LPC I/O cycles](images/Memory_cycle_03.png)
+![LPC I/O cycles](images/IcarusVerilog_SIM_03.png)
 
-We can also observe on the last simulation screenshot that while the state of the `memory_cycle_sig` signal is high (`Memory` cycle) there is never a change in the
-state of the output bus `TDATABOu [31: 0]`.
-Such behavior of `LPC Peripheral` was expected before simulating the `LPC pripheral` operation - `I/O` cycles should be recorded, other cycle types should be ignored.
+
+We can also observe on the last simulation screenshot that while the state of 
+the `memory_cycle_sig` signal is high (`Memory` cycle) there is never a change in the
+state of the output bus `TDATABOu [31: 0]`. Signal `periph_en` (High) is also never
+generated when `memory_cycle_sig` signal is high. Such behavior of `LPC Peripheral` 
+was expected before simulating the `LPC pripheral` operation - `I/O` cycles should 
+be recorded, other cycle types should be ignored.
 
 
 
