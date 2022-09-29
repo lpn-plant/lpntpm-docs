@@ -26,7 +26,7 @@ recommend using 64-bit version which worked properly. OS can be installed using
 [Raspberry Pi Imager](https://www.raspberrypi.com/software/). Please remember to
 configure user passwords before installing OS to avoid login problems.
 
-![/images/rpi_imager_cfg.png]
+![RPI Imager password setup](/images/rpi_imager_cfg.png)
 
 For testing purposes we are going to use Linux driver, which requires changes to
 device tree. Please save the following contents to temporary file.
@@ -90,7 +90,7 @@ wrapped with electrical tape.
 
 This is the pinout of the TPM used
 
-![](/images/asus_tpm_pinout.png)
+![ASUS TPM pinout](/images/asus_tpm_pinout.png)
 
 Following connections must be done
 
@@ -104,7 +104,7 @@ Following connections must be done
 | CS#       | SPI0_CS0     |
 | RST#_TPM  | GND          |
 
-![](/images/rp2_pinout.png)
+![RPI2 header pinout](/images/rp2_pinout.png)
 
 When the TPM is connected to RPI, try running these commands as root
 
@@ -119,7 +119,7 @@ mentioned above, try again with CS# connected to GND).
 
 Complete setup looks like this:
 
-![](/images/tpm_rpi_dslogic_connection.jpg)
+![TPM to RPI connection](/images/tpm_rpi_dslogic_connection.jpg)
 
 ## Monitoring SPI bus
 
@@ -127,19 +127,19 @@ In DSView open Device Options window, set operation mode to buffered (required
 for DSLogic Plus to operate at 100 MHz with 4 channels). Set voltage threshold
 to 2.0V and select max 4 channels.
 
-![](/images/dsview_cfg.png)
+![DSView configuration](/images/dsview_cfg.png)
 
 DSView has built-in decoders for various protocols including TPM over SPI. To
 enable decoding click on the `Decode` button from toolbar and search for the
 `SPI TPM` protocol. Select proper CLK, MISO, MOSI, CS#, and leave other settings
 at theirs defaults.
 
-![](/images/dsview_proto_cfg.png)
+![DSView protocol decoder configuration](/images/dsview_proto_cfg.png)
 
 When configured properly DSView should show TPM registers we read or write, and
 raw data that goes to/from these registers.
 
-![](/images/dsview_trace_tpm_init.png)
+![Communication dump during TPM init](/images/dsview_trace_tpm_init.png)
 
 ## Communication dumps
 
