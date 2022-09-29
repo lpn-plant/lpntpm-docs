@@ -143,11 +143,14 @@ raw data that goes to/from these registers.
 
 ## Communication dumps
 
-`data` directory in this repository contains a few `*.dsl` files which can be
-opened in DSView for analysis.
+`data` directory in [lpn-plant/lpntpm-docs](https://github.com/lpn-plant/lpntpm-docs/)
+repository contains a few `*.dsl` files which can be opened in DSView for
+analysis.
 
-- `driver_init.dsl` - dump of communication right after loading `tpm_tis_spi`
-  driver.
-- `tpm2_startup-c.dsl` - result of running `tpm2_startup -c` command.
-- `tpm2_pcrread.dsl` - result of running `tpm2_pcrread` command. At this point
-  PCRs were at theirs default values.
+- [driver_init.dsl](https://github.com/lpn-plant/lpntpm-docs/blob/main/docs/data/driver_init.dsl) -
+  dump of communication right after loading `tpm_tis_spi` driver.
+- [tpm2_startup-c.dsl](https://github.com/lpn-plant/lpntpm-docs/blob/main/docs/data/tpm2_startup-c.dsl) -
+  result of running `tpm2_startup -c` command.
+- [tpm2_pcrread.dsl](https://github.com/lpn-plant/lpntpm-docs/blob/main/docs/data/tpm2_pcrread.dsl) -
+  result of running `tpm2_pcrread` command. At this point PCRs were at theirs
+  default values.
