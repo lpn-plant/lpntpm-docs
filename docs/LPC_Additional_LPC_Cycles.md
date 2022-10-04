@@ -173,7 +173,7 @@ using the signal state of the `skipCycle`
                       1'h0;
 ```
 This causes LPC cycle data not to be recorded on the output bus for cycles other
- than `I/O` and` TPM`.
+ than I/O and TPM.
 
 ## Changes in the `test bench` implementation regarding the handling of `Memory R/W` cycles
 
