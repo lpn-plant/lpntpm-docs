@@ -233,7 +233,7 @@ the cycle data sent by Host is not registered on output bus `TDATABOu [31:0]` no
 this case during the execution of the `Memory` cycle registering cycle data is 
 skipped.
 
-Now let's look at the third simulation screenshot:
+Now let's look at the third simulation:
 ![LPC I/O cycles](images/IcarusVerilog_SIM_03.png)
 
 
