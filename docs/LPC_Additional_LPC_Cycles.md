@@ -8,7 +8,7 @@ earlier, only two types of LPC cycles were supported:
 And we really do not need to support more types of LPC cycles in the designed 
 TPM module, but there is a need to check how the "LPC peripheral" module we wrote
 reacts to other types of cycles appearing on the 4-bit LAD bus. For this purpose,
-it was necessary to extend the "LPC Host" implementation with additional LPC protocol
+it was necessary to extend LPC Host implementation with additional LPC protocol
 cycle types. 
 
 The "LPC peripheral" module should record all the occurrences on the LAD of the
