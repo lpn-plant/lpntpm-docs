@@ -12,7 +12,7 @@ it was necessary to extend the "LPC Host" implementation with additional LPC pro
 cycle types. 
 
 The "LPC peripheral" module should record all the occurrences on the LAD of the
-`I/O` and `TPM` cycles and send their data (LPC address and LPC data) to the 
+I/O and TPM cycles and send their data (LPC address and LPC data) to the 
 MCU module of SoC (by 32-bit output bus in FPGA). However, other LPC protocol cycle
 types on the LAD bus should be ignored and their data should not be logged.
 
