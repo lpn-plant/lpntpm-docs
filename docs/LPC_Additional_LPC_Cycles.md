@@ -237,7 +237,7 @@ Now let's look at the third simulation screenshot:
 ![LPC I/O cycles](images/IcarusVerilog_SIM_03.png)
 
 
-We can also observe on the last simulation screenshot that while the state of 
+We can also observe on the last simulation that while the state of 
 the `memory_cycle_sig` signal is high (`Memory` cycle) there is never a change in the
 state of the output bus `TDATABOu [31: 0]`. Signal `periph_en` (High) is also never
 generated when `memory_cycle_sig` signal is high. Such behavior of `LPC Peripheral` 
