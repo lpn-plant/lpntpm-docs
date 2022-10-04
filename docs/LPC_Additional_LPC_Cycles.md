@@ -158,7 +158,7 @@ and` LPC_ST_START` were modified:
                   else if ((lframe_i == 1'b1) && (lad_bus == 4'h2)) fsm_next_state <= `LPC_ST_CYCTYPE_WR;                
               end
 ```
-When in the `LPC_ST_START` state, the LAD bus does not have a CYCTYPE meaning I / O`
+When in the `LPC_ST_START` state, the LAD bus does not have a CYCTYPE meaning I/O
 or `Memory` cycles, the `skipCycle` signal becomes High.
 
 + In the rest of the code, the value of the `lpc_en_o` signal is worked out already
