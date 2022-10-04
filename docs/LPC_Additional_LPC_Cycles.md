@@ -34,7 +34,7 @@ The most important here are the `START` and `CYCTYPE` fields:
 + CYCTYPE has values: 0000b or 0010b
 And we also see that whole I/O cycle has a length of 13 clock cycles.
 
-Second we have description of `Memory R/W` cycles:
+Second we have description of Memory cycles:
 ![LPC Memory cycles](images/LPC_Memory_Cycles_c1.png)
 
 ![LPC Memory cycles](images/LPC_Memory_cycles_c2.png)
