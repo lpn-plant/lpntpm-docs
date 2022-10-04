@@ -43,7 +43,7 @@ The most important here are also the `START` and `CYCTYPE` fields:
 
 + START has value: 0000b
 + CYCTYPE has values: 0100b or 0110b
-And we also see that whole `Memory R/W`c cycle has a length of 21(read) or 17(write)
+And we also see that whole `Memory R/W` cycle has a length of 21 (read) or 17 (write)
 clock cycles. The field Address on LAD bus is longer compared to `I/O` cycles.
 
 ## Changes in the "LPC Host" implementation regarding the handling of `Memory R/W` cycles
