@@ -206,7 +206,7 @@ This causes LPC cycle data not to be recorded on the output bus for cycles other
 ```
 ## The results of the simulation of the `lpc-periph` module in Xilinx vivado 2019.1
 
-First, we will look at the simulation of the `lpc_periph` module for `I/O` cycles:
+First, we will look at the simulation of the `lpc_periph` module for I/O cycles:
 
 ![LPC I/O cycles](images/Icarusverilog_SIM_01.png)
 
