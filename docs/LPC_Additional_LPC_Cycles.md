@@ -86,7 +86,7 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 2. Secondly, in the `LPC_ST_START` phase of the LPC cycle (FSM machine), depending
    on the state of the `ctrl_memory_cycle_i` input (high state means Memory cycle),
    we changed the value of the CYCTYPE field on the LAD bus to the one appropriate
-   for the `Memory`cycle - see code:
+   for the `Memory` cycle - see code:
 
 ```verilog
       else if (fsm_host_state == `LPC_ST_START) begin
