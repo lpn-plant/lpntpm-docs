@@ -48,7 +48,7 @@ clock cycles. The field Address on LAD bus is longer compared to `I/O` cycles.
 
 ## Changes in the "LPC Host" implementation regarding the handling of `Memory R/W` cycles
 
-1. First, we added the *ctrl_memory_cycle_i* input signal to the `lpc_host` port 
+1. First, we added the `ctrl_memory_cycle_i` input signal to the `lpc_host` port 
 list - see in code:
 ```verilog
 
