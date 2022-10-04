@@ -2,6 +2,7 @@
 
 In the implementation of the LPC (LPC Host and LPC Peripheral) protocol we wrote
 earlier, only two types of LPC cycles were supported:
+
 + I/O cycles (Read and Write)
 + TPM cycles
 
@@ -137,8 +138,8 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 +  First, one internal signal has been added:
 
 ```verilog
-reg skipCycle;               // 1 -indicates that this cycle is not I/O or TPM cycle, 0 - indicates I/O or TPM cycle
-```
+reg skipCycle;               // 1 -indicates that this cycle is not I/O or TPM cycle
+``
 + On the main state machine (FSM) supporting LPC cycles - states `LPC_ST_IDLE`
 and` LPC_ST_START` were modified:
 
