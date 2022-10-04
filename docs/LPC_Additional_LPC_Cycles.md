@@ -18,7 +18,7 @@ types on the LAD bus should be ignored and their data should not be logged.
 
 It is enough to add one additional type of supported cycles to the `LPC Host`
 module as the response of the "LPC Peripheral" to all additional cycle types 
-should be similar. The choice fell on `Memory Read/Write` cycles because they are
+should be similar. The choice fell on Memory Read/Write cycles because they are
 quite similar to `I/O` cycles and easy to implement.
 
 ## Changes related to the addition of "Memory" cycles support in "LPC Host"
