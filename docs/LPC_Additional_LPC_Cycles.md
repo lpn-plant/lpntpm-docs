@@ -216,7 +216,7 @@ with a vertical (pink) line, the output bus signal `TDATABOu [31:0]` is changed
 to the values sent by the LPC Host and the pulse (high state) of the `READYNET`
 signal is generated (which means that there are new data on output bus). Also signal
 `periph_en`(High) is generated. The states of the FSM machines for LPC Host
-and `LPC Peripheral` are also important - you can see that here the FSM machine
+and LPC Peripheral are also important - you can see that here the FSM machine
 states from peripheral mimics these from host. It means that, complete `I/O`
 cycles are performed by `LPC Peripheral`.
 
