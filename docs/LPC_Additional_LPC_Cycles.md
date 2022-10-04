@@ -139,7 +139,7 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 
 ```verilog
 reg skipCycle;               // 1 -indicates that this cycle is not I/O or TPM cycle
-``
+```
 + On the main state machine (FSM) supporting LPC cycles - states `LPC_ST_IDLE`
 and` LPC_ST_START` were modified:
 
