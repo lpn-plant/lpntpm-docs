@@ -115,7 +115,7 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
            end
         end
 ```
-3. Third, changes in two places in the FSM code - starting the Memory cycles:
+3. Third, changes in two places in the FSM code - starting the memory cycles:
 
 ```verilog
 . . .
