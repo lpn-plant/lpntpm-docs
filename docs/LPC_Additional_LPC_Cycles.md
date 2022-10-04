@@ -159,7 +159,7 @@ and` LPC_ST_START` were modified:
               end
 ```
 When in the `LPC_ST_START` state, the LAD bus does not have a CYCTYPE meaning I/O
-or `Memory` cycles, the `skipCycle` signal becomes High.
+or memory cycles, the `skipCycle` signal becomes High.
 
 + In the rest of the code, the value of the `lpc_en_o` signal is worked out already
 using the signal state of the `skipCycle`
