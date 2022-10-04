@@ -25,7 +25,7 @@ quite similar to `I/O` cycles and easy to implement.
 
 First, let's look at the similarities and differences between the I/O and memory
 cycles. For this purpose we will look at Intel's [LPC Protocol](https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf) reference document.
-See screen shots from this document. First we have description of `I/O` cycles
+See screen shots from this document. First we have description of I/O cycles
 ![LPC IO Cycles](images/I_O_LPC_Cycles.png)
 
 The most important here are the `START` and `CYCTYPE` fields:
