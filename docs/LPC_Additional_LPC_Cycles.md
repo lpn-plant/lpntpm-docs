@@ -23,7 +23,7 @@ quite similar to `I/O` cycles and easy to implement.
 
 ## Changes related to the addition of "Memory" cycles support in "LPC Host"
 
-First, let's look at the similarities and differences between the `I/O` and `Memory`
+First, let's look at the similarities and differences between the I/O and memory
 cycles.For this purpose we will look at Intel's `LPC Protocol` reference document.
 See screen shots from this document. First we have description of `I/O` cycles
 ![LPC IO Cycles](images/I_O_LPC_Cycles.png)
