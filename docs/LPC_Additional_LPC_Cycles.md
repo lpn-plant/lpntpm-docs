@@ -213,7 +213,7 @@ First, we will look at the simulation of the `lpc_periph` module for I/O cycles:
 As you can see in the screenshot from Icarus Verilog (simulation) - the value of
 signal `memory_cycle_sig` is Low, meaning the `I/O` cycle. At the point marked 
 with a vertical (pink) line, the output bus signal `TDATABOu [31:0]` is changed
-to the values sent by the `LPC Host` and the pulse (high state) of the `READYNET`
+to the values sent by the LPC Host and the pulse (high state) of the `READYNET`
 signal is generated (which means that there are new data on output bus). Also signal
 `periph_en`(High) is generated. The states of the FSM machines for `LPC Host` 
 and `LPC Peripheral` are also important - you can see that here the FSM machine
