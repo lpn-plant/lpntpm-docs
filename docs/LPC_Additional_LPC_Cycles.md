@@ -188,7 +188,7 @@ This causes LPC cycle data not to be recorded on the output bus for cycles other
 ```
 + Second, to the main loop sending the cycle data to module `lpc_host` we add 
    second for loop for setting `memory_cycle_sig` signal value. In this way, the
- `I/O` and `Memory` cycles are alternately sent:
+ I/O and memory cycles are alternately sent:
 
 ```verilog
        for (i = 0; i <= 128; i = i + 1) begin
