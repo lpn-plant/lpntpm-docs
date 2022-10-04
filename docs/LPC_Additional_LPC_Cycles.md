@@ -162,7 +162,7 @@ When in the `LPC_ST_START` state, the LAD bus does not have a CYCTYPE meaning I/
 or `Memory` cycles, the `skipCycle` signal becomes High.
 
 + In the rest of the code, the value of the `lpc_en_o` signal is worked out already
-using the signal state of the` skipCycle`
+using the signal state of the `skipCycle`
 
 ```verilog
    assign lpc_en_o = ((!skipCycle)&&(sync_en == 1'b1)) ? 1'h1 :
