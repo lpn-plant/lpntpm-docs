@@ -210,7 +210,7 @@ First, we will look at the simulation of the `lpc_periph` module for I/O cycles:
 
 ![LPC I/O cycles](images/Icarusverilog_SIM_01.png)
 
-As you can see in the screenshot from `Icarus verilog` (simulation) - the value of
+As you can see in the screenshot from Icarus Verilog (simulation) - the value of
 signal `memory_cycle_sig` is Low, meaning the `I/O` cycle. At the point marked 
 with a vertical (pink) line, the output bus signal `TDATABOu [31:0]` is changed
 to the values sent by the `LPC Host` and the pulse (high state) of the `READYNET`
