@@ -2,7 +2,7 @@
 
 In the implementation of the LPC (LPC Host and LPC Peripheral) protocol we wrote
 earlier, only two types of LPC cycles were supported:
-+ I / O cycles (Read and Write)
++ I/O cycles (Read and Write)
 + TPM cycles
 
 And we really do not need to support more types of LPC cycles in the designed 
