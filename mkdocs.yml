@@ -36,3 +36,4 @@ nav:
   - 'TPM hardware interface documentation': tpm_lpc_spi_interface.md
   - 'SPI interface - implementation': tpm-spi-dev.md
   - 'LPC driver - implementation': TPM_with_LPC_protocol.md
+  - 'Additional LPC cycles': LPC_Additional_LPC_Cycles.md
