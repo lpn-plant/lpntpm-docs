@@ -1,9 +1,8 @@
 ## Why do we need to support additional LPC protocol cycles in LPC Host
 
 In the implementation of the LPC (LPC Host and LPC Peripheral) protocol we wrote
-earlier, only two types of LPC cycles were supported:
+earlier, only one type of LPC cycles were supported:
 
-+ I/O cycles (Read and Write)
 + TPM cycles
 
 And we really do not need to support more types of LPC cycles in the designed 
@@ -13,31 +12,32 @@ it was necessary to extend LPC Host implementation with additional LPC protocol
 cycle types. 
 
 The LPC peripheral module should record all the occurrences on the LAD of the
-I/O and TPM cycles and send their data (LPC address and LPC data) to the 
-MCU module of SoC (by 32-bit output bus in FPGA). However, other LPC protocol cycle
-types on the LAD bus should be ignored and their data should not be logged.
+TPM cycles and send their data (LPC address and LPC data) to the MCU module of 
+SoC (by 32-bit output bus in FPGA). However, other LPC protocol cycltypes on the
+LAD bus should be ignored and their data should not be logged.
 
 It is enough to add one additional type of supported cycles to the LPC Host
 module as the response of the LPC Peripheral to all additional cycle types
 should be similar. The choice fell on Memory Read/Write cycles because they are
-quite similar to I/O cycles and easy to implement.
+quite similar to TPM cycles and easy to implement.
 
 ## Changes related to the addition of Memory cycles support in LPC Host
 
-First, let's look at the similarities and differences between the I/O and memory
+First, let's look at the similarities and differences between the TPM and memory
 cycles. For this purpose we will look at Intel's [LPC Protocol](https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf) reference document.
-See screen shots from this document. First we have description of I/O cycles
-![LPC IO Cycles](images/I_O_LPC_Cycles.png)
+See screen shots from this document. First we have description of TPM cycles
+![LPC IO Cycles](images/TPMReadCycle.png)
+![LPC IO Cycles](images/TPMWriteCycle.png)
 
 The most important here are the `START` and `CYCTYPE` fields:
 
-+ START has value: 0000b
++ START has value: 0101b
 + CYCTYPE has values: 0000b or 0010b
 
-And we also see that whole I/O cycle has a length of 13 clock cycles.
+And we also see that whole TPM cycle has a length of 13 clock cycles.
 
 Second we have description of Memory cycles:
-![LPC Memory cycles](images/LPC_Memory_Cycles_c1.png)
+![LPC Memory cycles](images/LPC_Memory_Cycles_c1.pg)
 
 ![LPC Memory cycles](images/LPC_Memory_cycles_c2.png)
 
@@ -135,7 +135,7 @@ module lpc_host (clk_i, ctrl_addr_i, ctrl_data_i, ctrl_nrst_i, ctrl_lframe_i,
 . . .
 ```
 
-## Changes in the LPC Peripheral implementation regarding skipping of LPC cycles different than I/O or TPM
+## Changes in the LPC Peripheral implementation regarding skipping of LPC cycles different than TPM
 
 +  First, one internal signal has been added:
 
@@ -211,18 +211,18 @@ This causes LPC cycle data not to be recorded on the output bus for cycles other
 ```
 ## The results of the simulation of the `lpc-periph` module in Icarus Verilog
 
-First, we will look at the simulation of the `lpc_periph` module for I/O cycles:
+First, we will look at the simulation of the `lpc_periph` module for TPM cycles:
 
 ![LPC I/O cycles](images/Icarusverilog_SIM_01.png)
 
 As you can see in the screenshot from Icarus Verilog (simulation) - the value of
-signal `memory_cycle_sig` is Low, meaning the I/O cycle. At the point marked 
+signal `memory_cycle_sig` is Low, meaning the TPM cycle. At the point marked 
 with a vertical (pink) line, the output bus signal `TDATABOu [31:0]` is changed
 to the values sent by the LPC Host and the pulse (high state) of the `READYNET`
 signal is generated (which means that there are new data on output bus). Also signal
 `periph_en`(High) is generated. The states of the FSM machines for LPC Host
 and LPC Peripheral are also important - you can see that here the FSM machine
-states from peripheral mimics these from host. It means that, complete I/O
+states from peripheral mimics these from host. It means that, complete TPM
 cycles are performed by LPC Peripheral.
 
 In the second screenshot we can see what the signals for the Memory cycle look
