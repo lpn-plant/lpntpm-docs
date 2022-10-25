@@ -150,6 +150,41 @@ openFPGALoader -b arty_a7_35t top.bit
 
 Here is link to `openFPGALoader`application: [openFPGALoader Github](https://github.com/trabucayre/openFPGALoader)
 
+## Other programs which will help in the process of designing FPGA circuits
+
+While the F4PGA toolchain tools are sufficient to develop an FPGA-based digital
+chip design, there are other programs that make this process easier: HDL simulators
+and waveform viewing programs.
+
+We are going to mention two programaac here: the Verilog (and SystemVerilog)
+language simulator called `Verilator` and waveforms viewer called `GTKWave`
+
+### `Verilator` Verilog and SystemVerilog simulator
+
+Verilator is a tool that compiles Verilog and SystemVerilog sources to highly
+optimized (and optionally multithreaded) cycle-accurate C++ or SystemC code.
+The converted modules can be instantiated and used in a C++ or a SystemC testbench,
+for verification and/or modelling purposes.
+
+#### Installation of `Verilator` in Linux OS
+
+The installation of Verilator can be done using the OS package manager or using
+Git from the source (install from source is preferred). The entire installation
+process can be performed following this tutorial [Verilator Installation](https://verilator.org/guide/latest/install.html)
+
+#### Getting started with `Verilator`
+
+Here is very good tutorial for getting started with `Verilator` [Verilator getting started](https://itsembedded.com/dhd/verilator_1/)
+
+And her is link to this tool documentation [Verilator User's Guide](https://verilator.org/guide/latest/)
+
+### `GTKWave` waveforms viewer
+
+`GTKWave` is application very useful when one want to see waveforms of circuit
+generated before by simulator. The process of instalation of this util is described
+in process of installation `Verilator` given above.
+
 ## What next
 
-If someone would like to have a broader view of the entire toolchain, I recommend reading a very good tutorial [F4PGA open source flow](<https://antmicro.com/blog/2022/09/f4pga-new-build-system-and-cli-tool/>)
+If someone would like to have a broader view of the entire F4PGA toolchain, I recommend
+reading a very good tutorial [F4PGA open source flow](<https://antmicro.com/blog/2022/09/f4pga-new-build-system-and-cli-tool/>)
