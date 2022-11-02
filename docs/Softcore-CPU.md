@@ -66,3 +66,47 @@ added to this processor. Problematic may also be that this Soft-CPU was written
 in `VHDL` language and most open source tools only support `Verilog`.
 
 Here is `Github` repository for `NEORV32` SoftCore-CPU [NEORV32 SoftCore](https://github.com/stnolting/neorv32)
+
+## Launch of SoftCore-CPU `NEORV32` on FPGA set with Xilinx Artix-7
+
+To familiarize ourselves with the `NEORV32` project, we decided to run it on the
+`QMTECH` FPGA board with the Xilinx Artix-7 chip [QMTECH Xilinx Artix7 board](https://pl.aliexpress.com/item/4000170042795.html?spm=a2g0o.productlist.0.0.50a757860ORVGM&algo_pvid=cda2307e-3949-4ae4-9ca0-1e6c960f5528&algo_exp_id=cda2307e-3949-4ae4-9ca0-1e6c960f5528-0&pdp_ext_f=%7B%22sku_id%22%3A%2212000029897527647%22%7D&pdp_npi=2%40dis%21PLN%21678.02%21678.02%21%21%2141.79%21%21%402100bddd16673770363786889e4a69%2112000029897527647%21sea&curPageLogUid=5KL1GZ3J6SMe)
+
+On the website of the `NEORV32` project, there were several configurations for
+specific FPGAs from several FPGA manufacturers (Xilinx, intel, Gowin) [NEORV32 Setups](https://github.com/stnolting/neorv32-setups)
+We chose a ready configuration for the Artix-7 FPGA (XC7A100T) because this is
+the FPGA chip on the `QMTECH` development kit [NEORV32 Setups](https://github.com/stnolting/neorv32-setups/tree/main/vivado/nexys-a7-test-setup)
+In order to create the project `NEORV32` for`Xilinx Vivado`, it was necessary to
+clone the project repository (with sub-modules) and use a ready-made script in
+the `TCL` language:
+
+```bash
+git clone https://github.com/stnolting/neorv32-setups.git
+git submodule init
+git submodule update
+```
+
+Then you had to go to the subdirectory
+
+```bash
+cd /<neorv32 dir>/neorv32-setups/vivado/nexys-a7-test-setup
+```
+
+open `Xilinx Vivado` and in `TCL Console` issue command
+
+```bash
+source create_project.tcl
+```
+
+This TCL script created an entire `Vivado` project for an Artix-7 FPGA chip with
+SoftCore-CPU implementation`NEORV32` ready for synthesis.
+Then we started in `Vivado` the synthesis, implementation and generation of the
+`bitstream` for the project. Here is a photo of the test circuit:
+![Test Circuit Photo](images/QMTECH_Board.png)
+
+Synthesis, implementation and generation of FPGA configuration file ended without
+errors (there were some warnings):
+![Test Circuit Photo](images/Artix7_NEORV32.png)
+
+Then, using the JTAG programmer/debugger (`Xilinx Cable`) we loaded the configuration
+file into the FPGA set.
