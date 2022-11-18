@@ -1,33 +1,31 @@
-# Getting acquainted with `F4PGA` fully open source toolchain for the development of FPGAs
+# Getting acquainted with F4PGA fully open source toolchain for the development of FPGAs
 
-F4PGA is a fully open source toolchain for the development of FPGAs of multiple
-vendors. Currently, it targets the Xilinx 7-Series, Lattice iCE40, Lattice ECP5
-FPGAs, QuickLogic EOS S3 and is gradually being expanded to provide a comprehensive
-end-to-end FPGA synthesis flow
+F4PGA (previously known as SymbiFlow) is a fully open source toolchain for the
+development of FPGAs of multiple vendors. Currently, it targets the Xilinx
+7-Series, Lattice iCE40, Lattice ECP5 FPGAs, QuickLogic EOS S3 and is gradually
+being expanded to provide a comprehensive end-to-end FPGA synthesis flow
 
 ## How it works
 
-Here is a short introduction to how `F4PGA` works [How F4PGA works](https://f4pga.readthedocs.io/en/latest/how.html)
+Please refer to the [Official Documentation](https://f4pga.readthedocs.io/en/latest/how.html).
 
-## What FPGA architectures are currently supported
+## Supported architectures
 
-Here is a list of supported architectures: [Supported architectures](https://f4pga.readthedocs.io/en/latest/status.html)
+Please refer to the [Official Documentation](https://f4pga.readthedocs.io/en/latest/status.html)
+for a list of supported architectures.
 
-## Installation of `F4PGA` toolchain
+## Getting F4PGA
 
-The entire toolchain installation was done according to the tutorial on the project
-site: [F4PGA toolchain installation](https://f4pga-examples.readthedocs.io/en/latest/getting.html)
+The entire toolchain installation was done according to the
+[Official Documentation](https://f4pga-examples.readthedocs.io/en/latest/getting.html).
 
-## Build examples for `Quicklogic EOS S3 SoC`
+> Note: `F4PGA_INSTALL_DIR` must point to the installation directory for F4PGA
+> tools to work, we recommend exporting this variable from `.bashrc`
 
-Before building the example, make sure you have the environment variables exported
-with the installation directories:
+## Building examples (Quicklogic EOS S3)
 
-```bash
-export F4PGA_INSTALL_DIR=~/opt/f4pga
-```
-
-where `~/opt/f4pga` is catalog in which `f4pag` was installed.
+Before building the example, make sure you have the environment variable
+`FPGA_FAM` set to `eos-s3`
 
 ```bash
 export FPGA_FAM="eos-s3"
@@ -36,7 +34,7 @@ export FPGA_FAM="eos-s3"
 Next step is preparing the environment:
 
 ```bash
-source "$F4PGA_INSTALL_DIR/$FPGA_FAM/conda/etc/profile.d/conda.sh"
+conda env create -f $FPGA_FAM/environment.yml
 ```
 
 After this step we can activate the environment:
@@ -45,16 +43,10 @@ After this step we can activate the environment:
 conda activate $FPGA_FAM
 ```
 
-Then go to the directory with examples:
+Now, we can invoke the build:
 
 ```bash
-cd eos-s3
-```
-
-and fianally we invoke build:
-
-```bash
-make -C btn_counter
+make -C eos-s3/btn_counter
 ```
 
 after make is invoked, a summary of the phases of the synthesis and routing process
@@ -88,30 +80,24 @@ Module `yosys` has finished its work!
 
 ```
 
-After completing all phases, the configuration file for the FPGA chip (bit or bin)
-will be created and we can load it to the SoC `EOS S3` using `J-Link`or `openOCD`
+After completing all phases, the bitstream file for the FPGA chip (bit or bin)
+will be created and we can load it to the SoC EOS S3 using J-Link or openOCD.
 
 ![Test Circuit Diagram](images/SOC_EOS_S3.png)
 
-## Build examples for `Xilinx Artix-7 FPGA`
+## Building examples (Xilinx Artix-7)
 
-In this case, the first four steps are similiar to these from the `EOS S3` example
-(to activate the `conda` environment ):
-
-```bash
-export F4PGA_INSTALL_DIR=~/opt/f4pga
-```
-
-where `~/opt/f4pga` is catalog in which `f4pag` was installed.
+The steps are similiar to these from the EOS S3 example. First, make you sure
+you have `FPGA_FAM` configured accordingly:
 
 ```bash
 export FPGA_FAM="xc7"
 ```
 
-Next step is preparing the environment:
+Next step is preparing and activating the environment:
 
 ```bash
-source "$F4PGA_INSTALL_DIR/$FPGA_FAM/conda/etc/profile.d/conda.sh"
+conda env create -f $FPGA_FAM/environment.yml
 ```
 
 After this step we can activate the environment:
@@ -120,71 +106,66 @@ After this step we can activate the environment:
 conda activate $FPGA_FAM
 ```
 
-Then go to the directory with examples:
+Now, we can invoke the build:
 
 ```bash
-cd xc7
+TARGET="arty_35" make -C xc7/counter_test
 ```
 
-and fianally we invoke build:
+As one can see the target in this case is
+[Arty 35](https://www.xilinx.com/products/boards-and-kits/arty.html) FPGA board.
 
-```bash
-TARGET="arty_35" make -C counter_test
-```
-
-As one can see the target in this case is `Arty 35` FPGA board: [Arty 35 FPGA board](https://www.xilinx.com/products/boards-and-kits/arty.html)
-
-As the FPGA configuration file (bit or bin) is created, we can load it into the
+As the FPGA bitstream file (bit or bin) is created, we can load it into the
 FPGA set with the command:
 
 ```bash
 TARGET="arty_35" make download -C counter_test
 ```
 
-Alternatively, we can use the `openFPGALoader` application to load the FPGA
-configuration file:
+Alternatively, we can use the
+[openFPGALoader](https://github.com/trabucayre/openFPGALoader) application to
+load the FPGA bitstream file:
 
 ```bash
 openFPGALoader -b arty_a7_35t top.bit
 ```
 
-Here is link to `openFPGALoader`application: [openFPGALoader Github](https://github.com/trabucayre/openFPGALoader)
-
-## Other programs which will help in the process of designing FPGA circuits
+## Other FPGA tools
 
 While the F4PGA toolchain tools are sufficient to develop an FPGA-based digital
-chip design, there are other programs that make this process easier: HDL simulators
-and waveform viewing programs.
+chip design, there are other programs that make this process easier: HDL
+simulators and waveform viewing programs.
 
 We are going to mention two programaac here: the Verilog (and SystemVerilog)
-language simulator called `Verilator` and waveforms viewer called `GTKWave`
+language simulator called Verilator and waveforms viewer called GTKWave.
 
-### `Verilator` Verilog and SystemVerilog simulator
+### Verilator - Verilog and SystemVerilog simulator
 
 Verilator is a tool that compiles Verilog and SystemVerilog sources to highly
 optimized (and optionally multithreaded) cycle-accurate C++ or SystemC code.
 The converted modules can be instantiated and used in a C++ or a SystemC testbench,
 for verification and/or modelling purposes.
 
-#### Installation of `Verilator` in Linux OS
+#### Getting Verilator
 
 The installation of Verilator can be done using the OS package manager or using
 Git from the source (install from source is preferred). The entire installation
-process can be performed following this tutorial [Verilator Installation](https://verilator.org/guide/latest/install.html)
+process can be performed following the [Verilator Installation](https://verilator.org/guide/latest/install.html)
+tutorial.
 
-#### Getting started with `Verilator`
+#### Getting started with Verilator
 
-Here is very good tutorial for getting started with `Verilator` [Verilator getting started](https://itsembedded.com/dhd/verilator_1/)
+Please refer to [Verilator getting started](https://itsembedded.com/dhd/verilator_1/)
+which is a very good tutorial. For mmore information please refer to
+[Verilator User's Guide](https://verilator.org/guide/latest/).
 
-And her is link to this tool documentation [Verilator User's Guide](https://verilator.org/guide/latest/)
+### GTKWave waveforms viewer
 
-### `GTKWave` waveforms viewer
-
-`GTKWave` is application very useful when one want to see waveforms of circuit
-generated before by simulator. The process of instalation of this util is described
-in process of installation `Verilator` given above.
+GKWave is application very useful when one want to see waveforms of circuit
+generated before by simulator. The process of instalation of this util is
+described in process of installation Verilator given above.
 
 ## What next
 
-If someone would like to have a broader view of the entire F4PGA toolchain, I recommend
-reading a very good tutorial [F4PGA open source flow](<https://antmicro.com/blog/2022/09/f4pga-new-build-system-and-cli-tool/>)
+If someone would like to have a broader view of the entire F4PGA toolchain,
+we recommend reading a very good tutorial: [F4PGA open source flow](<https://antmicro.com/blog/2022/09/f4pga-new-build-system-and-cli-tool/>)
