@@ -21,7 +21,6 @@ nav:
       - 'Running': running.md
       - 'TPM driver instrumentation': instrumentation.md
   - 'Target TPM hardware interfaces': hardware_interfaces.md
-  - 'Open-source tools for FPGA synthesis': symbiflow_investigation.md
   - 'Using F4PGA': 'F4PGA_investigation.md'
   - 'Current issues': issues.md
   - 'Mechanical design':
