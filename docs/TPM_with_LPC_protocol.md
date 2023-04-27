@@ -20,7 +20,7 @@ microcontrollers, which raises some challenge here.
 At first, we have attempted to implement the `LPC` interface on MCU via GPIO.
 The `LPC` requires 33MHz clock, which might be challenging for a typical MCU.
 
-Initially we have used `Nucleo L476` which is clocked ad 80MHz. We have decided
+Initially we have used `Nucleo L476` which is clocked at 80MHz. We have decided
 to use some other board for this test, instead. `ESP32-WROOM32` board has been
 chosen as the hardware platform here. This hardware has dual-core Tensilica LX6
 with 240 MHz clock and 512 KB SRAM, which is quite a powerful MCU. Here is a
@@ -30,19 +30,19 @@ picture of test circuit which was used during our experiments:
 
 We have started our test with a very simple application in `Arduino IDE` for
 switching the output GPIO pin using an interrupt assigned to another GPIO
-(Input) pin. There was a 33 Mhz clock signal attached to this pin. In the
+(Input) pin. There was a 33 MHz clock signal attached to this pin. In the
 interrupt routine, the state of the output GPIO pin had been negated. Here
 is screen-shot from logic analyzer software:
 
 ![Circuit used for test](images/PinInterrupt_Analizator.png)
 
-The signal in channel 0 is a 33 Mhz clock, and the signal in channel 2 is an
+The signal in channel 0 is a 33 MHz clock, and the signal in channel 2 is an
 output GPIO pin. The maximum frequency of switching GPIO pins we could reach on
-this hardware was close to 380 Khz. The main reason for such bad results has
-been substancial latency in interrupts handling.
+this hardware was close to 380 kHz. The main reason for such bad results has
+been substantial latency in interrupts handling.
 
 We have also considered some other versions  of STM32 family MCUs, but based on
-the documentation, reaching the desieed frequency would be very challenging as
+the documentation, reaching the desired frequency would be very challenging as
 well.
 
 ## Shift towards FPGA
@@ -69,7 +69,7 @@ requirements for a new chip:
 * sufficient (>256kB) amount of SRAM,
 * existence of a programmable logic (FPGA), as well as a fast bus connecting
   FPGA and MCU,
-* efficient MCU with desieed peripherals (such as SPI).
+* efficient MCU with desired peripherals (such as SPI).
 
 Another very important requirement (not strictly hardware-related) is the
 possibility of using open-source software for the applications development for
@@ -79,7 +79,7 @@ this hardware.
 
 Our candidate for a new hardware platform for this project is
 `QuickLogic EOS™ S3 MCU + eFPGA SoCs`. It combines ARM Cortex-M4 MCU with 512
-KB of SRAM (max. clock frequency is 80 Mhz) and FPGA. FPGA and MCU are connected
+KB of SRAM (max. clock frequency is 80 MHz) and FPGA. FPGA and MCU are connected
 by a fast `Wishbone Bus` and can handle interrupts from FPGA to MCU. The MCU
 has many peripherals like `SPI`, `I2C`, `UARTs`, `Timers`, and so on.
 
@@ -338,7 +338,7 @@ simulate the `LPC Peripheral` module can be found in
 ![LPC Peripheral simulation 01](images/LPC_Peripheral_SIM_01.png)
 Let's first look at basic LPC protocol signals:
 
-* clk_i is LPC clock 33,3 Mhz
+* clk_i is LPC clock 33,3 MHz
 * LRESET is LPC reset - active low
 * LFRAME - Low state marks new LPC cycle
 * rd_flag - High state marks read cycle
@@ -628,7 +628,7 @@ What was changed in FPGA part of application:
     ```verilog
     module AL4S3B_FPGA_Top (
         // LPC Slave Interface
-    	lpc_lclk_top         , // LPC clock 33 Mhz     (external from LPC Host)
+    	lpc_lclk_top         , // LPC clock 33 MHz     (external from LPC Host)
     	lpc_lreset_n_top     , // Reset - Active Low   (external from LPC Host)
     	lpc_lframe_n_top      , // Frame - Active Low   (external from LPC Host)
     	lpc_lad_in_top       , // Bi-directional 4-bit LAD bus (tri-state) (external from LPC Host)
@@ -636,7 +636,7 @@ What was changed in FPGA part of application:
         // io_pad(s) from constraint file
         io_pad,
 
-    	//Wisbone bys clock 80 Mhz
+    	//Wisbone bys clock 80 MHz
     	clk80Mhz
     );
     ```
@@ -646,13 +646,13 @@ What was changed in FPGA part of application:
     inout   wire    [15:0]   io_pad ; //Decreased from [31:0]
 
     // LPC Slave Interface
-    input  wire        lpc_lclk_top         ; // LPC clock 33 Mhz
+    input  wire        lpc_lclk_top         ; // LPC clock 33 MHz
     input  wire        lpc_lreset_n_top     ; // Reset - Active Low
     input  wire        lpc_lframe_n_top     ; // Frame - Active Low
     inout  wire [ 3:0] lpc_lad_in_top       ; // Bi-directional 4-bit LAD bus (tri-state)
 
     //Wisbone clock
-     output wire clk80Mhz;               //Clock 80 Mhz
+     output wire clk80Mhz;               //Clock 80 MHz
     ```
 
 2. In module `AL4S3B_FPGA_IP`, also ports of the `LPC protocol` had been added:
@@ -684,7 +684,7 @@ What was changed in FPGA part of application:
         FPGA_INTR,
 
     	// LPC Slave Interface
-    	lpc_lclk,     // LPC clock 33 Mhz
+    	lpc_lclk,     // LPC clock 33 MHz
     	lpc_lreset_n, // Reset - Active Low
     	lpc_lframe_n, // LPC Frame - Active Low
         lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)
@@ -706,13 +706,13 @@ What was changed in FPGA part of application:
             .WBs_WE_i           ( WBs_WE                            ),
             .WBs_STB_i          ( WBs_STB                           ),
             .WBs_DAT_i          ( WBs_WR_DAT                        ),
-            .WBs_CLK_i          ( WB_CLK                            ), //80 Mhz
+            .WBs_CLK_i          ( WB_CLK                            ), //80 MHz
             .WBs_RST_i          ( WB_RST                            ),
             .WBs_DAT_o          ( WBs_DAT_o_ONION_LPCCTRL           ),
             .WBs_ACK_o          ( WBs_ACK_ONION_LPCCTRL             ),
 
             //System clk
-            .Sys_clk            ( CLK_IP_i                          ), //33 Mhz
+            .Sys_clk            ( CLK_IP_i                          ), //33 MHz
 
     		//System reset
     		.Sys_reset          ( RST_IP_i                          ),
@@ -748,7 +748,7 @@ What was changed in FPGA part of application:
         WBs_DAT_o,
         WBs_ACK_o,
 
-        // System clk 33 Mhz
+        // System clk 33 MHz
         Sys_clk,
 
     	//System reset
@@ -761,7 +761,7 @@ What was changed in FPGA part of application:
         TIMER_o,
 
     	// LPC Slave Interface
-    	lpc_lclk,     // LPC clock 33 Mhz
+    	lpc_lclk,     // LPC clock 33 MHz
     	lpc_lreset_n, // Reset - Active Low
     	lpc_lframe_n, // LPC Frame - Active Low
     	lpc_lad_in    // Bi-directional 4-bit LAD bus (tri-state)
@@ -798,8 +798,8 @@ What was changed in FPGA part of application:
 **Caution:** currently in module `AL4S3B_FPGA_ONION_LPCCTRL` we have two clock
 domains:
 
-* one: with `WBs_CLK_i` - it is 80 Mhz internal SoC Wishbone Bus clock
-* second: `lpc_lclk` - it is external 33 Mhz LPC clock (from LPC Host)
+* one: with `WBs_CLK_i` - it is 80 MHz internal SoC Wishbone Bus clock
+* second: `lpc_lclk` - it is external 33 MHz LPC clock (from LPC Host)
 
 Using multiple clock domains requires taking [special steps](https://www.icdesigntips.com/2020/12/understanding-cdc-issues-in-digital-ic.html) in module
 implementation. For this reason, in module code (lines from 214 to 230) is
