@@ -1,0 +1,996 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/issues/">
+      
+      
+        <link rel="prev" href="../symbiflow_investigation/">
+      
+      
+        <link rel="next" href="../tpm_modules_pinout/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>Current issues - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#current-issues" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Current issues
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instrumentation/" class="md-nav__link">
+        TPM driver instrumentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Current issues
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Current issues
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tpm2-tools-incompatibility-with-tty-devices" class="md-nav__link">
+    tpm2-tools incompatibility with tty devices
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#investigate-possible-security-issues" class="md-nav__link">
+    Investigate possible security issues
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incoming-data-reception-and-decoding" class="md-nav__link">
+    Incoming data reception and decoding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-analysis-early-conclusions" class="md-nav__link">
+    Protocol analysis - early conclusions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage" class="md-nav__link">
+    Memory usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outdated-repository" class="md-nav__link">
+    Outdated repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differences-between-stm32-and-simulator-implementation-of-command-parsing" class="md-nav__link">
+    Differences between STM32 and Simulator implementation of command parsing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#possible-bug-in-build-system" class="md-nav__link">
+    Possible bug in build system
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_modules_pinout/" class="md-nav__link">
+        TPM modules pinout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sparkfun-thingplus/" class="md-nav__link">
+        Development on SparkFun Thing+
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dev/" class="md-nav__link">
+        SPI interface - implementation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TPM_with_LPC_protocol/" class="md-nav__link">
+        LPC driver - implementation
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tpm2-tools-incompatibility-with-tty-devices" class="md-nav__link">
+    tpm2-tools incompatibility with tty devices
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#investigate-possible-security-issues" class="md-nav__link">
+    Investigate possible security issues
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incoming-data-reception-and-decoding" class="md-nav__link">
+    Incoming data reception and decoding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-analysis-early-conclusions" class="md-nav__link">
+    Protocol analysis - early conclusions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-usage" class="md-nav__link">
+    Memory usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#outdated-repository" class="md-nav__link">
+    Outdated repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differences-between-stm32-and-simulator-implementation-of-command-parsing" class="md-nav__link">
+    Differences between STM32 and Simulator implementation of command parsing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#possible-bug-in-build-system" class="md-nav__link">
+    Possible bug in build system
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="current-issues">Current issues</h1>
+<h2 id="tpm2-tools-incompatibility-with-tty-devices">tpm2-tools incompatibility with tty devices</h2>
+<p>tpm2-tools are not compatible with the current tpm implementation, which uses
+USB CDC, <code>/dev/tty*</code> device as a communication interface.</p>
+<p>This issue is probably caused, by the lack of <code>poll</code> function implementation
+is <code>tty</code> kernel driver.
+Apparently, tpm_tools expects a slightly different behavior and are designed to
+work with a particular tpm driver</p>
+<p>The actual line of code in <code>tpm-tss</code> library, causing failures in communication.</p>
+<div class="highlight"><pre><span></span><code>https://github.com/tpm2-software/tpm2-tss/blob/master/src/tss2-tcti/tcti-device.c#L466
+</code></pre></div>
+<p><a href="https://github.com/lpn-plant/ms-tpm-20-ref/tree/cmd_parsing/Samples/Nucleo-TPM/scripts">Scripts</a>
+are provided to make it easier to debug and investigate the behavior both for
+<code>tpm2-tools</code> and <code>tpm2-tss</code> <code>tpm2-pytss</code> libraries.</p>
+<p><code>simulator</code> - virtual serial port was created to act as a simulated tpm device,
+to capture commands, that tpm2-tools are sending. Those commands can be
+directly used, using <code>lpntpn_cmd</code> script.</p>
+<p><code>tpm2-pytss_example</code> - simple startup example using tpm2-pytss library</p>
+<p><code>tpm2-tts_example</code> - simple startup example using tpm2-tss library - has to be
+compiled with provided Makefile</p>
+<p>Some additional information could be found in
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref/blob/cmd_parsing/Samples/Nucleo-TPM/scripts/README.md">Scripts readme file</a></p>
+<h2 id="investigate-possible-security-issues">Investigate possible security issues</h2>
+<p>As Jeremy Boone mention @
+<a href="https://slack.osfw.dev/">slack trusted-computing channel</a>, we should
+investigate possible flaws in NVMem implementation.</p>
+<blockquote>
+<p>the _plat__ APIs in NVMem.c are where i’ve seen the most mistakes.
+If you are persisting data to external flash then you need confidentiality,
+integrity, rollback-protection, and replay-protection.</p>
+</blockquote>
+<h2 id="incoming-data-reception-and-decoding">Incoming data reception and decoding</h2>
+<p>Data sent from VCOM application always get received as full command located in
+one incoming buffer. Parsing commands make use of this feature, letting the
+application execute only commands, that are received at once.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int8_t</span><span class="w"> </span><span class="nf">CDC_Receive_FS</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">Buf</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">Len</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="cm">/* USER CODE BEGIN 6 */</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">TpmSignalEvent</span><span class="p">(</span><span class="n">Buf</span><span class="p">,</span><span class="w"> </span><span class="n">Len</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="p">(</span><span class="n">USBD_FAIL</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="protocol-analysis-early-conclusions">Protocol analysis - early conclusions</h2>
+<p>Getting STM32 to communicate with
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref/tree/master/Samples/Nucleo-TPM/VCOM">VCOM</a>
+application leads us to a current yet not resolved problem.</p>
+<p>Right now we are able to execute commands on TPM, but an error occurs when the
+host device verifies the response data. Specifically, this line of code causes
+an error:</p>
+<div class="highlight"><pre><span></span><code><span class="o">*</span><span class="p">((</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">response</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">short</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)])</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
+</code></pre></div>
+<p><a href="https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L198">VCOM-TPM.cpp:198</a></p>
+<p>For now, it's not clear what the response data of TPM_Startup command should
+look like and what each byte of command represents.</p>
+<p>Command and response data looks as follows.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">CmdBuf</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0c</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x44</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span>
+<span class="p">};</span>
+
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">RspBuf</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0a</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>This data is output via ITM trace on port 2.</p>
+<p>Correctness of data was verified on both sides of the communication.</p>
+<p>Startup command data is hardcoded in VCOM application
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref/blob/master/Samples/Nucleo-TPM/VCOM/VCOM-TPM/VCOM-TPM.cpp#L192">here</a>
+what makes it hard to reason about its origins.</p>
+<p>Raw data dumped from <code>CDC_Receive_FS</code> shows some similarities between VCOM
+sent command and test run of <code>tpm2_startup -T device:/dev/ttyACM1</code> application.</p>
+<p>VCOM Startup command received</p>
+<div class="highlight"><pre><span></span><code>0x54 0x70 0x6d 0x32 0x3 0x0 0x0 0x0 0x4 0x0 0x0 0x0 0xac 0x44 0x69 0x61
+0x54 0x70 0x6d 0x32 0x6 0x0 0x0 0x0 0x14 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0xc 0x0 0x0 0x0 0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x0
+</code></pre></div>
+<p>tpm2_startup received command</p>
+<div class="highlight"><pre><span></span><code>0x80 0x1 0x0 0x0 0x0 0xc 0x0 0x0 0x1 0x44 0x0 0x1
+</code></pre></div>
+<p>As you can see VCOM sends much more bytes. Presumably two commands (?) as new
+the line gets appended to the log after a new pack of data gets received by
+<code>CDC_Receive_FS</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">int8_t</span><span class="w"> </span><span class="nf">CDC_Receive_FS</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="w"> </span><span class="n">Buf</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="o">*</span><span class="n">Len</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;*</span><span class="n">Len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">itmPrintAppend</span><span class="p">(</span><span class="n">ITMSTDERR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;0x%x &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Buf</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">itmPrintAppend</span><span class="p">(</span><span class="n">ITMSTDERR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>What's interesting is the last 12 bytes of the received buffer, which differs
+only in the last byte between VCOM and tpm2_startup.</p>
+<p>Software simulator <a href="https://google.github.io/tpm-js/">tpm-js</a> shows exactly the
+same command and response data, as ITM debug output when using VCOM application.</p>
+<p>tpm-js output:</p>
+<div class="highlight"><pre><span></span><code>PowerOn
+ManufactureReset
+Startup
+About to execute command TPM2_CC_Startup
+Command buffer (12):
+  0000 80 01 00 00 00 0c 00 00 01 44 00 00              .........D..
+Response buffer (10):
+  0000 80 01 00 00 00 0a 00 00 00 00                    ..........
+</code></pre></div>
+<p>ITM port 2 output:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">//2021.10.14-08:52:37.000GMT</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">CmdBuf</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0c</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x44</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span>
+<span class="p">};</span>
+<span class="c1">//2021.10.14-08:52:37.330GMT</span>
+<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">RspBuf</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="mh">0x80</span><span class="p">,</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x0a</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x00</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>From what I discovered, the first 4 bytes of VCOM communication are the
+magic signal values from <code>TpmDevice.h</code></p>
+<div class="highlight"><pre><span></span><code><span class="mh">0x54</span><span class="w"> </span><span class="mh">0x70</span><span class="w"> </span><span class="mh">0x6d</span><span class="w"> </span><span class="mh">0x32</span>
+
+<span class="cp">#define SIGNALMAGIC (0x326d7054) </span><span class="c1">//Tpm2</span>
+</code></pre></div>
+<p>For now, the rest of the protocol is to be discovered. Probably we should
+focus on getting <code>tpm2_tools</code> to work with STM32, as we probably don't want to
+port VCOM to Linux.</p>
+<p>This requires a better understanding of the communication protocol itself thus
+the following document will be helpful:</p>
+<p><a href="https://trustedcomputinggroup.org/wp-content/uploads/TCG_TSS_TCTI_v1p0_r18_pub.pdf">TCG TSS 2.0 TPM Command Transmission Interface (TCTI) API Specification</a></p>
+<p>Section 1.3 Refedences</p>
+<p><a href="https://www.trustedcomputinggroup.org/wp-content/uploads/PCClientPlatform-TPM-Profile-for-TPM-2-0-v1-03-20-161114_public-review.pdf">TCG PC Client Platform TPM Profile (PTP) Specification</a></p>
+<p>Chapter 6</p>
+<p><a href="https://trustedcomputinggroup.org/wp-content/uploads/TSS_TCTI_Version-1.0_Revision-05_Review_END030918.pdf">TCG TSS 2.0 TPM Command Transmission Interface (TCTI) API Specification</a></p>
+<p>20.10.2021 update:</p>
+<p>The incoming data sent from VCOM application decodes as follows:</p>
+<div class="highlight"><pre><span></span><code>54 70 6d 32 6 0 0 0 14 0 0 0 0 0 0 0 c 0 0 0 80 1 0 0 0 c 0 0 1 44 0 0
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">sizeof</span><span class="p">(</span><span class="n">signalWrapper_t</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="n">sig</span><span class="o">-&gt;</span><span class="n">s</span><span class="p">.</span><span class="n">magic</span><span class="w">    </span><span class="err">&#39;\</span><span class="n">x54</span><span class="err">\</span><span class="n">x70</span><span class="err">\</span><span class="n">x6d</span><span class="err">\</span><span class="n">x32</span><span class="err">&#39;</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">hardcoded</span><span class="w"> </span><span class="n">magic</span><span class="w"> </span><span class="n">value</span>
+<span class="n">sig</span><span class="o">-&gt;</span><span class="n">s</span><span class="p">.</span><span class="n">signal</span><span class="w">   </span><span class="err">&#39;\</span><span class="n">x06</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">signal</span><span class="w"> </span><span class="k">enum</span>
+<span class="n">sig</span><span class="o">-&gt;</span><span class="n">s</span><span class="p">.</span><span class="n">dataSize</span><span class="w"> </span><span class="err">&#39;\</span><span class="n">x14</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="w">  </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">size</span>
+<span class="p">}</span>
+<span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="err">&#39;\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="w">          </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">locality</span>
+<span class="err">&#39;\</span><span class="n">x0c</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span><span class="w">          </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">cmdSize</span>
+<span class="p">}</span>
+<span class="n">actual</span><span class="w"> </span><span class="n">TPM</span><span class="w"> </span><span class="n">command</span><span class="w">          </span><span class="n">Global</span><span class="p">.</span><span class="n">h</span><span class="o">:</span><span class="mi">1098</span>
+<span class="err">&#39;\</span><span class="n">x80</span><span class="err">\</span><span class="n">x01</span><span class="err">&#39;</span><span class="w">              </span><span class="n">TPM_ST</span><span class="w">           </span><span class="n">command</span><span class="p">.</span><span class="n">tag</span><span class="p">;</span>
+<span class="err">&#39;\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;\</span><span class="n">x00</span><span class="err">\</span><span class="n">x0c</span><span class="err">&#39;</span><span class="w">         </span><span class="n">UINT32</span><span class="w">           </span><span class="n">commandSize</span><span class="p">;</span>
+<span class="err">&#39;\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">\</span><span class="n">x01</span><span class="err">\</span><span class="n">x44</span><span class="err">&#39;</span><span class="w">          </span><span class="n">TPM_CC</span><span class="w">           </span><span class="n">command</span><span class="p">.</span><span class="n">code</span>
+<span class="err">&#39;\</span><span class="n">x00</span><span class="err">\</span><span class="n">x00</span><span class="err">&#39;</span>
+</code></pre></div>
+<p>Probably all of those header values are redundant and should be decoded using
+unmarshal mechanism.</p>
+<h2 id="memory-usage">Memory usage</h2>
+<p>Memory limitations hit us right at the beginning preventing us from building the
+project for STM32L476RG on both Linux STM32CubeIDE and Windows Atollic Studio.</p>
+<p>After limiting the minimal stack size in the linker script the application fits
+in SRAM memory, but probably the problem will hit us soon after successful
+execution of TPM command.</p>
+<p><img alt="Static stack analysis" src="../images/static_stack_analysis.png" /></p>
+<p>At the moment of writing, we are almost out of memory.
+<img alt="Build analysis" src="../images/memory_usage.png" /></p>
+<h2 id="outdated-repository">Outdated repository</h2>
+<p>After struggling a lot with build errors while compiling the <code>master</code> branch we
+decided to roll back the repo. Chosen commit is the one, that adds STM32
+samples. Plans involve updating the repo, eventually hitting most actual
+changes.</p>
+<h2 id="differences-between-stm32-and-simulator-implementation-of-command-parsing">Differences between STM32 and Simulator implementation of command parsing</h2>
+<p>Dealing with the actual communication with TPM core we are facing some minor
+problems.</p>
+<p>VCOM application dedicated to TPM communication, located in
+<code>ms-tpm-20-ref/Samples/Nucleo-TPM/VCOM</code> is created using Windows, so we have to
+decide if we want to port it.</p>
+<p>Data packet for controlling the TPM differs between one used by <code>tpm2_tools</code>,
+Simulator, and STM32 implementation.</p>
+<p>This point needs additional investigation, but a quick glance at received data
+sent by using <code>tpm2_startup -T device -d/dev/ttyACM1 --state</code> command ensures us
+about it. By /dev/ACM1 port we mean STM32 USB CDC.</p>
+<h2 id="possible-bug-in-build-system">Possible bug in build system</h2>
+<p>According to the project assumptions, whole configuration is done using
+<code>user_settings.h</code> file. Previously encountered
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref/commit/c681b2130df35b0d1ae498656476f30cd4e472e4">error</a>
+led us to the conclusion that some parts of the aplication could be
+misconfigured.</p>
+<p>Some of the build switches inside <code>TpmBuildSwitches.h</code> could be enabled in an
+unwanted way.</p>
+<p>It needs to be further investigated with defines like <code>SIMULATION</code> and
+<code>SELF_TESTS</code> in mind. Maybe we can get some extra free RAM space this way.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

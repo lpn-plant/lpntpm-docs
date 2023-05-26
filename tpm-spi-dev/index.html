@@ -1,0 +1,1213 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/tpm-spi-dev/">
+      
+      
+        <link rel="prev" href="../tpm_lpc_spi_interface/">
+      
+      
+        <link rel="next" href="../tpm-spi-dump/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>SPI interface - implementation - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SPI interface - implementation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instrumentation/" class="md-nav__link">
+        TPM driver instrumentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../issues/" class="md-nav__link">
+        Current issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_modules_pinout/" class="md-nav__link">
+        TPM modules pinout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sparkfun-thingplus/" class="md-nav__link">
+        Development on SparkFun Thing+
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          SPI interface - implementation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SPI interface - implementation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-usb-cdc-with-spi-communication-in-ms-tpm-20-ref" class="md-nav__link">
+    Replacing USB CDC with SPI communication in ms-tpm-20-ref
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing USB CDC with SPI communication in ms-tpm-20-ref">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running" class="md-nav__link">
+    Running
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-the-hal-based-approach" class="md-nav__link">
+    Summary of the HAL-based approach
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prototyping-tpm-spi-communication-with-zephyr" class="md-nav__link">
+    Prototyping TPM SPI communication with Zephyr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-zephyr-sample" class="md-nav__link">
+    Running Zephyr sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Zephyr sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-spi-communication" class="md-nav__link">
+    Testing SPI communication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-work" class="md-nav__link">
+    Further work
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TPM_with_LPC_protocol/" class="md-nav__link">
+        LPC driver - implementation
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-usb-cdc-with-spi-communication-in-ms-tpm-20-ref" class="md-nav__link">
+    Replacing USB CDC with SPI communication in ms-tpm-20-ref
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing USB CDC with SPI communication in ms-tpm-20-ref">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running" class="md-nav__link">
+    Running
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-the-hal-based-approach" class="md-nav__link">
+    Summary of the HAL-based approach
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prototyping-tpm-spi-communication-with-zephyr" class="md-nav__link">
+    Prototyping TPM SPI communication with Zephyr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-zephyr-sample" class="md-nav__link">
+    Running Zephyr sample
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Zephyr sample">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing-spi-communication" class="md-nav__link">
+    Testing SPI communication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-work" class="md-nav__link">
+    Further work
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="intro">Intro</h1>
+<p>The goal of this document is to describe the current state of the lpnTPM
+communication over SPI interface and what are the further plans in this area.</p>
+<h2 id="replacing-usb-cdc-with-spi-communication-in-ms-tpm-20-ref">Replacing USB CDC with SPI communication in ms-tpm-20-ref</h2>
+<p><a href="https://lpntpm.lpnplant.io/running/">Initially</a> we have enabled the sample code
+from the <code>ms-tpm-20-ref</code>, which provided the USB CDC communication channel. Our
+first goal towards the SPI communication was to replace the USB CDC channel
+with SPI one.</p>
+<p>We have added basic support for communication with TPM over SPI and dropped CDC
+support (code available
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref/tree/cmd_parsing_spi">here</a>).
+Currently, communication protocol does not follow the protocol as defined in the
+<a href="https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf">TCG PC Client Specification</a>.
+This is planned for futher milestones of the project to be fully compatible with
+existing TPM SPI drivers. For implementation to be compliant with TPM protocol
+we must use the same header format (current format has only slight differences),
+and implement full TPM register interface.</p>
+<h3 id="running">Running</h3>
+<p>To build and run this application you need latest
+<a href="https://www.st.com/en/ecosystems/stm32cube.html">STM32Cube IDE</a> (at least
+version 1.10.0). Instructions for building and running has been described
+<a href="https://lpntpm.lpnplant.io/building">here</a>. TPM2 interface is exposed through
+SPI2. Following pins are used:</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC2</td>
+<td>MISO</td>
+</tr>
+<tr>
+<td>PC3</td>
+<td>MOSI</td>
+</tr>
+<tr>
+<td>PB10</td>
+<td>SCK</td>
+</tr>
+<tr>
+<td>PB12</td>
+<td>CS</td>
+</tr>
+</tbody>
+</table>
+<p>STM32Cube IDE by default inserts breakpoint at <code>main()</code>, to resume program press
+F8. After resuming program you should see similar log in <code>SWV ITM Data Console</code>
+window</p>
+<div class="highlight"><pre><span></span><code>=========================
+= Nucleo-L476RG TPM 2.0 =
+=========================
+2000.01.01-00:00:00.003GMT: Generated tpmUnique
+    64d35b5495b2960f085a53af30aa2b68
+    1dcde64d11b81f1ba80207cd0546dbc8
+    937003faae4ee104769877877e8a9f8b
+    30a3ce2621641a56c9d3ce1ff95b9eee
+2000.01.01-00:00:00.324GMT: Initialized 16kb NVFile.
+2000.01.01-00:00:00.324GMT: NVFile loaded (16kb, 1970.01.01-00:00:00GMT created, 0 writes, NEVER last)
+2000.01.01-00:00:00.327GMT: TPM_Manufacture(1) requested.
+2000.01.01-00:00:00.654GMT: NVFile written (16kb, 1970.01.01-00:00:00GMT created, 0 writes, NEVER last)
+2000.01.01-00:00:00.654GMT: _plat__SetNvAvail().
+2000.01.01-00:00:00.654GMT: _plat__Signal_PowerOn().
+2000.01.01-00:00:00.654GMT: _plat__Signal_Reset().
+</code></pre></div>
+<p><img alt="" src="/images/tpm_spi2_con.jpg" /></p>
+<p>As SPI master we use Raspberry PI 3B, TPM is connected to RPI SPI1. To be able
+to send test commands to TPM <code>spidev</code> driver must be enabled and bound to SPI1.
+To enable <code>spidev</code>, modify <code>config.txt</code> in RPI boot partition by adding
+<code>dtoverlay=spi1-1cs</code>. This line has to be added before any section starts,
+preferably on top of file. RPI must be rebooted for the changes to take effect.</p>
+<p>Device should be visible as <code>/dev/spidev1.0</code>.</p>
+<h3 id="testing">Testing</h3>
+<p>Basic testing can be done using
+<a href="https://github.com/STMicroelectronics/linux/blob/v5.10-stm32mp/tools/spi/spidev_test.c">spidev</a>
+test tool.</p>
+<p>Commands are sent after 4-byte header. Header first byte determines size of
+transfer and second byte determines which register to read/write. There are 4
+registers:</p>
+<ul>
+<li>0x00 - write TPM command into buffer without executing it</li>
+<li>0x01 - execute TPM command stored in buffer</li>
+<li>0x02 - read TPM response</li>
+<li>0x03 - send test response: TPM always responds with
+  <code>0x42, 0x43, 0xab, 0xcd, 0xde, 0xef</code></li>
+<li>0x04 - read TPM response size</li>
+</ul>
+<p>To do a simple test, first, send special request</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x06\x03\x00\x00&#39;</span>
+spi<span class="w"> </span>mode:<span class="w"> </span>0x0
+bits<span class="w"> </span>per<span class="w"> </span>word:<span class="w"> </span><span class="m">8</span>
+max<span class="w"> </span>speed:<span class="w"> </span><span class="m">100000</span><span class="w"> </span>Hz<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="w"> </span>kHz<span class="o">)</span>
+TX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">06</span><span class="w"> </span><span class="m">03</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>....<span class="p">|</span>
+RX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>....<span class="p">|</span>
+</code></pre></div>
+<p>TPM should start printing <code>SPI TX error: 3</code> which means it cannot send response
+due to timeout, this is because host is not waiting for transfer. To receive
+data, next transfer must be initiated. SPI works in duplex mode simultaneously
+so some data must be transferred to TPM while receiving response. Here we send
+NULL bytes.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x00\x00\x00\x00\x00\x00&#39;</span>
+spi<span class="w"> </span>mode:<span class="w"> </span>0x0
+bits<span class="w"> </span>per<span class="w"> </span>word:<span class="w"> </span><span class="m">8</span>
+max<span class="w"> </span>speed:<span class="w"> </span><span class="m">100000</span><span class="w"> </span>Hz<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="w"> </span>kHz<span class="o">)</span>
+TX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>......<span class="p">|</span>
+RX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">42</span><span class="w"> </span><span class="m">43</span><span class="w"> </span>AB<span class="w"> </span>CD<span class="w"> </span>DE<span class="w"> </span>EF<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>BC....<span class="p">|</span>
+</code></pre></div>
+<blockquote>
+<p>Note: number of NULLs must match the number declared in header (here 6 bytes).</p>
+</blockquote>
+<p>To send real TPM command (here TPM_Startup) it must be first written into buffer
+(normally TPM would use FIFO but here we use a simple buffer).</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x0c\x00\x00\x00\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00&#39;</span>
+spi<span class="w"> </span>mode:<span class="w"> </span>0x0
+bits<span class="w"> </span>per<span class="w"> </span>word:<span class="w"> </span><span class="m">8</span>
+max<span class="w"> </span>speed:<span class="w"> </span><span class="m">100000</span><span class="w"> </span>Hz<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="w"> </span>kHz<span class="o">)</span>
+TX<span class="w"> </span><span class="p">|</span><span class="w"> </span>0C<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>0C<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">44</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>.............D..<span class="p">|</span>
+RX<span class="w"> </span><span class="p">|</span><span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>DE<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>................<span class="p">|</span>
+</code></pre></div>
+<blockquote>
+<p>Note: on RX we receive some junk. This is because test app does not enqueue
+TX transfer while receiving data and controller re-transfers remnants of
+previous transfer. This can be (partially) solved by always providing a NULL
+filled buffer, and using HAL_SPI_TransmitReceive instead of HAL_SPI_Receive.
+Zephyr (see the section below) already does that which partially solves the
+problem. However, if TPM does not enqueue transfer right in time, this causes
+noise on SPI.</p>
+</blockquote>
+<p>And now, execute command:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x01\x01\x00\x00\x01&#39;</span>
+</code></pre></div>
+<p>You should see something like this on SWV console</p>
+<div class="highlight"><pre><span></span><code>TPM<span class="w"> </span>command:<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>0c<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">44</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span>
+<span class="m">2000</span>.01.01-00:20:18.201GMT:<span class="w"> </span>Executing<span class="w"> </span><span class="nb">command</span><span class="w"> </span>TPM_CC_Startup<span class="o">()</span>
+<span class="m">2000</span>.01.01-00:20:18.525GMT:<span class="w"> </span>NVFile<span class="w"> </span>written<span class="w"> </span><span class="o">(</span>16kb,<span class="w"> </span><span class="m">1970</span>.01.01-00:00:00GMT<span class="w"> </span>created,<span class="w"> </span><span class="m">0</span><span class="w"> </span>writes,<span class="w"> </span>NEVER<span class="w"> </span>last<span class="o">)</span>
+<span class="m">2000</span>.01.01-00:20:18.525GMT:<span class="w"> </span>Completion<span class="w"> </span><span class="nb">time</span><span class="w"> </span><span class="m">0</span><span class="err">&#39;</span><span class="m">0</span><span class="s2">&quot; with ReturnCode {TPM_RC_SUCCESS}</span>
+<span class="s2">Response size: 10</span>
+</code></pre></div>
+<p>To read response, type:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x04\x04\x00\x00\x00\x00\x00\x00&#39;</span>
+$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x00\x00\x00\x00&#39;</span>
+spi<span class="w"> </span>mode:<span class="w"> </span>0x0
+bits<span class="w"> </span>per<span class="w"> </span>word:<span class="w"> </span><span class="m">8</span>
+max<span class="w"> </span>speed:<span class="w"> </span><span class="m">100000</span><span class="w"> </span>Hz<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="w"> </span>kHz<span class="o">)</span>
+TX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>....<span class="p">|</span>
+RX<span class="w"> </span><span class="p">|</span><span class="w"> </span>0A<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>....<span class="p">|</span>
+</code></pre></div>
+<p>Response size is 10, so we need to send 4 byte header and then prepare 10 byte
+transfer</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x04\x02\x00\x00\x00\x00\x00\x00&#39;</span>
+$<span class="w"> </span>spitest<span class="w"> </span>-v<span class="w"> </span>-D<span class="w"> </span>/dev/spidev1.0<span class="w"> </span>-s<span class="w"> </span><span class="m">100000</span><span class="w"> </span>-p<span class="w"> </span><span class="s1">&#39;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&#39;</span>
+spi<span class="w"> </span>mode:<span class="w"> </span>0x0
+bits<span class="w"> </span>per<span class="w"> </span>word:<span class="w"> </span><span class="m">8</span>
+max<span class="w"> </span>speed:<span class="w"> </span><span class="m">100000</span><span class="w"> </span>Hz<span class="w"> </span><span class="o">(</span><span class="m">100</span><span class="w"> </span>kHz<span class="o">)</span>
+TX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>..........<span class="p">|</span>
+RX<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>0A<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w"> </span>__<span class="w">  </span><span class="p">|</span>..........<span class="p">|</span>
+</code></pre></div>
+<p>Examples above show successful communication attempt, however communication is
+unstable and it tends to fail frequently. Failure can be simply reproduced by
+trying commands multiple times.</p>
+<p>Also, please note that SPI is running at 100 kHz, where TPM specification
+requires TPM to operate at range 10 MHz - 24 MHz. Currently, upon receiving
+command TPM is waiting for host to receive response and will not accept further
+commands until response is received. Before sending command and receiving
+response there is a delay caused by executing <code>spitest</code> separately. <code>spitest</code>
+calls may be chained together, but this may result in TPM not responding right
+in time.</p>
+<p>STM32 HAL does not provide API to sample SPI chip select, but TPM specification
+requires some actions to be taken based on the CS value.</p>
+<blockquote>
+<p>From <a href="https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p05p_r14_pub.pdf">TCG PC Client Platform TPM Profile Specification</a>
+section 6.5.1.1:</p>
+<ol>
+<li>For Read Cycles, the TPM SHALL abort a cycle by driving 1 on MISO and
+   continue to hold MISO at 1 until its CS# signal is deasserted.</li>
+</ol>
+</blockquote>
+<p>Also, TPM needs a way to recover to interrupted transfers. TPM data transfer
+happens in a few byte chunks (header and data payload of size defined by
+header). When TPM is deselected, transfer is aborted and TPM should go back into
+idle state. This may require TPM firmware to sample CS state in order to update
+its internal state machine.</p>
+<p>Neither Zephyr provides such an API, except for GPIO chip select, which may not
+be usable from within SPI slave.</p>
+<h3 id="summary-of-the-hal-based-approach">Summary of the HAL-based approach</h3>
+<p>The STM32 HAL approach was continued as it was the easiest path forward for
+idea verification. Unfortunataly, we faced several obstacles and decided not to
+continue this path, as this approach is not the target one for multiple
+reasons:</p>
+<ul>
+<li>the STM32L476 is
+  <a href="https://lpntpm.lpnplant.io/issues/#memory-usage">short on memory</a> when
+  running the <code>ms-tpm-20-ref</code> stack</li>
+<li>the STM32L476 will not be able to provide LPC interface, which is common
+  interface for TPM modules</li>
+<li>due to the global supply chain issues, the STM32L476 (as most of the others
+  STM32, and many more MCUs) is infeasible to source</li>
+</ul>
+<p>Some more considerations on the hardware replaceement could be found
+<a href="https://lpntpm.lpnplant.io/further_project_development/">here</a>.</p>
+<p>One of the paths to move forward is to port the <code>ms-tpm-20-ref</code> stack to some
+RTOS (such as <a href="https://zephyrproject.org/">Zephyr</a>) to gain some more
+flexibility in tems of hardware switching in the current global situation.</p>
+<h2 id="prototyping-tpm-spi-communication-with-zephyr">Prototyping TPM SPI communication with Zephyr</h2>
+<p>Further SPI work has been done on Zephyr, the code is available
+<a href="https://github.com/lpn-plant/zephyr-spi-app">here</a>. This code tests
+communication with a dummy TPM implementation as <code>ms-tpm-ref-20</code> has not been
+fully ported to Zephyr yet.</p>
+<p>Zephyr has it's own SPI driver, which still uses low level HAL API, however its
+behaviour is different from high level HAL API we were using previously. First,
+receiving of multiple bytes at once works fine, which simplifies code - instead
+of filling RX buffer one byte at a time we can do this in 2 transfers</p>
+<ul>
+<li>4 byte TPM header which contains: mode (read or write),
+  target register address and transfer size</li>
+<li>data read or write transfer with matching size as defined in TPM header</li>
+</ul>
+<blockquote>
+<p>Note: Current SPI implementation uses different header format than defined by
+TPM spec. Mode is not present and, on read,  TPM always sends full register,
+ignoring header size field.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Size of transfer</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Register address</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Unused (zero)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Unused (zero)</td>
+</tr>
+</tbody>
+</table>
+<p>Currently, there are 3 registers (mininum required to send command and receive
+response):</p>
+<ul>
+<li>TPM_REG_CMD - register used for sending command, there is no  TPM FIFO, entire
+  command is executed immediatelly after transfer is complete</li>
+<li>TPM_REG_STATUS - status register, currently contains only response size</li>
+<li>TPM_REG_RESP - response, there is no FIFO so response must be read during a
+  single transfer</li>
+</ul>
+<h2 id="running-zephyr-sample">Running Zephyr sample</h2>
+<p>Zephyr sample communicates SPI1 (there were problems in getting SPI2 to work
+under Zephyr). Following pins are used:</p>
+<table>
+<thead>
+<tr>
+<th>Pin</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PA5</td>
+<td>SCK</td>
+</tr>
+<tr>
+<td>PA6</td>
+<td>MISO</td>
+</tr>
+<tr>
+<td>PA7</td>
+<td>MOSI</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Note: Zephyr uses GPIO chip select on SPI1 which works only for master, not
+slave. So, device is always selected and listening on the bus and there is no
+need to attach CS. In real world scenario CS is required, in that case SPI
+controller dedicated CS should be used instead of GPIO.</p>
+</blockquote>
+<p><img alt="" src="/images/tpm_spi1_con.jpg" /></p>
+<p>To run Zephyr sample, use the following commands:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-ti<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>/dev:/dev<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-u<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/workdir<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$SSH_AUTH_SOCK</span><span class="k">)</span>:<span class="k">$(</span>dirname<span class="w"> </span><span class="nv">$SSH_AUTH_SOCK</span><span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-e<span class="w"> </span><span class="nv">SSH_AUTH_SOCK</span><span class="o">=</span><span class="nv">$SSH_AUTH_SOCK</span><span class="w">  </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/zephyrproject-rtos/zephyr-build:v0.23.3
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>init<span class="w"> </span>-m<span class="w"> </span>git@github.com:lpn-plant/zephyr-spi-app.git<span class="w"> </span>--mr<span class="w"> </span>spi<span class="w"> </span>zephyr-spi-workspace
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>zephyr-spi-workspace
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>update
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">ZEPHYR_BASE</span><span class="o">=</span><span class="nv">$PWD</span>/zephyr
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-p<span class="w"> </span>auto<span class="w"> </span>-b<span class="w"> </span>nucleo_l476rg<span class="w"> </span>-s<span class="w"> </span>zephyr-spi-app/app/
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>flash
+</code></pre></div>
+<blockquote>
+<p>Note: Zephyr outputs to emulated UART over USB which should be visible as
+/dev/ttyACM*</p>
+</blockquote>
+<h3 id="testing-spi-communication">Testing SPI communication</h3>
+<p>We have provided <code>tpmctl</code> available in
+<a href="https://github.com/lpn-plant/zephyr-spi-app">zephyr-spi-app</a> repo which can be
+used to send TPM command and receive response. <code>tpmctl</code> can be built simply by
+invoking GCC as it does not depend on any external libraries. If cross compiling
+you can use <code>arm-linux-gnueabihf-gcc</code> or build directly on the target device.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>gcc<span class="w"> </span>tpmctl.c<span class="w"> </span>-o<span class="w"> </span>tpmctl
+</code></pre></div>
+<p>Command is sent by piping raw, binary command to <code>tpmctl</code>, output can be either
+in binary form or hexdump:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tpmctl<span class="w"> </span>-H
+<span class="m">80</span><span class="w"> </span><span class="m">01</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span>0a<span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span><span class="w"> </span><span class="m">00</span>
+</code></pre></div>
+<blockquote>
+<p>Note: here we send TPM startup which is the only TPM command supported by SPI
+test application.</p>
+</blockquote>
+<p>Communication works fine with smaller commands (up to 16 bytes), albeit SPI
+driver keeps complaining that transfer failed even if host got all data.</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span><span class="m">00</span>:00:08.242,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi_ll_stm32:<span class="w"> </span>spi_stm32_get_err:<span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="m">64</span>
+<span class="o">[</span><span class="m">00</span>:00:08.242,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi:<span class="w"> </span>SPI<span class="w"> </span>TX<span class="w"> </span>failed:<span class="w"> </span>-5<span class="w"> </span><span class="o">(</span>size<span class="w"> </span><span class="m">10</span><span class="o">)</span>
+
+<span class="o">[</span><span class="m">00</span>:00:10.248,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi_ll_stm32:<span class="w"> </span>spi_stm32_get_err:<span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="m">64</span>
+<span class="o">[</span><span class="m">00</span>:00:10.248,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi:<span class="w"> </span>SPI<span class="w"> </span>TX<span class="w"> </span>failed:<span class="w"> </span>-5<span class="w"> </span><span class="o">(</span>size<span class="w"> </span><span class="m">10</span><span class="o">)</span>
+
+<span class="o">[</span><span class="m">00</span>:00:11.386,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi_ll_stm32:<span class="w"> </span>spi_stm32_get_err:<span class="w"> </span><span class="nv">err</span><span class="o">=</span><span class="m">64</span>
+<span class="o">[</span><span class="m">00</span>:00:11.387,000<span class="o">]</span><span class="w"> </span>&lt;err&gt;<span class="w"> </span>spi:<span class="w"> </span>SPI<span class="w"> </span>TX<span class="w"> </span>failed:<span class="w"> </span>-5<span class="w"> </span><span class="o">(</span>size<span class="w"> </span><span class="m">10</span><span class="o">)</span>
+</code></pre></div>
+<p>As per TPM spec, TPM must support transfers up to 64 bytes (excluding 4 byte
+header). With transfers larger than 8 bytes communication becomes unstable.
+Transfer from TPM to Host is generally more unstable - Host to TPM transfer
+(command) can be <strong>usually</strong> transferred uncorrupted, however responses, usually
+get corrupted right after 8 byte mark.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">printf</span><span class="w"> </span><span class="s1">&#39;\x80\x01\x00\x00\x00\xfa\x00\x00\x01\x44\x00\x00\x03\x29\xab\x33\x64\xd2\x41\xec\x2d\x8c\x31\x7f\x3c\x64\x68\x5a\x7d\x8e\xce\xbe\xf5\xfa\xa0\xc7\x06\xe8\x07\x5e\xb3\x12\xfc\xbc\x4e\x61\x72\x05\x3f\x34\xf2\x28\x44\xb5\x40\x2e\x21\x35\xcc\x57\xfa\xa0\xc7\x06&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tpmctl<span class="w"> </span>-H
+ec<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="m">48</span><span class="w"> </span>4e<span class="w"> </span>9d<span class="w"> </span><span class="m">22</span><span class="w"> </span>9c<span class="w"> </span>db<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>4e<span class="w"> </span>ce<span class="w"> </span>ce
+ce<span class="w"> </span>a7<span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">53</span><span class="w"> </span>b3<span class="w"> </span>b3<span class="w"> </span>b3<span class="w"> </span>a9<span class="w"> </span>d9<span class="w"> </span>d9<span class="w"> </span>d9<span class="w"> </span>d4<span class="w"> </span>ec<span class="w"> </span>ec
+ec<span class="w"> </span>ea<span class="w"> </span><span class="m">76</span><span class="w"> </span><span class="m">76</span><span class="w"> </span><span class="m">76</span><span class="w"> </span><span class="m">75</span><span class="w"> </span>3b<span class="w"> </span>3b<span class="w"> </span>3b<span class="w"> </span>3a<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>9d<span class="w"> </span>4e<span class="w"> </span>ce
+ce<span class="w"> </span>ce<span class="w"> </span>a7<span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">67</span><span class="w"> </span><span class="m">53</span><span class="w"> </span>b3<span class="w"> </span>b3<span class="w"> </span>b3<span class="w"> </span>a9<span class="w"> </span>d9<span class="w"> </span>d9<span class="w"> </span>d9<span class="w"> </span>d4<span class="w"> </span>ec
+</code></pre></div>
+<p>Here command is transferred properly and TPM responds with a hardcoded 64 byte
+response, but the response becomes corrupted (note repeating patterns). The
+correct response is</p>
+<div class="highlight"><pre><span></span><code>ec<span class="w"> </span><span class="m">32</span><span class="w"> </span><span class="m">48</span><span class="w"> </span>4e<span class="w"> </span>9d<span class="w"> </span><span class="m">22</span><span class="w"> </span>9c<span class="w"> </span>db<span class="w"> </span><span class="m">29</span><span class="w"> </span>9e<span class="w"> </span>b4<span class="w"> </span>4a<span class="w"> </span><span class="m">23</span><span class="w"> </span>e2<span class="w"> </span>ec<span class="w"> </span>e1
+<span class="m">36</span><span class="w"> </span>4e<span class="w"> </span>1b<span class="w"> </span>c2<span class="w"> </span><span class="m">09</span><span class="w"> </span><span class="m">44</span><span class="w"> </span>eb<span class="w"> </span><span class="m">65</span><span class="w"> </span><span class="m">21</span><span class="w"> </span>aa<span class="w"> </span>db<span class="w"> </span><span class="m">00</span><span class="w"> </span>da<span class="w"> </span><span class="m">60</span><span class="w"> </span><span class="m">50</span><span class="w"> </span>a6
+<span class="m">53</span><span class="w"> </span>de<span class="w"> </span>da<span class="w"> </span><span class="m">22</span><span class="w"> </span>5c<span class="w"> </span>a5<span class="w"> </span>df<span class="w"> </span>2f<span class="w"> </span><span class="m">75</span><span class="w"> </span>b3<span class="w"> </span>9c<span class="w"> </span>e0<span class="w"> </span><span class="m">10</span><span class="w"> </span>4a<span class="w"> </span>1d<span class="w"> </span>a9
+<span class="m">94</span><span class="w"> </span>e2<span class="w"> </span>0c<span class="w"> </span>b8<span class="w"> </span>c1<span class="w"> </span><span class="m">82</span><span class="w"> </span>b0<span class="w"> </span><span class="m">34</span><span class="w"> </span>d6<span class="w"> </span>ea<span class="w"> </span><span class="m">10</span><span class="w"> </span>e1<span class="w"> </span><span class="m">72</span><span class="w"> </span><span class="m">98</span><span class="w"> </span><span class="m">88</span><span class="w"> </span><span class="m">24</span>
+</code></pre></div>
+<p>For SPI to work reliably both host and device must keep transfers in sync, to
+achieve this on host we execute multiple transfers during a single IOCTL and let
+the driver handle this. On TPM side, we have to process request quickly and
+queue response before host initiates next transfer. This adds complexity as the
+code has to be very well optimized. Currently, there is a workaround that adds
+delays between transfers to let TPM get ready after executing command, otherwise
+we won't be able to get response. This workaround should be replaced with better
+optimized SPI handling on TPM site, as well as implementation of wait states
+(TPM specific extension to SPI).</p>
+<p>SPI currently runs at 100 KHz where TPM specification requires support for
+10 - 24 MHz range. Currently, communication is completely broken at 1 MHz.</p>
+<h2 id="further-work">Further work</h2>
+<p>SPI stability problems must be solved and device must be able to reliably
+operate at 24 MHz (TPM specification recommends higher frequencies, however
+these are not mandatory currently).</p>
+<p>TPM specific SPI extensions must be implemented, such as wait states and bus
+aborts, which depend on non-standard behaviour not supported directly by SPI
+drivers/controllers. Implementing this is possible, but complex.</p>
+<p>Currently, we have implemented only 3 registers, but a real TPM has much more.
+To be able operate with existing software/hardware we have to implement TPM
+register interface, along with TPM FIFO interface, interrupt interface and all
+related registers.</p>
+<p>Requirements have been also described
+<a href="https://github.com/lpn-plant/lpntpm-docs/blob/main/docs/tpm_lpc_spi_interface.md">here</a></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

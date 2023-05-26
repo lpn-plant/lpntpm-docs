@@ -1,0 +1,1892 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/TPM_with_LPC_protocol/">
+      
+      
+        <link rel="prev" href="../tpm-spi-dump/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>LPC driver - implementation - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LPC driver - implementation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instrumentation/" class="md-nav__link">
+        TPM driver instrumentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../issues/" class="md-nav__link">
+        Current issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_modules_pinout/" class="md-nav__link">
+        TPM modules pinout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sparkfun-thingplus/" class="md-nav__link">
+        Development on SparkFun Thing+
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dev/" class="md-nav__link">
+        SPI interface - implementation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          LPC driver - implementation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        LPC driver - implementation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    Motivation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-implementation-via-gpio" class="md-nav__link">
+    LPC implementation via GPIO
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shift-towards-fpga" class="md-nav__link">
+    Shift towards FPGA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-selection" class="md-nav__link">
+    Hardware selection
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eos-s3-soc" class="md-nav__link">
+    EOS S3 SoC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-setup" class="md-nav__link">
+    Hardware setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-setup" class="md-nav__link">
+    Software setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-repositories" class="md-nav__link">
+    Software repositories
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-driver-implementation" class="md-nav__link">
+    LPC driver implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC driver implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lpc-peripheral" class="md-nav__link">
+    LPC Peripheral
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC Peripheral">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io-ports" class="md-nav__link">
+    I/O ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-bench" class="md-nav__link">
+    Test bench
+  </a>
+  
+    <nav class="md-nav" aria-label="Test bench">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results-analysis" class="md-nav__link">
+    Results analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eos-s3-applications" class="md-nav__link">
+    EOS S3 applications
+  </a>
+  
+    <nav class="md-nav" aria-label="EOS S3 applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fpga-mcu-communication" class="md-nav__link">
+    FPGA &lt;--&gt; MCU communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-lpc-peripheral" class="md-nav__link">
+    Embedded LPC Peripheral
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-plans" class="md-nav__link">
+    Further plans
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    Motivation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-implementation-via-gpio" class="md-nav__link">
+    LPC implementation via GPIO
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shift-towards-fpga" class="md-nav__link">
+    Shift towards FPGA
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-selection" class="md-nav__link">
+    Hardware selection
+  </a>
+  
+    <nav class="md-nav" aria-label="Hardware selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    Requirements
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eos-s3-soc" class="md-nav__link">
+    EOS S3 SoC
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hardware-setup" class="md-nav__link">
+    Hardware setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-setup" class="md-nav__link">
+    Software setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#software-repositories" class="md-nav__link">
+    Software repositories
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-driver-implementation" class="md-nav__link">
+    LPC driver implementation
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC driver implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lpc-peripheral" class="md-nav__link">
+    LPC Peripheral
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC Peripheral">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io-ports" class="md-nav__link">
+    I/O ports
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-bench" class="md-nav__link">
+    Test bench
+  </a>
+  
+    <nav class="md-nav" aria-label="Test bench">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#results-analysis" class="md-nav__link">
+    Results analysis
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eos-s3-applications" class="md-nav__link">
+    EOS S3 applications
+  </a>
+  
+    <nav class="md-nav" aria-label="EOS S3 applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fpga-mcu-communication" class="md-nav__link">
+    FPGA &lt;--&gt; MCU communication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-lpc-peripheral" class="md-nav__link">
+    Embedded LPC Peripheral
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-plans" class="md-nav__link">
+    Further plans
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>LPC driver - implementation</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>The main goal of this document is showing the current state of development of
+the LPC driver for use in the lpnTPM project.</p>
+<h2 id="motivation">Motivation</h2>
+<p>Even though the SPI interface for the TPM module is more and more popular, the
+LPC (<code>Low Pin Count</code>) interface is still widely used as a way to connect TPM
+module to the mainboard. We have considered possible hardware platforms in the
+past in
+<a href="../hardware_interfaces/#low-pin-count-interface">this document</a>.</p>
+<p>While the SPI and I2C interfaces are available on each microcontroller out
+there, the LPC hardware block is nearly not available on the generally-available
+microcontrollers, which raises some challenge here.</p>
+<h2 id="lpc-implementation-via-gpio">LPC implementation via GPIO</h2>
+<p>At first, we have attempted to implement the <code>LPC</code> interface on MCU via GPIO.
+The <code>LPC</code> requires 33MHz clock, which might be challenging for a typical MCU.</p>
+<p>Initially we have used <code>Nucleo L476</code> which is clocked at 80MHz. We have decided
+to use some other board for this test, instead. <code>ESP32-WROOM32</code> board has been
+chosen as the hardware platform here. This hardware has dual-core Tensilica LX6
+with 240 MHz clock and 512 KB SRAM, which is quite a powerful MCU. Here is a
+picture of test circuit which was used during our experiments:</p>
+<p><img alt="Circuit used for test" src="../images/ESP32_board.png" /></p>
+<p>We have started our test with a very simple application in <code>Arduino IDE</code> for
+switching the output GPIO pin using an interrupt assigned to another GPIO
+(Input) pin. There was a 33 MHz clock signal attached to this pin. In the
+interrupt routine, the state of the output GPIO pin had been negated. Here
+is screen-shot from logic analyzer software:</p>
+<p><img alt="Circuit used for test" src="../images/PinInterrupt_Analizator.png" /></p>
+<p>The signal in channel 0 is a 33 MHz clock, and the signal in channel 2 is an
+output GPIO pin. The maximum frequency of switching GPIO pins we could reach on
+this hardware was close to 380 kHz. The main reason for such bad results has
+been substantial latency in interrupts handling.</p>
+<p>We have also considered some other versions  of STM32 family MCUs, but based on
+the documentation, reaching the desired frequency would be very challenging as
+well.</p>
+<h2 id="shift-towards-fpga">Shift towards FPGA</h2>
+<p>Given that we would not be able to switch the GPIO pins fast enough in reaction
+to the 33MHz clock, we have concluded that the better way of implementing the
+<code>LPC</code> driver could be the use of a programmable device like an FPGA or CPLD.</p>
+<p>But we also need a CPU for implementation of the TPM module logic and
+substantial amount of RAM. If we would use both MCU and FPGA on a single board,
+it would cause a major increase in the board's size. Fortunately, in the
+last years some SoCs (System on Chips) has appeared, which combine these two
+(MCU and FPGA) into a single chip.</p>
+<h2 id="hardware-selection">Hardware selection</h2>
+<h3 id="requirements">Requirements</h3>
+<p>The most serious issues in our previous attempts to implement the TPM module was
+<a href="../issues/#memory-usage">shortage of the SRAM memory</a> in the selected MCU.
+Based on that and our other previous attempts, we could outline the hardware
+requirements for a new chip:</p>
+<ul>
+<li>sufficient (&gt;256kB) amount of SRAM,</li>
+<li>existence of a programmable logic (FPGA), as well as a fast bus connecting
+  FPGA and MCU,</li>
+<li>efficient MCU with desired peripherals (such as SPI).</li>
+</ul>
+<p>Another very important requirement (not strictly hardware-related) is the
+possibility of using open-source software for the applications development for
+this hardware.</p>
+<h3 id="eos-s3-soc">EOS S3 SoC</h3>
+<p>Our candidate for a new hardware platform for this project is
+<code>QuickLogic EOS™ S3 MCU + eFPGA SoCs</code>. It combines ARM Cortex-M4 MCU with 512
+KB of SRAM (max. clock frequency is 80 MHz) and FPGA. FPGA and MCU are connected
+by a fast <code>Wishbone Bus</code> and can handle interrupts from FPGA to MCU. The MCU
+has many peripherals like <code>SPI</code>, <code>I2C</code>, <code>UARTs</code>, <code>Timers</code>, and so on.</p>
+<p><code>Quicklogic EOS S3 MCU + eFPGA SoC</code> had been chosen for the hardware part of
+this project because it fulfills all requirements related to the amount of RAM
+and overall performance. More description on this hardware can be found
+<a href="https://www.mouser.pl/new/quicklogic/quicklogic-eos-s3-mcu-efpga-socs/">here</a>.</p>
+<p>We carried out all development on an open-hardware board called
+<a href="https://www.sparkfun.com/products/17273">Sparkfun QuickLogic Thing Plus - EOS S3</a>.
+This board is based on Quicklogic <code>EOS S3</code> SoC.</p>
+<p>Some more references on this SoC and board:</p>
+<ul>
+<li><a href="https://cdn.sparkfun.com/assets/7/a/c/c/e/QL-EOS-S3-Ultra-Low-Power-multicore-MCU-Datasheet-v3_3d.pdf">QuickLogic EOS S3 Ultra Low Power multicore MCU datasheet</a></li>
+<li><a href="https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide#hardware-overview">QuickLogic Thing Plus (EOS S3) Hookup Guide</a></li>
+</ul>
+<h2 id="hardware-setup">Hardware setup</h2>
+<p>Below is picture of circuit used for development of this project:</p>
+<p><img alt="Circuit used for development" src="../images/QuickLogicThingPlus.png" /></p>
+<p>It consist of the following parts:</p>
+<ul>
+<li><code>Sparkfun QuickLogic Thing Plus - EOS S3</code> board</li>
+<li>breadboard</li>
+<li>power adapter</li>
+<li>J-Link JTAG programmer/debugger</li>
+<li>USB 2 UART converter</li>
+</ul>
+<p>Note that in this photo we have used the <code>SEGGER J-Link</code> JTAG debugger for
+programming and debugging, but one can use different JTAG debugger for this
+purpose (such as the
+<a href="https://www.olimex.com/Products/ARM/JTAG/ARM-USB-OCD-H/">Olimex ARM-USB-OCD-H</a>
+paired with <a href="https://openocd.org/">OpenOCD</a>.</p>
+<h2 id="software-setup">Software setup</h2>
+<p>All development - both FPGA Verilog RTL part and ARM Cortex-M4 MCU development
+had been carried out using <code>Quicklogic QORC SDK</code>.
+<a href="https://github.com/QuickLogic-Corp/qorc-sdk">QORC SDK</a> consists of the
+following parts:</p>
+<ul>
+<li>Symbiflow package for FPGA synthessis (Yosys) and <code>place and route</code> tool
+  for implementation and generation of bitstream for FPGA</li>
+<li>GCC-cross compiler for ARM Cortex</li>
+<li>FreeRTOS</li>
+<li>Zephyr-RTOS</li>
+</ul>
+<p><code>QORC SDK</code> is fully open-source project.</p>
+<p>Another useful tools used during development are:</p>
+<ul>
+<li><a href="http://iverilog.icarus.com/">Icarus Verilog simulator</a></li>
+<li><a href="http://gtkwave.sourceforge.net/">GTKWave </a></li>
+</ul>
+<p>These can be used to perform simulation of the implemented FPGA code.</p>
+<h2 id="software-repositories">Software repositories</h2>
+<p>Github repository with source code (Verilog RTL code) of <code>LPC peripheral</code> and
+all files needed to perform simulation are located
+<a href="https://github.com/lpn-plant/lpntpm-lpc-verilog">in the lpntpm-lpc-verilog repository</a>.</p>
+<p>There are several files in this repository:</p>
+<ul>
+<li><code>lpc_periph.v</code>- <code>LPC Peripheral</code> implementation in Verilog</li>
+<li><code>lpc_host.v</code> - <code>LPC Host</code> implementation in Verilog</li>
+<li><code>lpc_defines.v</code>- auxiliary file with definition of constants used in the
+    implementation</li>
+<li><code>lpc_periph_tb.v</code> - test-bench for the <code>LPC Peripheral</code> implementation</li>
+</ul>
+<p>Another source code repository is the
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples">lpntpm-eos-s3-examples</a>.
+It contains applications (FPGA and ARM Cortex-M4 MCU) for the <code>EOS S3</code> SoC.</p>
+<p>Two applications are important here:
+* <a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication">test communication application</a>
+  - used for testing the internal communication between FPGA and MCU parts
+    using the <code>Wishbone</code> bus and interrutps,
+* <a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_With_LPC_peripheral">LPC test application</a>
+  - used for testing the <code>LPC peripheral</code> embedded into the FPGA part,
+  - application is reading LPC cycles, and displaying these cycles via UART in
+    the MCU part.</p>
+<h2 id="lpc-driver-implementation">LPC driver implementation</h2>
+<p>Because in TPM part of a project we only need to handle the I/O or TPM cycles of
+LPC protocol, we have develop a minimal implementation of the <code>LPC Peripheral</code>.
+Before writing RTL code in Verilog, we have studied several open-source
+implementations of LPC protocol, such as
+<a href="https://opencores.org/projects/wb_lpc">this one</a>.</p>
+<p>The main reference for implementation of the LPC driver was Intel company
+<a href="https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf">LPC interface Specification</a>
+document.</p>
+<p>The implementation so far can handle following types of LPC cycles:</p>
+<ul>
+<li>I/O LPC cycles (1 byte)</li>
+<li>TPM LPC cycles (1 byte)</li>
+</ul>
+<p>Other cycles of LPC protocol (such as Memory, Firmware, DMA) are not supported.</p>
+<p>This implementation is based on a simple FSM (Finite State Machine) handling
+individual phases of the LPC protocol cycle. There is also code for handling
+I/O ports and internal signals states for every phase of the LPC cycle.</p>
+<h3 id="lpc-peripheral">LPC Peripheral</h3>
+<h4 id="io-ports">I/O ports</h4>
+<p>Here is table with all I/O ports of the <code>LPC Peripheral</code> module:</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>Type</th>
+<th>Bus</th>
+<th>Port name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input</td>
+<td>wire</td>
+<td></td>
+<td>clk_i</td>
+<td>LPC clock (33,3 MHz) from LPC Host</td>
+</tr>
+<tr>
+<td>input</td>
+<td>wire</td>
+<td></td>
+<td>nrst_i</td>
+<td>Active-low reset signal</td>
+</tr>
+<tr>
+<td>input</td>
+<td>wire</td>
+<td></td>
+<td>lframe_i</td>
+<td>Active-low frame signal</td>
+</tr>
+<tr>
+<td>inout</td>
+<td>wire</td>
+<td>[ 3:0]</td>
+<td>lad_bus</td>
+<td>Multiplexed Command, Address and Data Bus</td>
+</tr>
+<tr>
+<td>input</td>
+<td>wire</td>
+<td></td>
+<td>addr_hit_i</td>
+<td></td>
+</tr>
+<tr>
+<td>output</td>
+<td>reg</td>
+<td>[ 4:0]</td>
+<td>current_state_o</td>
+<td>Current peripheral state  (FSM)</td>
+</tr>
+<tr>
+<td>input</td>
+<td>wire</td>
+<td>[ 7:0]</td>
+<td>din_i</td>
+<td>Data sent when host requests a read</td>
+</tr>
+<tr>
+<td>output</td>
+<td>reg</td>
+<td>[ 7:0]</td>
+<td>lpc_data_in_o</td>
+<td>Data received by peripheral for writing</td>
+</tr>
+<tr>
+<td>output</td>
+<td>wire</td>
+<td>[ 3:0]</td>
+<td>lpc_data_out_o</td>
+<td>Data sent to host when a read is requested</td>
+</tr>
+<tr>
+<td>output</td>
+<td>wire</td>
+<td>[15:0]</td>
+<td>lpc_addr_o</td>
+<td>16-bit LPC Peripheral Address</td>
+</tr>
+<tr>
+<td>output</td>
+<td>wire</td>
+<td></td>
+<td>lpc_en_o</td>
+<td>Active-high status signal indicating the peripheral is ready for next operation.</td>
+</tr>
+<tr>
+<td>output</td>
+<td>wire</td>
+<td></td>
+<td>io_rden_sm_o</td>
+<td>Active-high read status</td>
+</tr>
+<tr>
+<td>output</td>
+<td>wire</td>
+<td></td>
+<td>io_wren_sm_o</td>
+<td>Active-high write status</td>
+</tr>
+<tr>
+<td>output</td>
+<td>reg</td>
+<td>[31:0]</td>
+<td>TDATA</td>
+<td>32-bit register with LPC cycle: Address, Data(8-bit) and type of opertion</td>
+</tr>
+<tr>
+<td>output</td>
+<td>reg</td>
+<td></td>
+<td>READY</td>
+<td>Active-high status signal indicating that new cycle data is on TDATA</td>
+</tr>
+</tbody>
+</table>
+<p>As one can see in I/O ports of the <code>LPC Peripheral</code> module, there are four
+common signals of the <code>LPC</code> protocol (<code>LPC Host</code> is connected to `LPC Peripheral
+by these lines). These signals are:</p>
+<ul>
+<li>clk_i</li>
+<li>nrst_i</li>
+<li>lframe_i</li>
+<li>lad_bus  (this 4-bit bi-directional multiplexed bus)</li>
+</ul>
+<p>Other signals are used to control the module and display information, or for
+internal purposes.</p>
+<h4 id="details">Details</h4>
+<ol>
+<li>In line 42 of <code>lpc_periph.v</code> source is declared port:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="k">inout</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">lad_bus</span>
+</code></pre></div>
+<p>This is a bi-directional (and tri-state) 4-bit bus. This bus is multiplexed and
+in different time slots during handling of the LPC cycle this bus shows up
+various data (for example: 4-bit parts of LPC Address, LPC Data, etc.).</p>
+<p>In source file <code>lpc_defines.v</code> are definitions of FSM states constants:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">//---- FSM states definitions --------------------------</span>
+<span class="cp">   `define LPC_START       4&#39;b0000</span>
+<span class="cp">   `define LPC_STOP        4&#39;b1111</span>
+<span class="cp">   `define LPC_FW_READ     4&#39;b1101</span>
+<span class="cp">   `define LPC_FW_WRITE    4&#39;b1110</span>
+<span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</code></pre></div>
+<p>In lines from 133 to 203 of <code>lpc_periph.v</code> there is implementation of main FSM
+(Finite State Machine) supporting transitions between different phases of LPC
+protocol cycles:</p>
+<div class="highlight"><pre><span></span><code><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nrst_i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span><span class="w"> </span><span class="n">fsm_next_state</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="no">`LPC_ST_IDLE</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lframe_i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span><span class="w"> </span><span class="n">fsm_next_state</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="no">`LPC_ST_IDLE</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="p">(</span><span class="n">current_state_o</span><span class="p">)</span>
+<span class="w">            </span><span class="no">`LPC_ST_IDLE</span><span class="o">:</span>
+<span class="w">             </span><span class="k">begin</span>
+<span class="w">                 </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nrst_i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span><span class="w"> </span><span class="n">fsm_next_state</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="no">`LPC_ST_IDLE</span><span class="p">;</span>
+<span class="w">                 </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">lframe_i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">lad_bus</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mh">4&#39;h0</span><span class="p">))</span><span class="w"> </span><span class="n">fsm_next_state</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="no">`LPC_ST_START</span><span class="p">;</span>
+<span class="w">             </span><span class="k">end</span>
+<span class="w">             </span><span class="no">`LPC_ST_START</span><span class="o">:</span>
+<span class="w">              </span><span class="k">begin</span>
+<span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</code></pre></div>
+<p>In lines from 99 to 111 of <code>lpc_periph.v</code> there is always block in which is
+determined when new cycle was started and when LPC cycle data are ready these
+data are packed and copied to 32-bit <code>TDATA</code> bus:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">wasLpc_enHigh</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">                </span><span class="n">cycle_cnt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cycle_cnt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">cycle_cnt</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">cycle_cnt</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">3</span><span class="p">))</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">                    </span><span class="n">dinAbuf</span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">28</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">dinAbuf</span><span class="p">[</span><span class="mh">27</span><span class="o">:</span><span class="mh">12</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">lpc_addr_o_reg</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">dinAbuf</span><span class="p">[</span><span class="mh">11</span><span class="o">:</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">lpc_data_in_o</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">dinAbuf</span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">2</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">dinAbuf</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">cycle_type</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dinAbuf</span><span class="o">==</span><span class="n">memoryLPC</span><span class="p">[</span><span class="mh">0</span><span class="p">])</span><span class="w"> </span><span class="n">newValuedata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="w">                    </span><span class="k">else</span><span class="w"> </span><span class="n">newValuedata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">TDATA</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">dinAbuf</span><span class="p">;</span>
+<span class="w">                    </span><span class="n">memoryLPC</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">dinAbuf</span><span class="p">;</span>
+<span class="w">                </span><span class="k">end</span>
+</code></pre></div>
+<p>The format of the data on the <code>TDATA</code> bus is as follows:</p>
+<ul>
+<li>bits <code>[31:28]</code> - filled with four zeros,</li>
+<li>bits <code>[27:12]</code> - placed 16-bits <code>LPC Address</code>,</li>
+<li>bits <code>[11:4]</code> - 8-bit <code>LPC Data</code>,</li>
+<li>bits <code>[3:0]</code> - cycle type (direction),</li>
+<li><code>1</code> for write,</li>
+<li><code>0</code> for read.</li>
+</ul>
+<p>In this last <code>always</code> block is also worked out <code>READY</code> signal. When <code>READY</code> is
+High <code>(1'b1)</code>, it means that there is new cycle data on <code>TDATA</code> bus. In target
+application for the <code>EOS S3 SoC</code>, cycle data from <code>TDATA</code> bus are sent by
+the internal <code>Wishbone</code> to the MCU when this data is displayed on <code>MCU UART</code>.</p>
+<h3 id="test-bench">Test bench</h3>
+<p>Test-bench for performing simulation of the <code>LPC Peripheral</code> module is
+available in the:
+<a href="https://github.com/lpn-plant/lpntpm-lpc-verilog/blob/main/lpc_periph_tb.v">lpc_periph_tb.v file</a>.</p>
+<p>Following fragment dumps file with wave forms (<code>.vcd</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">initial</span>
+<span class="k">begin</span>
+<span class="w">    </span><span class="c1">// Initialize</span>
+<span class="w">     </span><span class="n">$dumpfile</span><span class="p">(</span><span class="s">&quot;lpc_periph_tb.vcd&quot;</span><span class="p">);</span>
+<span class="w">     </span><span class="n">$dumpvars</span><span class="p">(</span><span class="mh">0</span><span class="p">,</span><span class="n">lpc_periph_tb</span><span class="p">);</span>
+</code></pre></div>
+<p>Following fragment is a main test routine - a <code>for loop</code>, generating 128 I/O
+cycles (alternately write and read):</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">128</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">)</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">        </span><span class="c1">// Perform write</span>
+<span class="w">        </span><span class="p">#</span><span class="mh">40</span><span class="w">  </span><span class="n">LFRAME_in</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+<span class="w">        </span><span class="n">IO_Read_Flag</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mh">0</span><span class="p">;</span>
+<span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span>
+</code></pre></div>
+<p>The accomplishment of simulation before tests on hardware (FPGA board) is very
+important and we carried out this process in great detail. Manual on how to
+simulate the <code>LPC Peripheral</code> module can be found in
+<a href="https://github.com/lpn-plant/lpntpm-lpc-verilog">this README</a>.</p>
+<h4 id="results-analysis">Results analysis</h4>
+<p><img alt="LPC Peripheral simulation 01" src="../images/LPC_Peripheral_SIM_01.png" />
+Let's first look at basic LPC protocol signals:</p>
+<ul>
+<li>clk_i is LPC clock 33,3 MHz</li>
+<li>LRESET is LPC reset - active low</li>
+<li>LFRAME - Low state marks new LPC cycle</li>
+<li>rd_flag - High state marks read cycle</li>
+<li>wr_flag - high state marks write cycle</li>
+<li>host_ready - tells that Host is ready to handle next cycle</li>
+<li>periph_en - tells that LPC Peripheral is ready for next cycle</li>
+</ul>
+<p>What is also very important:</p>
+<ul>
+<li>current_periph_state[4:0] - this is 4-bit value of current peripheral FSM state</li>
+<li>current_host_state[4:0] - this is 4-bit value of current host FSM state</li>
+</ul>
+<p>One can see that states on the LPC peripheral mimics the states from LPC Host
+and sequences of states for I/O read cycle and I/O write cycle are in accordance
+with states described in the
+<a href="https://www.intel.com/content/dam/www/program/design/us/en/documents/low-pin-count-interface-specification.pdf">LPC interface specification</a>
+Conclusion: the basic LPC Protocol signals are correct in presented
+simulation.</p>
+<p><img alt="LPC Peripheral simulation 02" src="../images/LPCPeripheral_SIM_02.png" /></p>
+<p>On the second screen from <code>GTKWave</code> the time scale is a little different from
+the previous screen. Important signals here are:</p>
+<ul>
+<li>host_addr_i[15:0] - this is LPC address on LPC Host</li>
+<li>host_wr_i[7:0] - this is 8-bit LPC data on LPC Host</li>
+</ul>
+<p>One can see that these address and data with some delay appears on <code>LPC
+Peripheral</code> signals:</p>
+<ul>
+<li>periph_addr_o[15:0] - received from Host LPC address</li>
+<li>periph_wr_o[7:0] - received from Host LPC cycle data</li>
+</ul>
+<p>And finally, one can see that <code>LPC Address</code> and <code>LPC Data</code> appear with some
+delay on <code>TDATABou[31:0]</code> - on this 32-bit bus are written <code>LPC Address</code> and
+<code>LPC Data</code> as has been described above. <code>READYNET</code> signal indicates that there
+is new data on <code>TDATA</code> bus. These two last signals (<code>TDATA</code> and <code>READY</code>) are
+used for sending LPC cycle data from FPGA to the MCU part of the SoC
+application.</p>
+<p>Summing up: after watching the simulation of <code>LPC Peripheral</code> we have a solid
+foundation to say that the tested circuit is working correctly.</p>
+<h2 id="eos-s3-applications">EOS S3 applications</h2>
+<h3 id="fpga-mcu-communication">FPGA &lt;--&gt; MCU communication</h3>
+<p>The goal of this application if to test the communication between FPGA and MCU
+by internal <code>Wishbone</code> (and using interrupts).</p>
+<p><code>Quicklogic EOS S3</code> is rather complex circuit what you can see studying
+it's <a href="https://cdn.sparkfun.com/assets/f/2/a/c/5/QL-S3-Technical-Reference-Manual-revisionv1.1a.pdf">Technical Reference Manual</a>.</p>
+<p>After reading this documentation we were missing a few important details that
+were needed to implement SoC application which can send data from FPGA part to ARM
+MCU program using internal bus. Frankly speaking, we needed bi-directional
+communication between FPGA and MCU in SoC. It wasn't clear how to generate all
+needed clocks, reset signals, set up interrupts in the FPGA part, and how to
+declare signals controlling the behavior of the internal bus.</p>
+<p>Happily for us, one of employee of <code>Quicklogic Corporation</code> posted
+<a href="https://github.com/coolbreeze413/qorc-onion-apps">in his Github repository</a>
+very valuable examples of applications for the <code>EOS S3</code> SoC.</p>
+<p><a href="https://github.com/coolbreeze413/qorc-onion-apps/tree/master/qorc_fpga_compositeGPBTctrl">One of these examples</a>
+has been using such communication between FPGA and MCU parts of SoC. Based on
+this, we wrote
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication">simpler application</a>
+using comunication between FPGA and MCU using <code>Wishbone</code>, and interrupts from
+FPGA to MCU.</p>
+<p>In the
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/blob/master/SOC_EOS_S3_Application_Test_comunication/fpga/rtl/AL4S3B_FPGA_Top.v">AL4S3B_FPGA_Top.v</a>:
+one can see that top module:</p>
+<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">AL4S3B_FPGA_Top</span><span class="w"> </span><span class="p">(</span>
+
+<span class="w">    </span><span class="c1">// io_pad(s) from constraint file</span>
+<span class="w">    </span><span class="n">io_pad</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>hasn't declared clock and asynchronous reset. We found that needed clocks and
+other signals (for example resets, Wishbone bus signals, etc.) are injected
+into the top module by use of the <code>cell_macro</code> primitive. <code>cell_macro</code> is part
+of SoC hardware (Similiar to IP core). It gave us the explanation of things
+that weren't clear before studying this example application. Here is the
+<code>cell_macro</code> used for generating clocks and other important signals for SoC:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Verilog model of QLAL4S3B</span>
+<span class="n">qlal4s3b_cell_macro</span>
+<span class="w">    </span><span class="n">u_qlal4s3b_cell_macro</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">// AHB-To-FPGA Bridge</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_ADR</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_ADR</span><span class="w">                        </span><span class="p">),</span><span class="w"> </span><span class="c1">// output [16:0] | Address Bus                   to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_CYC</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_CYC</span><span class="w">                        </span><span class="p">),</span><span class="w"> </span><span class="c1">// output        | Cycle Chip Select             to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_BYTE_STB</span><span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_BYTE_STB</span><span class="w">                   </span><span class="p">),</span><span class="w"> </span><span class="c1">// output  [3:0] | Byte Select                   to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_WE</span><span class="w">                    </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_WE</span><span class="w">                         </span><span class="p">),</span><span class="w"> </span><span class="c1">// output        | Write Enable                  to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_RD</span><span class="w">                    </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_RD</span><span class="w">                         </span><span class="p">),</span><span class="w"> </span><span class="c1">// output        | Read  Enable                  to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_STB</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_STB</span><span class="w">                        </span><span class="p">),</span><span class="w"> </span><span class="c1">// output        | Strobe Signal                 to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_WR_DAT</span><span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_WR_DAT</span><span class="w">                     </span><span class="p">),</span><span class="w"> </span><span class="c1">// output [31:0] | Write Data Bus                to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WB_CLK</span><span class="w">                    </span><span class="p">(</span><span class="w"> </span><span class="n">WB_CLK</span><span class="w">                         </span><span class="p">),</span><span class="w"> </span><span class="c1">// input         | FPGA Clock                    from FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WB_RST</span><span class="w">                    </span><span class="p">(</span><span class="w"> </span><span class="n">WB_RST</span><span class="w">                         </span><span class="p">),</span><span class="w"> </span><span class="c1">// output        | FPGA Reset                    to   FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_RD_DAT</span><span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_RD_DAT</span><span class="w">                     </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [31:0] | Read Data Bus                 from FPGA</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_ACK</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_ACK</span><span class="w">                        </span><span class="p">),</span><span class="w"> </span><span class="c1">// input         | Transfer Cycle Acknowledge    from FPGA</span>
+
+<span class="w">        </span><span class="c1">// SDMA Signals</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SDMA_Req</span><span class="w">                  </span><span class="p">(</span><span class="w"> </span><span class="p">{</span><span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}</span><span class="w">                 </span><span class="p">),</span><span class="w"> </span><span class="c1">// input   [3:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SDMA_Sreq</span><span class="w">                 </span><span class="p">(</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="w">                        </span><span class="p">),</span><span class="w"> </span><span class="c1">// input   [3:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SDMA_Done</span><span class="w">                 </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output  [3:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SDMA_Active</span><span class="w">               </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output  [3:0]</span>
+
+<span class="w">        </span><span class="c1">// FB Interrupts</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_msg_out</span><span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">,</span><span class="w"> </span><span class="n">FPGA_INTR</span><span class="p">[</span><span class="mh">0</span><span class="p">]}),</span><span class="w"> </span><span class="c1">// input   [3:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_Int_Clr</span><span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="mh">8&#39;h0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input   [7:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_Start</span><span class="w">                  </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_Busy</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+
+<span class="w">        </span><span class="c1">// FB Clocks</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Clk0</span><span class="w">                  </span><span class="p">(</span><span class="w"> </span><span class="n">Sys_Clk0</span><span class="w">                       </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Clk0_Rst</span><span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="n">Sys_Clk0_Rst</span><span class="w">                   </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Clk1</span><span class="w">                  </span><span class="p">(</span><span class="w"> </span><span class="n">Sys_Clk1</span><span class="w">                       </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Clk1_Rst</span><span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="n">Sys_Clk1_Rst</span><span class="w">                   </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+
+<span class="w">        </span><span class="c1">// Packet FIFO</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_PKfb_Clk</span><span class="w">              </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_PKfb_Rst</span><span class="w">              </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData</span><span class="w">               </span><span class="p">(</span><span class="w"> </span><span class="mh">32&#39;h0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [31:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbPush</span><span class="w">               </span><span class="p">(</span><span class="w">  </span><span class="mh">4&#39;h0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input   [3:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbSOF</span><span class="w">                </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbEOF</span><span class="w">                </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbOverflow</span><span class="w">           </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+
+<span class="w">        </span><span class="c1">// Sensor Interface</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sensor_Int</span><span class="w">                </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output  [7:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">TimeStamp</span><span class="w">                 </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output [23:0]</span>
+
+<span class="w">        </span><span class="c1">// SPI Master APB Bus</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Pclk</span><span class="w">                  </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_Pclk_Rst</span><span class="w">              </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output      &lt;-- Fixed to add &quot;_Rst&quot;</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_PSel</span><span class="w">                  </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_Paddr</span><span class="w">                </span><span class="p">(</span><span class="w"> </span><span class="mh">16&#39;h0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [15:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PEnable</span><span class="w">              </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWrite</span><span class="w">               </span><span class="p">(</span><span class="w">  </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata</span><span class="w">               </span><span class="p">(</span><span class="w"> </span><span class="mh">32&#39;h0</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [31:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_Prdata</span><span class="w">               </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output [31:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PReady</span><span class="w">               </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PSlvErr</span><span class="w">              </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output</span>
+
+<span class="w">        </span><span class="c1">// Misc</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Device_ID</span><span class="w">                 </span><span class="p">(</span><span class="w"> </span><span class="n">Device_ID</span><span class="w">                      </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [15:0]</span>
+
+<span class="w">        </span><span class="c1">// FBIO Signals</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FBIO_In</span><span class="w">                   </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// output [13:0] &lt;-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FBIO_In_En</span><span class="w">                </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [13:0] &lt;-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FBIO_Out</span><span class="w">                  </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [13:0] &lt;-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FBIO_Out_En</span><span class="w">               </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// input  [13:0] &lt;-- Do Not make any connections; Use Constraint manager in SpDE to sFBIO</span>
+
+<span class="w">        </span><span class="c1">// ???</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SFBIO</span><span class="w">                     </span><span class="p">(</span><span class="w">                                </span><span class="p">),</span><span class="w"> </span><span class="c1">// inout  [13:0]</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Device_ID_6S</span><span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Device_ID_4S</span><span class="w">              </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata_26S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata_24S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata_14S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata_11S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_PWdata_0S</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_Paddr_8S</span><span class="w">             </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">SPIm_Paddr_6S</span><span class="w">             </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbPush_1S</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData_31S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData_21S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData_19S</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData_9S</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_PKfbData_6S</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_PKfb_ClkS</span><span class="w">             </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">FB_BusyS</span><span class="w">                  </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">),</span><span class="w"> </span><span class="c1">// input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WB_CLKS</span><span class="w">                   </span><span class="p">(</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="w">                           </span><span class="p">)</span><span class="w">  </span><span class="c1">// input</span>
+
+<span class="w">    </span><span class="p">);</span>
+</code></pre></div>
+<p>As one can see there is much more than only clocks. There is one big
+disadvantage related to using the <code>cell_macro</code> construct. This <code>cell macro</code> is
+just a <code>black box</code> and we haven't any model of how it works. This fact makes it
+an impossible simulation of FPGA is part of the application for SoC <code>EOS S3</code>,
+so we can't determine this way if an application is working properly. We just
+check if communication between FPGA and ARM Cortex-M4 MCU using <code>Wishbone</code> bu
+to <code>AHB</code> bridge and interrupts using hardware.</p>
+<p>In the
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/blob/master/SOC_EOS_S3_Application_Test_comunication/fpga/rtl/AL4S3B_FPGA_ONION_LPCCTRL.v">AL4S3B_FPGA_ONION_LPCCTRL.v</a>
+we have declared three 32-bit registers:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">reg</span><span class="w">     </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">  </span><span class="n">BREATHE_0_CONFIG</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h00000010</span><span class="p">;</span>
+<span class="kt">reg</span><span class="w">     </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">  </span><span class="n">BREATHE_1_CONFIG</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h00002000</span><span class="p">;</span>
+<span class="kt">reg</span><span class="w">     </span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">  </span><span class="n">BREATHE_2_CONFIG</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mh">32&#39;h03000000</span><span class="p">;</span>
+</code></pre></div>
+<p>Then in the <code>always</code> block:</p>
+<div class="highlight"><pre><span></span><code><span class="w">     </span><span class="c1">//-----------------------------------------------</span>
+<span class="w">       </span><span class="n">cnt3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cnt3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">cnt3</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mh">1024000</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">cnt3</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">1024900</span><span class="p">))</span>
+<span class="w">       </span><span class="k">begin</span><span class="w"> </span><span class="c1">//period 1.25s</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cnt3</span><span class="o">==</span><span class="mh">1024000</span><span class="p">)</span>
+<span class="w">         </span><span class="k">begin</span>
+<span class="w">           </span><span class="n">BREATHE_0_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREATHE_0_CONFIG</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+<span class="w">           </span><span class="n">BREATHE_1_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREATHE_1_CONFIG</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+<span class="w">           </span><span class="n">BREATHE_2_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BREATHE_2_CONFIG</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="p">;</span>
+<span class="w">         </span><span class="k">end</span>
+<span class="w">         </span><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b1111</span><span class="p">;</span><span class="w">  </span><span class="c1">//activate interrupt for MCU part</span>
+<span class="w">       </span><span class="k">end</span>
+<span class="w">       </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cnt3</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mh">1024900</span><span class="p">)</span>
+<span class="w">       </span><span class="k">begin</span>
+<span class="w">          </span><span class="n">cnt3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">20&#39;h00000</span><span class="p">;</span>
+<span class="w">          </span><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span><span class="w">  </span><span class="c1">//deactivate interrupt for MCU part</span>
+<span class="w">       </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+</code></pre></div>
+<p>we periodically increment these registers, and set <code>TIMER_o = 4'b1111</code> signal,
+which is interrupt vector passed to MCU. When MCU gets this intterupt, it
+programatically reads these registers by internal <code>Wishbone</code> to <code>AHB</code> bridge.
+After short time, the interrupt in FPGA is deactivated:</p>
+<div class="highlight"><pre><span></span><code><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+</code></pre></div>
+<p>On the MCU side, there is a handler for message generated in the ISR. In RTOS
+task code we have such fragment:</p>
+<div class="highlight"><pre><span></span><code><span class="w">      </span><span class="k">case</span><span class="w"> </span><span class="no">TIMERCTRL0_ISR</span><span class="p">:</span>
+<span class="w">                    </span><span class="n">dbg_str</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Interrupt occured ISR</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">register0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hal_fpga_onion_breath_getval_reg</span><span class="w"> </span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">dbg_str</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">dbg_str_hex32</span><span class="p">(</span><span class="s">&quot;Register0: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">register0</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">register1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hal_fpga_onion_breath_getval_reg</span><span class="w"> </span><span class="p">(</span><span class="mi">21</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="n">dbg_str</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">dbg_str_hex32</span><span class="p">(</span><span class="s">&quot;Register1: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">register1</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">register2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hal_fpga_onion_breath_getval_reg</span><span class="w"> </span><span class="p">(</span><span class="mi">18</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="n">dbg_str</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">dbg_str_hex32</span><span class="p">(</span><span class="s">&quot;Register2: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">register2</span><span class="p">);</span>
+
+<span class="w">                    </span><span class="k">break</span><span class="p">;</span>
+</code></pre></div>
+<p>When message is detected, the values of these three registers are
+read from FPGA and displayed by MCU UART.</p>
+<p>Documentation on building and testing this application can be found in
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_Test_comunication">it's README</a>.</p>
+<p>After test application is built and loaded to hardware, we can see changing
+values via UART (incremented by one in cycle) of the three test register which
+are getting read from the FPGA:</p>
+<p><img alt="SoC MCU UART window" src="../images/UART_SoC_MCU.png" /></p>
+<h3 id="embedded-lpc-peripheral">Embedded LPC Peripheral</h3>
+<p>In the final step of this part of the development, we have embeded
+<code>LPC Peripheral</code> developed previously into <code>EOS S3</code> SoC application.</p>
+<p>As mentioned before, we cannot simulate the FPGA part of the SoC application
+because of the use of the <code>cell_macro</code> construction. But the <code>LPC Peripheral</code>
+was simulated before, so it should not be a huge problem.</p>
+<p>This application along with short documentation can be found in the
+<a href="https://github.com/lpn-plant/lpntpm-eos-s3-examples/tree/master/SOC_EOS_S3_Application_With_LPC_peripheral">lpntpm-eos-s3-examples repoistory</a>.</p>
+<p>What was changed in FPGA part of application:</p>
+<ol>
+<li>
+<p>In top module <code>AL4S3B_FPGA_Top</code> were additional ports of LPC protocol added:</p>
+<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">AL4S3B_FPGA_Top</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">// LPC Slave Interface</span>
+<span class="w">    </span><span class="n">lpc_lclk_top</span><span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="c1">// LPC clock 33 MHz     (external from LPC Host)</span>
+<span class="w">    </span><span class="n">lpc_lreset_n_top</span><span class="w">     </span><span class="p">,</span><span class="w"> </span><span class="c1">// Reset - Active Low   (external from LPC Host)</span>
+<span class="w">    </span><span class="n">lpc_lframe_n_top</span><span class="w">      </span><span class="p">,</span><span class="w"> </span><span class="c1">// Frame - Active Low   (external from LPC Host)</span>
+<span class="w">    </span><span class="n">lpc_lad_in_top</span><span class="w">       </span><span class="p">,</span><span class="w"> </span><span class="c1">// Bi-directional 4-bit LAD bus (tri-state) (external from LPC Host)</span>
+
+<span class="w">    </span><span class="c1">// io_pad(s) from constraint file</span>
+<span class="w">    </span><span class="n">io_pad</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">//Wisbone bys clock 80 MHz</span>
+<span class="w">    </span><span class="n">clk80Mhz</span>
+<span class="p">);</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// io_pad(s)</span>
+<span class="k">inout</span><span class="w">   </span><span class="kt">wire</span><span class="w">    </span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">   </span><span class="n">io_pad</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="c1">//Decreased from [31:0]</span>
+
+<span class="c1">// LPC Slave Interface</span>
+<span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">        </span><span class="n">lpc_lclk_top</span><span class="w">         </span><span class="p">;</span><span class="w"> </span><span class="c1">// LPC clock 33 MHz</span>
+<span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">        </span><span class="n">lpc_lreset_n_top</span><span class="w">     </span><span class="p">;</span><span class="w"> </span><span class="c1">// Reset - Active Low</span>
+<span class="k">input</span><span class="w">  </span><span class="kt">wire</span><span class="w">        </span><span class="n">lpc_lframe_n_top</span><span class="w">     </span><span class="p">;</span><span class="w"> </span><span class="c1">// Frame - Active Low</span>
+<span class="k">inout</span><span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">lpc_lad_in_top</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="c1">// Bi-directional 4-bit LAD bus (tri-state)</span>
+
+<span class="c1">//Wisbone clock</span>
+<span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">wire</span><span class="w"> </span><span class="n">clk80Mhz</span><span class="p">;</span><span class="w">               </span><span class="c1">//Clock 80 MHz</span>
+</code></pre></div>
+</li>
+<li>
+<p>In module <code>AL4S3B_FPGA_IP</code>, also ports of the <code>LPC protocol</code> had been added:</p>
+<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">AL4S3B_FPGA_IP</span><span class="w"> </span><span class="p">(</span>
+
+<span class="w">    </span><span class="c1">// CLOCK/RESET</span>
+<span class="w">    </span><span class="n">CLK_IP_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">RST_IP_i</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// AHB-To_FPGA Bridge I/F</span>
+<span class="w">    </span><span class="n">WBs_ADR</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_CYC</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_BYTE_STB</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_WE</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_RD</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_STB</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_WR_DAT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WB_CLK</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WB_RST</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_RD_DAT</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_ACK</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// io_pad</span>
+<span class="w">    </span><span class="n">io_pad</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// FPGA Interrupts</span>
+<span class="w">    </span><span class="n">FPGA_INTR</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// LPC Slave Interface</span>
+<span class="w">    </span><span class="n">lpc_lclk</span><span class="p">,</span><span class="w">     </span><span class="c1">// LPC clock 33 MHz</span>
+<span class="w">    </span><span class="n">lpc_lreset_n</span><span class="p">,</span><span class="w"> </span><span class="c1">// Reset - Active Low</span>
+<span class="w">    </span><span class="n">lpc_lframe_n</span><span class="p">,</span><span class="w"> </span><span class="c1">// LPC Frame - Active Low</span>
+<span class="w">    </span><span class="n">lpc_lad_in</span><span class="w">    </span><span class="c1">// Bi-directional 4-bit LAD bus (tri-state)</span>
+
+<span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p>During instantation of the <code>AL4S3B_FPGA_ONION_LPCCTRL</code> module (in which
+   <code>LPC Peripheral</code> is embbeded) - these ports also had been added:</p>
+<div class="highlight"><pre><span></span><code><span class="n">AL4S3B_FPGA_ONION_LPCCTRL</span>
+<span class="w">    </span><span class="n">u_AL4S3B_FPGA_ONION_LPCCTRL</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="c1">// AHB-To_FPGA Bridge I/F</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_ADR_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_ADR</span><span class="w">                           </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_CYC_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_CYC_ONION_LPCCTRL</span><span class="w">             </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_BYTE_STB_i</span><span class="w">     </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_BYTE_STB</span><span class="w">                      </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_WE_i</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_WE</span><span class="w">                            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_STB_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_STB</span><span class="w">                           </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_DAT_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_WR_DAT</span><span class="w">                        </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_CLK_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WB_CLK</span><span class="w">                            </span><span class="p">),</span><span class="w"> </span><span class="c1">//80 MHz</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_RST_i</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WB_RST</span><span class="w">                            </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_DAT_o</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_DAT_o_ONION_LPCCTRL</span><span class="w">           </span><span class="p">),</span>
+<span class="w">        </span><span class="p">.</span><span class="n">WBs_ACK_o</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">WBs_ACK_ONION_LPCCTRL</span><span class="w">             </span><span class="p">),</span>
+
+<span class="w">        </span><span class="c1">//System clk</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_clk</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="n">CLK_IP_i</span><span class="w">                          </span><span class="p">),</span><span class="w"> </span><span class="c1">//33 MHz</span>
+
+<span class="w">        </span><span class="c1">//System reset</span>
+<span class="w">        </span><span class="p">.</span><span class="n">Sys_reset</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">RST_IP_i</span><span class="w">                          </span><span class="p">),</span>
+
+<span class="w">        </span><span class="c1">// BREATHE signals</span>
+<span class="w">        </span><span class="p">.</span><span class="n">BREATHE_o</span><span class="w">          </span><span class="p">(</span><span class="w"> </span><span class="n">FPGA_IP_LPC_o</span><span class="p">[</span><span class="mh">31</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w">               </span><span class="p">),</span>
+
+<span class="w">        </span><span class="c1">// TIMER output interrupts</span>
+<span class="w">        </span><span class="p">.</span><span class="n">TIMER_o</span><span class="w">            </span><span class="p">(</span><span class="w"> </span><span class="n">FPGA_INTR</span><span class="w">                         </span><span class="p">),</span>
+
+<span class="w">        </span><span class="c1">// LPC Slave Interface</span>
+<span class="w">        </span><span class="p">.</span><span class="n">lpc_lclk</span><span class="w">           </span><span class="p">(</span><span class="w"> </span><span class="n">lpc_lclk</span><span class="w">                          </span><span class="p">),</span><span class="w">   </span><span class="c1">// LPC Frame input (active high)</span>
+<span class="w">        </span><span class="p">.</span><span class="n">lpc_lreset_n</span><span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">lpc_lreset_n</span><span class="w">                      </span><span class="p">),</span><span class="w">      </span><span class="c1">// LPC AD Output Enable</span>
+<span class="w">        </span><span class="p">.</span><span class="n">lpc_lframe_n</span><span class="w">       </span><span class="p">(</span><span class="w"> </span><span class="n">lpc_lframe_n</span><span class="w">                      </span><span class="p">),</span><span class="w">       </span><span class="c1">// LPC AD Input Bus</span>
+<span class="w">        </span><span class="p">.</span><span class="n">lpc_lad_in</span><span class="w">         </span><span class="p">(</span><span class="w"> </span><span class="n">lpc_lad_in</span><span class="w">                        </span><span class="p">),</span><span class="w">       </span><span class="c1">// LPC AD Output Bus</span>
+<span class="w">    </span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p>In module <code>AL4S3B_FPGA_ONION_LPCCTRL</code> I/O ports look like:</p>
+<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">AL4S3B_FPGA_ONION_LPCCTRL</span><span class="w"> </span><span class="p">(</span>
+
+<span class="w">    </span><span class="c1">// AHB-To_FPGA Bridge I/F</span>
+<span class="w">    </span><span class="n">WBs_ADR_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_CYC_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_BYTE_STB_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_WE_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_STB_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_DAT_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_CLK_i</span><span class="p">,</span><span class="w">  </span><span class="c1">//80 MHz</span>
+<span class="w">    </span><span class="n">WBs_RST_i</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_DAT_o</span><span class="p">,</span>
+<span class="w">    </span><span class="n">WBs_ACK_o</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// System clk 33 MHz</span>
+<span class="w">    </span><span class="n">Sys_clk</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">//System reset</span>
+<span class="w">    </span><span class="n">Sys_reset</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// BREATHE signals</span>
+<span class="w">    </span><span class="n">BREATHE_o</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// TIMER signals</span>
+<span class="w">    </span><span class="n">TIMER_o</span><span class="p">,</span>
+
+<span class="w">    </span><span class="c1">// LPC Slave Interface</span>
+<span class="w">    </span><span class="n">lpc_lclk</span><span class="p">,</span><span class="w">     </span><span class="c1">// LPC clock 33 MHz</span>
+<span class="w">    </span><span class="n">lpc_lreset_n</span><span class="p">,</span><span class="w"> </span><span class="c1">// Reset - Active Low</span>
+<span class="w">    </span><span class="n">lpc_lframe_n</span><span class="p">,</span><span class="w"> </span><span class="c1">// LPC Frame - Active Low</span>
+<span class="w">    </span><span class="n">lpc_lad_in</span><span class="w">    </span><span class="c1">// Bi-directional 4-bit LAD bus (tri-state)</span>
+<span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p>In lines from 289 there is instantation of developed earlier "LPC_Peri" module:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">//***************************</span>
+<span class="c1">// LPC Peripheral instantiation</span>
+<span class="c1">//***************************</span>
+<span class="n">lpc_periph</span><span class="w"> </span><span class="n">lpc_periph_inst</span><span class="p">(</span>
+<span class="c1">// LPC Interface</span>
+<span class="p">.</span><span class="n">clk_i</span><span class="p">(</span><span class="n">lpc_lclk</span><span class="p">),</span>
+<span class="p">.</span><span class="n">nrst_i</span><span class="p">(</span><span class="n">lpc_lreset_n</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lframe_i</span><span class="p">(</span><span class="n">lpc_lframe_n</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lad_bus</span><span class="p">(</span><span class="n">lpc_lad_in</span><span class="p">),</span>
+<span class="p">.</span><span class="n">addr_hit_i</span><span class="p">(</span><span class="n">i_addr_hit_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">current_state_o</span><span class="p">(</span><span class="n">o_current_peri_state_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">din_i</span><span class="p">(</span><span class="n">i_din_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lpc_data_in_o</span><span class="p">(</span><span class="n">o_lpc_data_in_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lpc_data_out_o</span><span class="p">(</span><span class="n">o_lpc_data_out_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lpc_addr_o</span><span class="p">(</span><span class="n">o_lpc_addr_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">lpc_en_o</span><span class="p">(</span><span class="n">o_lpc_en_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">io_wren_sm_o</span><span class="p">(</span><span class="n">o_io_wren_sm_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">io_rden_sm_o</span><span class="p">(</span><span class="n">o_io_wren_sm_sig</span><span class="p">),</span>
+<span class="c1">//----------------------------------</span>
+<span class="p">.</span><span class="n">TDATA</span><span class="p">(</span><span class="n">TDATA_sig</span><span class="p">),</span>
+<span class="p">.</span><span class="n">READY</span><span class="p">(</span><span class="n">READY_sig</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+</li>
+</ol>
+<p><strong>Caution:</strong> currently in module <code>AL4S3B_FPGA_ONION_LPCCTRL</code> we have two clock
+domains:</p>
+<ul>
+<li>one: with <code>WBs_CLK_i</code> - it is 80 MHz internal SoC Wishbone Bus clock</li>
+<li>second: <code>lpc_lclk</code> - it is external 33 MHz LPC clock (from LPC Host)</li>
+</ul>
+<p>Using multiple clock domains requires taking <a href="https://www.icdesigntips.com/2020/12/understanding-cdc-issues-in-digital-ic.html">special steps</a> in module
+implementation. For this reason, in module code (lines from 214 to 230) is
+generated signal clock enable for the LPC clock (33MHz):</p>
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="n">generating</span><span class="w"> </span><span class="n">clock_33Mhz_enable</span><span class="w"> </span><span class="n">signal</span>
+<span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">WBs_CLK_i</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="c1">//if (WBs_CLK_i)</span>
+<span class="w">  </span><span class="c1">//begin</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">counter</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">divisor</span><span class="p">)</span>
+<span class="w">    </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+<span class="w">      </span><span class="n">clock_33Mhz_enable</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="k">begin</span>
+<span class="w">      </span><span class="n">clock_33Mhz_enable</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+<span class="w">      </span><span class="n">counter</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">counter</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="c1">//end</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Here is <code>always</code> block for generating interrupt signal from FPGA 2 MCU(this
+interrupt cause that MCU reads register with LPC cycle data from FPGA):</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Logic for determine cycle type and send cycle data</span>
+<span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="w"> </span><span class="k">posedge</span><span class="w"> </span><span class="n">WBs_CLK_i</span><span class="p">)</span>
+<span class="k">begin</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">clock_33Mhz_enable</span><span class="p">)</span>
+<span class="w">  </span><span class="k">begin</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">READY_sig</span><span class="p">)</span>
+<span class="w">     </span><span class="k">begin</span>
+<span class="w">       </span><span class="n">BREATHE_0_CONFIG_TMP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TDATA_sig</span><span class="p">;</span><span class="w"> </span><span class="c1">//all cycle data sent in one 32-bit register</span>
+<span class="w">       </span><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b1111</span><span class="p">;</span><span class="w">  </span><span class="c1">//activate interrupt for MCU part</span>
+<span class="w">     </span><span class="k">end</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="w">     </span><span class="k">begin</span>
+<span class="w">       </span><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span><span class="w">  </span><span class="c1">//deactivate interrupt for MCU part</span>
+<span class="w">     </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="n">TIMER_o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div>
+<p>Then, in C source file <code>mininimal_task.c</code> is code which handles interrupt from
+FPGA and reads register from FPGA and decodes LPC Address, LPC Data, cycle type
+and prints these data on MCU UART. BTW: in source file:
+<code>fpga/src/hal_fpga_onion_timerctrl.c</code> is located code related to interrupts
+handling.</p>
+<p>As we mentioned earlier, we weren't able to simulate this code, because of using
+<code>cell_macro</code> construct.</p>
+<h2 id="further-plans">Further plans</h2>
+<p>The current development of this project is starting point for development of
+full <code>TPM</code> hardware module with <code>LPC</code> protocol support.</p>
+<p>In next steps we plan to:</p>
+<ol>
+<li>Test working LPC protocol with <code>EOS S3</code> application on the Thing Plus board.
+   We have implemented <code>LPC Host</code> Verilog module, which is needed for the test
+   of <code>LPC Peripheral</code> on hardware. We are going to run <code>LPC Host</code> on second
+   FPGA board connected by wires to the <code>Thing Plus</code> board and test correctness
+   of operation of the LPC peripheral not only in simulation, but on real
+   hardware as well. We also planning to write <code>Test Generator</code> for <code>LPC Host</code>
+   as a Verilog module - which will be able to generate test signals. Moreover,
+   we want to test this <code>LPC Peripheral</code> module not only with test <code>LPC Host</code>,
+   but also with real mainboard.</li>
+<li>After determining that LPC cycles are properly detected and send to MCU in
+   SoC application, we are going to extend it to send back response by LPC
+   protocol lines in FPGA. We will define TPM registers in MCU and TPM cycles
+   of LPC protocol should be able to write and read from these registers
+   using LPC protocol.</li>
+<li>Next step is to develop full TPM module based on the
+   <a href="https://github.com/lpn-plant/ms-tpm-20-ref">Microsoft TPM module reference 2.0</a>reference Microsoft TPM
+   module source code, which would work with this TPM driver.</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

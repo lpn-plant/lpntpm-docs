@@ -1,0 +1,1047 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/sparkfun-thingplus/">
+      
+      
+        <link rel="prev" href="../rpi_faq/">
+      
+      
+        <link rel="next" href="../further_project_development/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>Development on SparkFun Thing+ - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#developing-on-sparkfun-thing-board" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Development on SparkFun Thing+
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instrumentation/" class="md-nav__link">
+        TPM driver instrumentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../issues/" class="md-nav__link">
+        Current issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_modules_pinout/" class="md-nav__link">
+        TPM modules pinout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Development on SparkFun Thing+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Development on SparkFun Thing+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-boot" class="md-nav__link">
+    First boot
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flashing-firmware-to-device" class="md-nav__link">
+    Flashing firmware to device
+  </a>
+  
+    <nav class="md-nav" aria-label="Flashing firmware to device">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flashing-through-openocd" class="md-nav__link">
+    Flashing through OpenOCD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparing-flashing-tools" class="md-nav__link">
+    Preparing flashing tools
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-zephyr-hello-world" class="md-nav__link">
+    Running Zephyr hello world
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-components-bootloader-fpgas" class="md-nav__link">
+    Other components, bootloader, FPGAs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovering-from-bad-flash" class="md-nav__link">
+    Recovering from bad flash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-synthesis" class="md-nav__link">
+    FPGA synthesis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-demo-applications" class="md-nav__link">
+    FPGA demo applications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dev/" class="md-nav__link">
+        SPI interface - implementation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TPM_with_LPC_protocol/" class="md-nav__link">
+        LPC driver - implementation
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#first-boot" class="md-nav__link">
+    First boot
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flashing-firmware-to-device" class="md-nav__link">
+    Flashing firmware to device
+  </a>
+  
+    <nav class="md-nav" aria-label="Flashing firmware to device">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flashing-through-openocd" class="md-nav__link">
+    Flashing through OpenOCD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparing-flashing-tools" class="md-nav__link">
+    Preparing flashing tools
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-zephyr-hello-world" class="md-nav__link">
+    Running Zephyr hello world
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-components-bootloader-fpgas" class="md-nav__link">
+    Other components, bootloader, FPGAs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recovering-from-bad-flash" class="md-nav__link">
+    Recovering from bad flash
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-synthesis" class="md-nav__link">
+    FPGA synthesis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fpga-demo-applications" class="md-nav__link">
+    FPGA demo applications
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="developing-on-sparkfun-thing-board">Developing on SparkFun Thing+ board</h1>
+<p>SparkFun Thing+ is a board based on, and compatible with QuickLogic FeatherLite
+board. It has EOS S3 which is ARM Cortex-M4 MCU with embedded FPGA. See
+<a href="https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide">this link</a>
+for official documentation.</p>
+<h2 id="first-boot">First boot</h2>
+<p>Device comes pre-flashed with diagnostic firmware, when device boots it flashes
+blue led for a few seconds, then pressing reset button will trigger diagnostic
+firmware and device exposes serial port over USB (CDC ACM).</p>
+<h2 id="flashing-firmware-to-device">Flashing firmware to device</h2>
+<p>Flashing can be performed in two way, either through bootloader or through SWD.
+Bootloader flashing mode can be triggered by pressing the reset button followed
+by pressing the user button. Green LED should start breathing. If LED blinks
+blue and green then an error has occurred (this happened on the firmware that
+came pre-installed on the device, flashing through SWD was required).</p>
+<p>Device came with broken firmware version, which prevents firmware flashing,
+please see <a href="#recovering-from-bad-flash">Recovering from bad flash</a> section -
+recovery process involves reflashing bootloader and USB FPGA with a working
+properly working version.</p>
+<blockquote>
+<p>Note: original bootloader version had a weird quirk - having UART connected,
+was causing bootloader to actually enter download mode, however attempt to
+flash m4app resulted in corrupting bootloader and USB FPGA.</p>
+</blockquote>
+<h3 id="flashing-through-openocd">Flashing through OpenOCD</h3>
+<p>For flashing through OpenOCD following equipment is required</p>
+<ul>
+<li>Debugger supporting OpenOCD, e.g.
+  <a href="https://www.olimex.com/Products/ARM/JTAG/ARM-USB-OCD-H/">Olimex ARM-USB-OCD-H</a>
+  (requires also <a href="https://www.olimex.com/Products/ARM/JTAG/ARM-JTAG-SWD/">ARM-JTAG-SWD</a>
+  adapter)</li>
+<li><a href="https://www.adafruit.com/product/1675">SWD cable</a></li>
+</ul>
+<p>When flashing firmware over SWD you need to put jumpers on J2 and J3. You need
+OpenOCD version 0.11, if your distro provides older version you have to build
+OpenOCD yourself.</p>
+<div class="highlight"><pre><span></span><code>apt build-dep openocd
+git clone https://github.com/openocd-org/openocd --branch v0.11.0 --depth=1
+cd openocd
+./bootstrap
+mkdir build &amp;&amp; cd build
+../configure --prefix=/opt/openocd
+make -j$(nproc)
+make install
+</code></pre></div>
+<p>Flash device is an external SPI flash and OpenOCD can't handle it - in order to
+write flash bootloader is required. Prebuilt bootloader is available
+<a href="https://github.com/QuickLogic-Corp/quick-feather-dev-board">here</a>,
+source is also available in
+<a href="https://github.com/QuickLogic-Corp/qorc-sdk">qorc-sdk</a> repo.</p>
+<p>Clone repository with prebuilt bootloader</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/QuickLogic-Corp/quick-feather-dev-board
+</code></pre></div>
+<p>Connect board to debugger using SWD cable, make sure jumpers are in place, plug
+USB cable and then type the following command</p>
+<div class="highlight"><pre><span></span><code>/opt/openocd/bin/openocd<span class="w"> </span>-f<span class="w"> </span>interface/ftdi/olimex-arm-usb-ocd-h.cfg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-f<span class="w"> </span>interface/ftdi/olimex-arm-jtag-swd.cfg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-f<span class="w"> </span>board/quicklogic_quickfeather.cfg<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-c<span class="w"> </span>init<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-c<span class="w"> </span>reset<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-c<span class="w"> </span><span class="s2">&quot;load_image quick-feather-dev-board/binaries/qf_loadflash.bin 0x0 bin&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-c<span class="w"> </span>reset<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-c<span class="w"> </span><span class="nb">exit</span>
+</code></pre></div>
+<p>Green LED should immediatelly light up and host should detect new CDC ACM device</p>
+<div class="highlight"><pre><span></span><code>[881016.294497] usb 3-2: new full-speed USB device number 25 using xhci_hcd
+[881016.443375] usb 3-2: New USB device found, idVendor=1d50, idProduct=6130, bcdDevice= 0.00
+[881016.443384] usb 3-2: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[881016.445132] cdc_acm 3-2:1.0: ttyACM0: USB ACM device
+</code></pre></div>
+<p>Now device can be flashed through USB.</p>
+<h3 id="preparing-flashing-tools">Preparing flashing tools</h3>
+<p>Firmware can be flashed through <a href="https://github.com/QuickLogic-Corp/TinyFPGA-Programmer-Application/">QuickLogic's TinyFPGA programmer</a>
+fork. Please follow the instructions below to prepare programmer.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/QuickLogic-Corp/TinyFPGA-Programmer-Application<span class="w"> </span>--recurse-submodules
+<span class="nb">cd</span><span class="w"> </span>TinyFPGA-Programmer-Application
+git<span class="w"> </span>checkout<span class="w"> </span>97149cab9126e70cc1aeeca6ba023520ae18ce60
+pip3<span class="w"> </span>install<span class="w"> </span>tinyfpgab
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s@^#!python3\.7@#!/usr/bin/env python3@&#39;</span><span class="w"> </span>tinyfpga-programmer-gui.py
+chmod<span class="w"> </span>+x<span class="w"> </span>tinyfpga-programmer-gui.py
+</code></pre></div>
+<p>Programmer cannot be easily installed because has no setuptools script, unless
+you want to copy to script (including submodules) into your bin, please consider
+putting an alias into your <code>.bashrc</code></p>
+<div class="highlight"><pre><span></span><code><span class="nb">alias</span><span class="w"> </span><span class="nv">qfprog</span><span class="o">=</span><span class="s2">&quot;/full/path/to/tinyfpga-programmer-gui.py&quot;</span>
+</code></pre></div>
+<p>Install <code>71-QuickFeather.rules</code>, otherwise qfprog may conflict with ModemManager
+(which may detect device as GSM modem).</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>cp<span class="w"> </span><span class="m">71</span>-QuickFeather.rules<span class="w"> </span>/etc/udev/rules.d/
+sudo<span class="w"> </span>udevadm<span class="w"> </span>control<span class="w"> </span>--reload
+</code></pre></div>
+<p>Unplug and plug device back in for the changes to take effect.</p>
+<h2 id="running-zephyr-hello-world">Running Zephyr hello world</h2>
+<p>To avoid messing with your environment you may use official Zephyr container.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>mkdir<span class="w"> </span>zephyr
+$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>zehpyr
+$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--privileged<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>/dev:/dev<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-u<span class="w"> </span><span class="k">$(</span>id<span class="w"> </span>-u<span class="k">)</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span><span class="nv">$PWD</span>:/workdir<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>ghcr.io/zephyrproject-rtos/zephyr-build:v0.23.3
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>init<span class="w"> </span>.
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>update
+<span class="o">(</span>docker<span class="o">)</span>$<span class="w"> </span>west<span class="w"> </span>build<span class="w"> </span>-b<span class="w"> </span>quick_feather<span class="w"> </span>zephyr/samples/hello_world
+</code></pre></div>
+<p>To flash Zephyr you need to enter download mode, either by pressing the user
+button or by downloading bootloader through OpenOCD which has been described in
+sections above. Then to flash Zephyr use the following command</p>
+<div class="highlight"><pre><span></span><code>qfprog<span class="w"> </span>--mode<span class="w"> </span>m4<span class="w"> </span>--m4app<span class="w"> </span>build/zephyr/zephyr.bin
+</code></pre></div>
+<blockquote>
+<p>To boot from flash you need to take off jumpers and also to boot into Zephyr
+you need press reset button.</p>
+</blockquote>
+<p>Zephyr by default outputs to UART0 instead of UART-over-USB (USB even isn't
+enabled when Zephyr boots). To be able to see anything you have to connect UART
+to <code>44/TX</code> and <code>45/RX</code> pins on J6 connector (you may also see official
+documentation linked at the top of this document).</p>
+<p><a href="https://github.com/QuickLogic-Corp/qorc-sdk">Qorc SDK</a> has an example app
+(<code>qf_uart2usbser</code>) which may be used to get USB UART working on Zephyr.</p>
+<h2 id="other-components-bootloader-fpgas">Other components, bootloader, FPGAs</h2>
+<p>QuickLogic EOS comes with few components available as part of
+<a href="https://github.com/QuickLogic-Corp/qorc-sdk">Qorc SDK</a></p>
+<ul>
+<li>Bootloader (<code>qf_bootloader</code>) - Cortex-M4 application responsible for booting
+  platform and loading FPGAs.</li>
+<li>Cortex-M4 - target application to run on Cortex-M4, Qorc SDK contains a few
+  applications, including <code>qf_helloworldsw</code> which is the diag application that
+  comes preinstalled.</li>
+<li>bootfpga - this is USB serial FPGA. See the section below for how to recover.</li>
+<li>FPGA for user application - FPGA which can be used for any purpose.</li>
+</ul>
+<p><img alt="" src="/images/qorc-flash-memory-map-addresses.svg" /></p>
+<p>Qorc SDK comes with <code>envsetup.sh</code> script that automatically downloads all
+required components (compilers, etc.) and configures environment, tested on
+Ubuntu 20.04 with Qorc SDK rev <code>6968338b8778cb129ae441f6944444c9a1298390</code>.</p>
+<p><code>qfprog</code> can flash a few types of image</p>
+<div class="highlight"><pre><span></span><code>usage:<span class="w"> </span>tinyfpga-programmer-gui.py<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>--mode<span class="w"> </span><span class="o">[</span>fpga-m4<span class="o">]]</span><span class="w"> </span><span class="o">[</span>--m4app<span class="w"> </span>app.bin<span class="o">]</span><span class="w"> </span><span class="o">[</span>--appfpga<span class="w"> </span>appfpga.bin<span class="o">]</span><span class="w"> </span><span class="o">[</span>--bootloader<span class="w"> </span>boot.bin<span class="o">]</span><span class="w"> </span><span class="o">[</span>--bootfpga<span class="w"> </span>fpga.bin<span class="o">]</span><span class="w"> </span><span class="o">[</span>--reset<span class="o">]</span><span class="w"> </span><span class="o">[</span>--port<span class="w"> </span>/dev/ttySx<span class="o">]</span><span class="w"> </span><span class="o">[</span>--crc<span class="o">]</span><span class="w"> </span><span class="o">[</span>--checkrev<span class="o">]</span>
+<span class="w">                                  </span><span class="o">[</span>--update<span class="o">]</span><span class="w"> </span><span class="o">[</span>--mfgpkg<span class="w"> </span>qf_mfgpkg/<span class="o">]</span>
+
+optional<span class="w"> </span>arguments:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">            </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>--mode<span class="w"> </span><span class="o">[</span>fpga-m4<span class="o">]</span><span class="w">      </span>operation<span class="w"> </span>mode<span class="w"> </span>-<span class="w"> </span>m4/fpga/fpga-m4
+<span class="w">  </span>--m4app<span class="w"> </span>app.bin<span class="w">       </span>m4<span class="w"> </span>application<span class="w"> </span>program
+<span class="w">  </span>--appfpga<span class="w"> </span>appfpga.bin
+<span class="w">                        </span>application<span class="w"> </span>FPGA<span class="w"> </span>binary
+<span class="w">  </span>--bootloader<span class="w"> </span>boot.bin,<span class="w"> </span>--bl<span class="w"> </span>boot.bin
+<span class="w">                        </span>m4<span class="w"> </span>bootloader<span class="w"> </span>program<span class="w"> </span>WARNING:<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>really<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span><span class="k">do</span><span class="w"> </span>this?<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>common,<span class="w"> </span>and<span class="w"> </span>getting<span class="w"> </span>it<span class="w"> </span>wrong<span class="w"> </span>can<span class="w"> </span>make<span class="w"> </span>you<span class="w"> </span>device<span class="w"> </span>non-functional
+<span class="w">  </span>--bootfpga<span class="w"> </span>fpga.bin<span class="w">   </span>FPGA<span class="w"> </span>image<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>during<span class="w"> </span>programming<span class="w"> </span>WARNING:<span class="w"> </span><span class="k">do</span><span class="w"> </span>you<span class="w"> </span>really<span class="w"> </span>need<span class="w"> </span>to<span class="w"> </span><span class="k">do</span><span class="w"> </span>this?<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>common,<span class="w"> </span>and<span class="w"> </span>getting<span class="w"> </span>it<span class="w"> </span>wrong<span class="w"> </span>can<span class="w"> </span>make<span class="w"> </span>you<span class="w"> </span>device<span class="w"> </span>non-functional
+<span class="w">  </span>--reset<span class="w">               </span>reset<span class="w"> </span>attached<span class="w"> </span>device
+<span class="w">  </span>--port<span class="w"> </span>/dev/ttySx<span class="w">     </span>use<span class="w"> </span>this<span class="w"> </span>port
+<span class="w">  </span>--crc<span class="w">                 </span>print<span class="w"> </span>CRCs
+<span class="w">  </span>--checkrev<span class="w">            </span>check<span class="w"> </span><span class="k">if</span><span class="w"> </span>CRC<span class="w"> </span>matches<span class="w"> </span><span class="o">(</span>flash<span class="w"> </span>is<span class="w"> </span>up-to-date<span class="o">)</span>
+<span class="w">  </span>--update<span class="w">              </span>program<span class="w"> </span>flash<span class="w"> </span>only<span class="w"> </span><span class="k">if</span><span class="w"> </span>CRC<span class="w"> </span>mismatch<span class="w"> </span><span class="o">(</span>not<span class="w"> </span>up-to-date<span class="o">)</span>
+<span class="w">  </span>--mfgpkg<span class="w"> </span>qf_mfgpkg/<span class="w">   </span>directory<span class="w"> </span>containing<span class="w"> </span>all<span class="w"> </span>necessary<span class="w"> </span>binaries
+</code></pre></div>
+<p>For device to boot, bootloader, m4app and bootfpga partitions are required.
+Bootfpga is actually USB serial FPGA and it is required for programming device
+and for booting application that use serial over USB.</p>
+<h2 id="recovering-from-bad-flash">Recovering from bad flash</h2>
+<p><code>qf_loadflash</code> doesn't require a valid USB serial FPGA in SPI flash as it
+contains its own embedded USB FPGA, so it can be used for recovering from
+corrupted flash.</p>
+<p>To recover from bad flash you have to flash <code>bootloader</code> and <code>bootfpga</code>.
+<code>qf_bootfpga</code> provided in <code>quick-feather-dev-board</code> repo is broken and device
+will hang when attempting to load, but <code>qf_bootfpga</code> can be built as part
+<code>qf_bootloader</code>. To built it go to <code>qorc-sdk</code> directory, run <code>envsetup.sh</code>, then
+go to <code>qf_apps/qf_bootloader</code> and run <code>make</code>. Then flash resulting binaries</p>
+<div class="highlight"><pre><span></span><code>qfprog<span class="w"> </span>--mode<span class="w"> </span>m4<span class="w"> </span>--bootloader<span class="w"> </span>GCC_Project/output/qf_bootloader.bin
+qfprog<span class="w"> </span>--mode<span class="w"> </span>m4<span class="w"> </span>--bootfpga<span class="w"> </span>GCC_Project/output/qf_bootfpga.bin
+</code></pre></div>
+<h2 id="fpga-synthesis">FPGA synthesis</h2>
+<p>QuickLogic uses its own SymbiFlow fork for synthesis. <code>qorc-sdk</code> contains
+Verilog sources for usb2serial among others (located in <code>s3-gateware</code>
+directory). Sources for many components can built without problems by simply
+running <code>make</code>.</p>
+<h2 id="fpga-demo-applications">FPGA demo applications</h2>
+<p><code>qf_apps</code> contains a few applications using a custom FPGA, including
+<code>qf_helloworldhw</code> and <code>qf_advancedfpga</code>. These applications can be flashed
+through bootloader as any other application.</p>
+<p>Despite using FPGA, the two applications must be flashed in m4 mode.
+<code>qf_advancedfpga</code> uses UART0 instead of USB. Applications must be told to power
+on the LED, please see
+<a href="https://github.com/QuickLogic-Corp/qorc-sdk#lesson-3-advanced-fpga-m4--fpga-qf_advancedfpga">Qorc SDK readme</a></p>
+<p>QuickLogic has 3 modes of operation: <code>m4</code>, <code>fpga</code> and <code>fpga-m4</code>. This controls
+bootloader behaviour, so that bootloader loads either Cortex-M4 application,
+FPGA or both. In case of applications that load FPGA by themselves, mode should
+be <code>m4</code>.</p>
+<blockquote>
+<p>Note: You can use <code>qfprog --mode</code> to get current mode.</p>
+</blockquote>
+<p>If operation mode is set to <code>fpga</code> or <code>fpga-m4</code> bootloader loads FPGA from the
+<code>appfpga</code> region, see relevant code
+<a href="https://github.com/QuickLogic-Corp/qorc-sdk/blob/6968338b8778cb129ae441f6944444c9a1298390/qf_apps/qf_bootloader/src/appfpga_loader.c#L113">here</a></p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://learn.sparkfun.com/tutorials/quicklogic-thing-plus-eos-s3-hookup-guide">Thing+ guide</a> -
+  Getting started for Sparkfun Thing+, contains HW overview, including images
+  and detailed pin descriptions, schematics and other useful resources.</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

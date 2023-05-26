@@ -1,0 +1,1030 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/tpm_modules_pinout/">
+      
+      
+        <link rel="prev" href="../issues/">
+      
+      
+        <link rel="next" href="../tpm_renders/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>TPM modules pinout - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tpm-modules-pinout" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TPM modules pinout
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instrumentation/" class="md-nav__link">
+        TPM driver instrumentation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../issues/" class="md-nav__link">
+        Current issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          TPM modules pinout
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        TPM modules pinout
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-interface" class="md-nav__link">
+    LPC interface
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asrock-rack-x470-d4u-romed8-2t-server-mb-epc621d8a-h170m-pro4" class="md-nav__link">
+    AsRock Rack X470 D4U, ROMED8-2T Server MB, EPC621D8A, H170M PRO4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-m5a99fx-pro-r20-maximus-vii-hero-z87-plus-maximus-vii-ranger" class="md-nav__link">
+    Asus M5A99FX Pro r2.0, MAXIMUS VII HERO, Z87 PLUS, MAXIMUS VII RANGER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-maximus-ix-formula-crosshair-viii-dark-hero-rog-strix-b450-f-gaming" class="md-nav__link">
+    Asus MAXIMUS IX FORMULA, CROSSHAIR VIII DARK HERO, ROG STRIX B450-F Gaming
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-tpm-m-r20-z97-pro-gamer" class="md-nav__link">
+    Asus TPM-M R2.0, Z97 PRO GAMER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-ga-a320m-s2h-amd-a320-ga-b250-hd3p-b450-aorus-pro-ga-z77-d3h-ga-970a-ud3p" class="md-nav__link">
+    Gigabyte GA A320M-S2H AMD A320, GA B250 HD3P, B450 Aorus Pro, GA Z77 D3H, GA 970A-UD3P
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msi-b75ma-e33-msi-b85m-e45-msi-b350-tomahawk-msi-x99a-gaming-9-ack" class="md-nav__link">
+    MSI B75MA E33, MSI B85M E45, MSI B350 TOMAHAWK, MSI X99A GAMING 9 ACK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supermicro-x10dal-i-supermicro-mbd-m12swa" class="md-nav__link">
+    Supermicro X10DAL-i, Supermicro MBD M12SWA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spi-interface" class="md-nav__link">
+    SPI interface
+  </a>
+  
+    <nav class="md-nav" aria-label="SPI interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asus-b550-plus-tuf-gaming-asus-rog-strix-x570-f-gaming" class="md-nav__link">
+    Asus-B550 PLUS TUF GAMING, Asus-ROG STRIX X570-F GAMING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msi-z590-pro-wifi" class="md-nav__link">
+    MSI Z590 PRO WiFi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-z590-aorus-master" class="md-nav__link">
+    Gigabyte Z590 AORUS MASTER
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sparkfun-thingplus/" class="md-nav__link">
+        Development on SparkFun Thing+
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dev/" class="md-nav__link">
+        SPI interface - implementation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TPM_with_LPC_protocol/" class="md-nav__link">
+        LPC driver - implementation
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lpc-interface" class="md-nav__link">
+    LPC interface
+  </a>
+  
+    <nav class="md-nav" aria-label="LPC interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asrock-rack-x470-d4u-romed8-2t-server-mb-epc621d8a-h170m-pro4" class="md-nav__link">
+    AsRock Rack X470 D4U, ROMED8-2T Server MB, EPC621D8A, H170M PRO4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-m5a99fx-pro-r20-maximus-vii-hero-z87-plus-maximus-vii-ranger" class="md-nav__link">
+    Asus M5A99FX Pro r2.0, MAXIMUS VII HERO, Z87 PLUS, MAXIMUS VII RANGER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-maximus-ix-formula-crosshair-viii-dark-hero-rog-strix-b450-f-gaming" class="md-nav__link">
+    Asus MAXIMUS IX FORMULA, CROSSHAIR VIII DARK HERO, ROG STRIX B450-F Gaming
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asus-tpm-m-r20-z97-pro-gamer" class="md-nav__link">
+    Asus TPM-M R2.0, Z97 PRO GAMER
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-ga-a320m-s2h-amd-a320-ga-b250-hd3p-b450-aorus-pro-ga-z77-d3h-ga-970a-ud3p" class="md-nav__link">
+    Gigabyte GA A320M-S2H AMD A320, GA B250 HD3P, B450 Aorus Pro, GA Z77 D3H, GA 970A-UD3P
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msi-b75ma-e33-msi-b85m-e45-msi-b350-tomahawk-msi-x99a-gaming-9-ack" class="md-nav__link">
+    MSI B75MA E33, MSI B85M E45, MSI B350 TOMAHAWK, MSI X99A GAMING 9 ACK
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supermicro-x10dal-i-supermicro-mbd-m12swa" class="md-nav__link">
+    Supermicro X10DAL-i, Supermicro MBD M12SWA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spi-interface" class="md-nav__link">
+    SPI interface
+  </a>
+  
+    <nav class="md-nav" aria-label="SPI interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asus-b550-plus-tuf-gaming-asus-rog-strix-x570-f-gaming" class="md-nav__link">
+    Asus-B550 PLUS TUF GAMING, Asus-ROG STRIX X570-F GAMING
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#msi-z590-pro-wifi" class="md-nav__link">
+    MSI Z590 PRO WiFi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gigabyte-z590-aorus-master" class="md-nav__link">
+    Gigabyte Z590 AORUS MASTER
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="tpm-modules-pinout">TPM modules pinout</h1>
+<p>This document describes a few different variants of the TPM module pinouts
+which are available on some of the PC mainboards. This research was made to
+design a few variants of the TPM modules with the most popular pinouts. In this
+chapter below, the same pinouts of TPM modules were grouped. The analyzed
+mainbaords are chosen based on what we have available for testing, but also
+based on the best sellers positions from the
+<a href="https://www.newegg.com/">Newegg.com</a> for some of the most recent mainboards.</p>
+<h2 id="lpc-interface">LPC interface</h2>
+<p>LPC was (and still is) the most common interface for the TPM.</p>
+<h3 id="asrock-rack-x470-d4u-romed8-2t-server-mb-epc621d8a-h170m-pro4">AsRock Rack X470 D4U, ROMED8-2T Server MB, EPC621D8A, H170M PRO4</h3>
+<p>Below there are two different pinouts that could be treated as interchangeable.
+PCICLK is a 33MHz standard clock (same with CK_33M_TPM). F_CLKRUN# is a signal
+when asserted instructs chipset to supply a clock signal. On the pinout below
+it is tied to GND which means always asserted (clock is always running).</p>
+<p><img alt="pinout" src="../images/pinouts/AsRock_Rack_X470_D4U_Server.svg" />
+<img alt="pinout" src="../images/pinouts/Asrock-H170M_PRO4.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://download.asrock.com/Manual/X470D4U.pdf">User Manual X470</a></li>
+<li><a href="https://download.asrock.com/Manual/ROMED8-2T.pdf">User Manual ROMED8-2T</a></li>
+<li><a href="https://download.asrock.com/Manual/EPC621D8A.pdf">User Manual EPC621D8A</a></li>
+<li><a href="https://download.asrock.com/Manual/H170M%20Pro4.pdf">User Manual H170M</a></li>
+</ul>
+<h3 id="asus-m5a99fx-pro-r20-maximus-vii-hero-z87-plus-maximus-vii-ranger">Asus M5A99FX Pro r2.0, MAXIMUS VII HERO, Z87 PLUS, MAXIMUS VII RANGER</h3>
+<p><img alt="pinout" src="../images/pinouts/Asus-M5A99FX_Pro_r2.0.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://images10.newegg.com/UploadFilesForNewegg/itemintelligence/ASUS/E7472_M5A99FX_PRO_R21401484751352.pdf">User Manual M5A99FX</a></li>
+<li><a href="http://dlcdnet.asus.com/pub/ASUS/mb/LGA1150/MAXIMUS-VII-HERO/E9192_Maximus_Vii_Hero.pdf">User Manual MAXIMUS VII HERO</a></li>
+<li><a href="https://images10.newegg.com/UploadFilesForNewegg/itemintelligence/ASUS/E7831_Z87_PLUS1403687574304.pdf">User Manual Z87 PLUS</a></li>
+<li><a href="https://dlcdnets.asus.com/pub/ASUS/mb/LGA1150/MAXIMUS-VII-RANGER/E9798_maximus_vii_ranger_ug_v2_WEB.pdf">User Manual MAXIMUS VII RANGER</a></li>
+</ul>
+<h3 id="asus-maximus-ix-formula-crosshair-viii-dark-hero-rog-strix-b450-f-gaming">Asus MAXIMUS IX FORMULA, CROSSHAIR VIII DARK HERO, ROG STRIX B450-F Gaming</h3>
+<p><img alt="pinout" src="../images/pinouts/Asus-MAXIMUS_IX_FORMULA.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="http://dlcdnet.asus.com/pub/ASUS/mb/LGA1151/MAXIMUS_IX_FORMULA/E12314_MAXIMUS_IX_FORMULA_UM_V3_WEB.pdf">User Manual MAXIMUS IX FORMULA</a></li>
+<li><a href="https://media.s-bol.com/Bnx1GRw6DXXo/original.pdf">User Manual ROG CROSSHAIR</a></li>
+<li><a href="https://www.bhphotovideo.com/lit_files/403638.pdf">User Manual B450-F</a></li>
+</ul>
+<h3 id="asus-tpm-m-r20-z97-pro-gamer">Asus TPM-M R2.0, Z97 PRO GAMER</h3>
+<p><img alt="pinout" src="../images/pinouts/Asus-TPM-M_R2.0.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://www.manualslib.com/manual/1447187/Asus-Tpm-M-R2-0.html">User Manual TPM-M</a></li>
+<li><a href="https://dlcdnets.asus.com/pub/ASUS/mb/LGA1150/Z97-PRO_GAMER/E10265_Z97-PRO_GAMER_Guide_v2_web_hi_res.pdf">User Manual Z97 PRO GAMER</a></li>
+</ul>
+<h3 id="gigabyte-ga-a320m-s2h-amd-a320-ga-b250-hd3p-b450-aorus-pro-ga-z77-d3h-ga-970a-ud3p">Gigabyte GA A320M-S2H AMD A320, GA B250 HD3P, B450 Aorus Pro, GA Z77 D3H, GA 970A-UD3P</h3>
+<p>Below there are two different pinouts that could be treated as interchangeable.
+SUSCLK is a RTC clock signal which is not used for TPM so it could be ignored.</p>
+<p><img alt="pinout" src="../images/pinouts/Gigabyte-GA-Z77X-D3H.svg" />
+<img alt="pinout" src="../images/pinouts/Gigabyte-GA-A320M-S2H-AMD-A320.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://download1.gigabyte.com/Files/Manual/mb_manual_ga-z77x-d3h_e.pdf">User Manual Z77X D3H</a></li>
+<li><a href="https://download1.gigabyte.com/Files/Manual/mb_manual_ga-z77x-d3h_e.pdf">User Manual Z77 D3H</a></li>
+<li><a href="https://download1.gigabyte.com/Files/Manual/mb_manual_ga-970a-ud3p_e.pdf">User Manual 970A-UD3P</a></li>
+<li><a href="https://gzhls.at/blob/ldb/0/a/1/c/f15c2f507a34fa4fb5f2d78875ef5477838c.pdf">User Manual A320M-S2H</a></li>
+<li><a href="https://download.gigabyte.com/FileList/Manual/mb_manual_ga-b250-hd3p_e.pdf">User Manual B250 HD3P</a></li>
+<li><a href="https://download.gigabyte.com/FileList/Manual/mb_manual_b450-aorus-pro-wifi_1002_e_190528.pdf">User Manual B450 AORUS PRO</a></li>
+</ul>
+<h3 id="msi-b75ma-e33-msi-b85m-e45-msi-b350-tomahawk-msi-x99a-gaming-9-ack">MSI B75MA E33, MSI B85M E45, MSI B350 TOMAHAWK, MSI X99A GAMING 9 ACK</h3>
+<p><img alt="pinout" src="../images/pinouts/MSI-B75MA-E33.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://www.msi.com/Motherboard/b75ma-e33/support#down-manual">User Manual B75MA E33</a></li>
+<li><a href="https://pl.msi.com/Motherboard/B85M-E45/support#down-manual">User Manual B85M E45</a></li>
+<li><a href="https://pl.msi.com/Motherboard/B350-TOMAHAWK/support#down-manual">User Manual TOMAHAWK</a></li>
+<li><a href="https://www.msi.com/Motherboard/x99a-gaming-9-ack/support#down-manual">User Manual X99A</a></li>
+</ul>
+<h3 id="supermicro-x10dal-i-supermicro-mbd-m12swa">Supermicro X10DAL-i, Supermicro MBD M12SWA</h3>
+<p>Below there are two different pinouts that could be treated as interchangeable.</p>
+<p><img alt="pinout" src="../images/pinouts/Supermicro_X10DAL-i.svg" />
+<img alt="pinout" src="../images/pinouts/Supermicro_MBD_M12SWA.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://www.supermicro.com/manuals/motherboard/M12/MNL-2336.pdf">User Manual Supermicro MBD M12SWA</a></li>
+<li><a href="https://www.supermicro.com/manuals/motherboard/C600/MNL-1701.pdf">User Manual X10DAL-i</a></li>
+</ul>
+<h2 id="spi-interface">SPI interface</h2>
+<p>SPI interface becomes more and more common for TPM modules, especially for the
+more recent mainboards. We can expect that this interface will be more commonly
+used in the modern mainbards, as the LPC interface becomes slowly deprecated for
+modern processors.</p>
+<h3 id="asus-b550-plus-tuf-gaming-asus-rog-strix-x570-f-gaming">Asus-B550 PLUS TUF GAMING, Asus-ROG STRIX X570-F GAMING</h3>
+<p>Below there are two different pinouts that could be treated as interchangeable.</p>
+<p><img alt="pinout" src="../images/pinouts/Asus-ROG_STRIX_X570-F_GAMING.svg" />
+<img alt="pinout" src="../images/pinouts/Asus-B550-PLUS.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://gamingprofy.com/wp-content/uploads/2021/06/E15827_ROG_STRIX_X570-F_GAMING_UM_v2_WEB.pdf">User Manual STRIX X570-F</a></li>
+<li><a href="https://dlcdnets.asus.com/pub/ASUS/mb/SocketAM4/TUF_GAMING_B550-PLUS/E16576_TUF_GAMING_B550-PLUS_UM_WEB.pdf">User Manual B550 PLUS</a></li>
+</ul>
+<h3 id="msi-z590-pro-wifi">MSI Z590 PRO WiFi</h3>
+<p><img alt="pinout" src="../images/pinouts/MSI-Z590_PRO_WiFi.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://download.msi.com/archive/mnu_exe/mb/M7D09v1.2.pdf">User Manual Z590</a></li>
+</ul>
+<h3 id="gigabyte-z590-aorus-master">Gigabyte Z590 AORUS MASTER</h3>
+<p><img alt="pinout" src="../images/pinouts/Gigabyte-Z590_AORUS_MASTER.svg" /></p>
+<ul>
+<li>Manuals:</li>
+<li><a href="https://download.gigabyte.com/FileList/Manual/mb_manual_z590-aorus-master_1002_e.pdf">User Manual</a></li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>There is a relation between TPM modules pinouts at the same vendors. For
+typical motherboards from one and similar series, pinouts are the same. On the
+other hand, the same manufacturer also supports different pinouts in the case
+of different models of motherboards. So it couldn't be said that always the
+same vendor supports the same pinout.</p>
+<p>During our research, we have identified:</p>
+<ul>
+<li>6 unique LPC TPM pinouts:</li>
+<li>AsRock (18-pin)</li>
+<li>Asus (20-pin)</li>
+<li>Asus (14-pin)</li>
+<li>Gigabyte (20-pin)</li>
+<li>MSI (14-pin)</li>
+<li>Supermicro (20-pin)</li>
+<li>3 unique SPI TPM pinouts:</li>
+<li>Asus (14-pin)</li>
+<li>MSI (12-pin)</li>
+<li>Gigabyte (12-pin)</li>
+</ul>
+<p>These pinouts will be used to define hardware requirements for the TPM boards
+and, later on, to deisgn TPM adapter boards.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>

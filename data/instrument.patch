@@ -1,0 +1,46 @@
+diff --git a/arch/arm/configs/bcm2709_defconfig b/arch/arm/configs/bcm2709_defconfig
+index 7b4c28badf91..cec802b7f2f4 100644
+--- a/arch/arm/configs/bcm2709_defconfig
++++ b/arch/arm/configs/bcm2709_defconfig
+@@ -1508,3 +1508,4 @@ CONFIG_IRQSOFF_TRACER=y
+ CONFIG_SCHED_TRACER=y
+ CONFIG_BLK_DEV_IO_TRACE=y
+ # CONFIG_UPROBE_EVENTS is not set
++CONFIG_DYNAMIC_DEBUG=y
+diff --git a/drivers/char/tpm/Makefile b/drivers/char/tpm/Makefile
+index 84db4fb3a9c9..37d265b4a722 100644
+--- a/drivers/char/tpm/Makefile
++++ b/drivers/char/tpm/Makefile
+@@ -15,6 +15,7 @@ tpm-y += tpm-sysfs.o
+ tpm-y += eventlog/common.o
+ tpm-y += eventlog/tpm1.o
+ tpm-y += eventlog/tpm2.o
++tpm-y += tpm-instr.o
+
+ tpm-$(CONFIG_ACPI) += tpm_ppi.o eventlog/acpi.o
+ tpm-$(CONFIG_EFI) += eventlog/efi.o
+diff --git a/drivers/char/tpm/tpm-instr.c b/drivers/char/tpm/tpm-instr.c
+new file mode 100644
+index 000000000000..c650026cb09e
+--- /dev/null
++++ b/drivers/char/tpm/tpm-instr.c
+@@ -0,0 +1,19 @@
++#include <linux/printk.h>
++
++void __cyg_profile_func_enter(void *this_fn, void *call_site)
++                              __attribute__((no_instrument_function));
++
++void __cyg_profile_func_exit(void *this_fn, void *call_site)
++                             __attribute__((no_instrument_function));
++
++
++void __cyg_profile_func_enter(void *this_fn, void *call_site) {
++  printk("tpm_addr_enter: 0x%px 0x%px \n", this_fn, call_site);
++}
++
++void __cyg_profile_func_exit(void *this_fn, void *call_site) {
++  printk("tpm_addr_exit: 0x%px 0x%px \n", this_fn, call_site);
++}
++
++EXPORT_SYMBOL(__cyg_profile_func_enter);
++EXPORT_SYMBOL(__cyg_profile_func_exit);

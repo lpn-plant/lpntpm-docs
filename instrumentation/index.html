@@ -1,0 +1,1021 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lpntpm.lpnplant.io/instrumentation/">
+      
+      
+        <link rel="prev" href="../running/">
+      
+      
+        <link rel="next" href="../hardware_interfaces/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>TPM driver instrumentation - lpnTPM Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tpm-driver-instrumentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="lpnTPM Documentation" class="md-header__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            lpnTPM Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TPM driver instrumentation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="lpnTPM Documentation" class="md-nav__button md-logo" aria-label="lpnTPM Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    lpnTPM Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          How to
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how_to/" class="md-nav__link">
+        Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        Building flashing and debugging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../running/" class="md-nav__link">
+        Running
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          TPM driver instrumentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        TPM driver instrumentation
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prepare-raspberry-pi" class="md-nav__link">
+    Prepare Raspberry Pi
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare Raspberry Pi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-compilation" class="md-nav__link">
+    Kernel compilation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collect-traces-and-get-function-names-from-addresses" class="md-nav__link">
+    Collect traces and get function names from addresses
+  </a>
+  
+    <nav class="md-nav" aria-label="Collect traces and get function names from addresses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whole-logs-from-the-test-procedure" class="md-nav__link">
+    Whole logs from the test procedure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hardware_interfaces/" class="md-nav__link">
+        Target TPM hardware interfaces
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../symbiflow_investigation/" class="md-nav__link">
+        Open-source tools for FPGA synthesis
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../issues/" class="md-nav__link">
+        Current issues
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Mechanical design
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Mechanical design
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_modules_pinout/" class="md-nav__link">
+        TPM modules pinout
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_renders/" class="md-nav__link">
+        TPM modules renders
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../journal/" class="md-nav__link">
+        Journal
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          RaspberryPi demonstration with TPM module
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          RaspberryPi demonstration with TPM module
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_connection/" class="md-nav__link">
+        Connecting Raspberry Pi with Windows OS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi/" class="md-nav__link">
+        Running TPM 2.0 module on Raspberry Pi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rpi_faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sparkfun-thingplus/" class="md-nav__link">
+        Development on SparkFun Thing+
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../further_project_development/" class="md-nav__link">
+        Considerations on hardware replacement
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm_lpc_spi_interface/" class="md-nav__link">
+        TPM hardware interface documentation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dev/" class="md-nav__link">
+        SPI interface - implementation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-spi-dump/" class="md-nav__link">
+        SPI communication dump
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TPM_with_LPC_protocol/" class="md-nav__link">
+        LPC driver - implementation
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prepare-raspberry-pi" class="md-nav__link">
+    Prepare Raspberry Pi
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare Raspberry Pi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-compilation" class="md-nav__link">
+    Kernel compilation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#collect-traces-and-get-function-names-from-addresses" class="md-nav__link">
+    Collect traces and get function names from addresses
+  </a>
+  
+    <nav class="md-nav" aria-label="Collect traces and get function names from addresses">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whole-logs-from-the-test-procedure" class="md-nav__link">
+    Whole logs from the test procedure
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="tpm-driver-instrumentation">TPM driver instrumentation</h1>
+<p>For development purposes, a set of scripts was created that allows for the
+instrumentation of a specific module, allowing for tracing the execution
+of module functions.</p>
+<p>This could be especially useful in the process of development of different
+protocol backends in our <code>lpntpn</code> like LPC or I2C.</p>
+<p>For now, scripts are located inside our fork of
+<a href="https://github.com/lpn-plant/ms-tpm-20-ref">ms-tpm-20-ref</a> repository.
+Look for <code>Samples/Nucleo-TPM/scripts/kfunc_tracer</code> directory on the dev branch.</p>
+<p>We use the integrated functionality that gcc provides '-finstrument-function'
+for function instrumentation.
+This step allows us to register exact function call addresses and log them to
+dmesg.</p>
+<p>Next, we match the function addresses against kernel processes address space
+that's located in <code>/proc/modules</code> to identify loaded module, that fn call
+belongs to. By subtracting function address with start memory location of loaded
+module, we obtain the real offset of a function call, that could be easily
+matched with an exact function name.</p>
+<p>The last step is to extract functions memory offsets located in non-striped
+kernel modules. For this purpose we are using a simple readelf call:
+<code>readelf -s MODULE_NAME.ko | grep FUNC</code>.</p>
+<p>This process requires kernel recompilation, execution of module startup and
+parsing of resulting trace files.</p>
+<h2 id="prepare-raspberry-pi">Prepare Raspberry Pi</h2>
+<p>We are using Raspberry Pi 3, but with minor modifications, this process could
+be used on different targets.</p>
+<p><strong>Flash SD card with raspbian lite os.</strong></p>
+<p>At the moment of writing image <code>2021-05-07-raspios-buster-armhf-lite.img</code> was
+used.</p>
+<p><strong>Enable ssh.</strong></p>
+<p>Execute on raspberry pi with connected keyboard and display</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># upgrade</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>upgrade
+
+<span class="c1"># change default password</span>
+passwd
+
+<span class="c1"># enable ssh</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ssh
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>ssh
+</code></pre></div>
+<p><strong>Check ssh connection.</strong></p>
+<p>Environmental variable <code>RASPI_IP</code> will be used several more times during this
+guide.</p>
+<p>Run on your host machine to test ssh connection.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">RASPI_IP</span><span class="o">=</span>pi@192.168.8.170
+ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_rsa.pub<span class="w"> </span><span class="nv">$RASPI_IP</span>
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;success&quot;</span>
+<span class="c1"># should echo success without prompting user to enter password</span>
+</code></pre></div>
+<h3 id="kernel-compilation">Kernel compilation</h3>
+<p><strong>Prepare build environment.</strong></p>
+<p>Ubuntu 20.04 LTS was used in this example.</p>
+<p>Install dependencies on your host machine and get source code.</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>crossbuild-essential-armhf<span class="w">     </span><span class="c1"># default toolchain</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python-is-python3<span class="w">              </span><span class="c1"># no python2 in ubuntu 20 fix</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>bison<span class="w"> </span>flex
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>qtbase5-dev<span class="w"> </span>pkg-config<span class="w">         </span><span class="c1"># xconfig</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>libncurses5-dev<span class="w">                </span><span class="c1"># menuconfig</span>
+
+<span class="nb">cd</span><span class="w"> </span>git
+git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span><span class="w"> </span>https://github.com/raspberrypi/linux
+<span class="nb">cd</span><span class="w"> </span>linux
+<span class="c1"># at the moment of writing we are using rpi-5.10.y branch specifically</span>
+<span class="c1"># 581049d718caf95f5feb00607ac748d5841cf27c commit</span>
+git<span class="w"> </span>checkout<span class="w"> </span>581049d718caf95f5feb00607ac748d5841cf27c
+</code></pre></div>
+<p><strong>Patch kernel</strong></p>
+<p>For future debug output we add <code>CONFIG_DYNAMIC_DEBUG=y</code> to bcm2709_defconfig.
+The rest of this patch is the code instrumentation functions themself.</p>
+<p><a href="../data/instrument.patch">instrument.patch</a></p>
+<p><strong>Build kernel</strong></p>
+<p>On your host machine:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>git
+<span class="nb">cd</span><span class="w"> </span>linux
+<span class="nb">export</span><span class="w"> </span><span class="nv">KERNEL</span><span class="o">=</span>kernel7
+<span class="c1"># output build directories</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">BUILD_DIR</span><span class="o">=</span>build
+<span class="nb">export</span><span class="w"> </span><span class="nv">INSTALL_PATH</span><span class="o">=</span>install_tmp
+<span class="c1"># temp directory for new content of the /boot and /root partion</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">BOOT_PART_TMP</span><span class="o">=</span><span class="nv">$BUILD_DIR</span>/<span class="nv">$INSTALL_PATH</span>/boot
+
+<span class="c1"># make modules_install will create build/install_tmp/root/lib directory during</span>
+<span class="c1"># install. we dont need to specify $BUILD_DIR prefix</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">ROOT_PART_TMP</span><span class="o">=</span><span class="nv">$INSTALL_PATH</span>/root
+
+<span class="c1"># prepare output directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BOOT_PART_TMP</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$BOOT_PART_TMP</span>/overlays
+
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span>-j4<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>bcm2709_defconfig
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span>-j4<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>scripts<span class="w"> </span>prepare<span class="w"> </span>modules_prepare
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span>-j4<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>zImage<span class="w"> </span>modules<span class="w"> </span>dtbs
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span>-j4<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>modules_install<span class="w"> </span><span class="nv">INSTALL_MOD_PATH</span><span class="o">=</span><span class="nv">$ROOT_PART_TMP</span>
+
+<span class="c1"># export K_VERSION variable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">K_VERSION</span><span class="o">=</span><span class="k">$(</span>make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>-s<span class="w"> </span>kernelrelease<span class="k">)</span>
+
+cp<span class="w"> </span><span class="nv">$BUILD_DIR</span>/arch/arm/boot/zImage<span class="w"> </span><span class="nv">$BOOT_PART_TMP</span>/<span class="nv">$KERNEL</span>.img
+
+cp<span class="w"> </span><span class="nv">$BUILD_DIR</span>/arch/arm/boot/dts/*.dtb<span class="w"> </span><span class="nv">$BOOT_PART_TMP</span>
+cp<span class="w"> </span><span class="nv">$BUILD_DIR</span>/arch/arm/boot/dts/overlays/*.dtb<span class="w"> </span><span class="nv">$BOOT_PART_TMP</span>/overlays
+</code></pre></div>
+<p><strong>Deploy</strong></p>
+<p>On your host machine:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PI_HOME</span><span class="o">=</span>/home/pi
+
+<span class="nb">cd</span><span class="w"> </span>~/git/linux
+tar<span class="w"> </span>-zcvf<span class="w"> </span>install_pkg.tar.gz<span class="w"> </span><span class="nv">$BUILD_DIR</span>/<span class="nv">$INSTALL_PATH</span>
+scp<span class="w"> </span>install_pkg.tar.gz<span class="w"> </span><span class="nv">$RASPI_IP</span>:/home/pi/
+
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>tar<span class="w"> </span>-xvzf<span class="w"> </span><span class="nv">$PI_HOME</span>/install_pkg.tar.gz
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>rm<span class="w"> </span><span class="nv">$PI_HOME</span>/install_pkg.tar.gz
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$PI_HOME</span>/build/install_tmp/root/lib/*<span class="w"> </span>/lib
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span><span class="nv">$PI_HOME</span>/build/install_tmp/boot/*<span class="w"> </span>/boot
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$PI_HOME</span>/build
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>Test if dynamic debug option is enabled</p>
+<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>modprobe<span class="w"> </span>configs
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span><span class="s2">&quot;zcat /proc/config.gz | grep DYNAMIC_DEBUG&quot;</span>
+<span class="c1"># you should get the following output:</span>
+<span class="c1"># CONFIG_DYNAMIC_DEBUG=y</span>
+<span class="c1"># CONFIG_DYNAMIC_DEBUG_CORE=y</span>
+</code></pre></div>
+<p><strong>Build instrumented module</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/git/linux
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">BUILD_DIR</span><span class="o">=</span>build
+<span class="nb">export</span><span class="w"> </span><span class="nv">K_VERSION</span><span class="o">=</span><span class="k">$(</span>make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>-s<span class="w"> </span>kernelrelease<span class="k">)</span>
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-linux-gnueabihf-<span class="w"> </span>-j4<span class="w"> </span><span class="nv">O</span><span class="o">=</span><span class="nv">$BUILD_DIR</span><span class="w"> </span>-C<span class="w"> </span>.<span class="w"> </span><span class="nv">M</span><span class="o">=</span>drivers/char/tpm<span class="w"> </span><span class="nv">EXTRA_CFLAGS</span><span class="o">=</span><span class="s2">&quot;-g -DDEBUG=1 -finstrument-functions&quot;</span>
+
+<span class="nb">export</span><span class="w"> </span><span class="nv">MOD_SRC</span><span class="o">=</span>build/drivers/char/tpm
+<span class="nb">export</span><span class="w"> </span><span class="nv">MOD_TMP_DST</span><span class="o">=</span>/home/pi
+<span class="nb">export</span><span class="w"> </span><span class="nv">MOD_DST</span><span class="o">=</span>/lib/modules/<span class="nv">$K_VERSION</span>/kernel/drivers/char/tpm
+
+scp<span class="w"> </span><span class="nv">$MOD_SRC</span>/tpm.ko<span class="w"> </span><span class="nv">$RASPI_IP</span>:<span class="nv">$MOD_TMP_DST</span>/
+scp<span class="w"> </span><span class="nv">$MOD_SRC</span>/tpm_tis_core.ko<span class="w"> </span><span class="nv">$RASPI_IP</span>:<span class="nv">$MOD_TMP_DST</span>
+scp<span class="w"> </span><span class="nv">$MOD_SRC</span>/tpm_tis_spi.ko<span class="w"> </span><span class="nv">$RASPI_IP</span>:<span class="nv">$MOD_TMP_DST</span>
+
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>tpm.ko<span class="w"> </span><span class="nv">$MOD_DST</span><span class="p">;</span>
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>tpm_tis_core.ko<span class="w"> </span><span class="nv">$MOD_DST</span><span class="p">;</span>
+ssh<span class="w"> </span><span class="nv">$RASPI_IP</span><span class="w"> </span>sudo<span class="w"> </span>mv<span class="w"> </span>tpm_tis_spi.ko<span class="w"> </span><span class="nv">$MOD_DST</span><span class="p">;</span>
+</code></pre></div>
+<p>At this point, we need to enable device tree overlay for tpm.</p>
+<p>In Raspberry Pi ssh terminal:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>nano<span class="w"> </span>/boot/config.txt
+
+<span class="c1"># add at the bottom</span>
+<span class="nv">dtparam</span><span class="o">=</span><span class="nv">spi</span><span class="o">=</span>on
+<span class="nv">dtoverlay</span><span class="o">=</span>tpm-slb9670
+
+<span class="c1"># permanently enable debug log level</span>
+sudo<span class="w"> </span>nano<span class="w"> </span>/boot/cmdline.txt
+add<span class="w"> </span><span class="s1">&#39;loglevel=7&#39;</span><span class="w"> </span>at<span class="w"> </span>the<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>line
+
+<span class="c1"># reboot raspi</span>
+sudo<span class="w"> </span>reboot
+</code></pre></div>
+<p>At this point, just after raspi reboot you should be able to see tpm function
+traces in <code>dmesg</code>.</p>
+<p>Example trace:</p>
+<p>In Raspberry Pi ssh terminal:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>dmesg<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tpm_addr
+<span class="go">[    9.358361] tpm_addr_enter: 0x7f0ee070 0x801022a4</span>
+<span class="go">[    9.358546] tpm_addr_enter: 0x7f0ee000 0x7f0ee15c</span>
+<span class="go">[    9.359167] tpm_addr_exit: 0x7f0ee000 0x7f0ee15c</span>
+<span class="go">[    9.359180] tpm_addr_exit: 0x7f0ee070 0x801022a4</span>
+<span class="go">[    9.420744] tpm_addr_enter: 0x7f09f000 0x801022a4</span>
+</code></pre></div>
+<h2 id="collect-traces-and-get-function-names-from-addresses">Collect traces and get function names from addresses</h2>
+<p>Last step to get execution traces is to use provided scripts located in
+<code>ms-tpm-20-ref/Samples/Nucleo-TPM/scripts/kfunc_tracer</code></p>
+<p>Pull logs from your host machine:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>./pull_logs.sh
+<span class="go">RASPI_IP: pi@192.168.8.170</span>
+<span class="go">creating ./logs directory</span>
+<span class="go">entering ./logs directory</span>
+<span class="go">cleaning ./logs directory</span>
+<span class="go">collecting dmesg tpm_addr logs</span>
+<span class="go">collecting tpm related /proc/modules entries</span>
+</code></pre></div>
+<p>Get function names.
+Below you can see the full call stack of tpm module failing due to not
+connected hardware of tpm module.
+To be executed on your host machine.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>python<span class="w"> </span>get_call_stack.py
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_driver_probe()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_probe()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_init()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_core_init()</span>
+<span class="go">tpm.ko: tpmm_chip_alloc()</span>
+<span class="go">tpm.ko: tpm_chip_alloc()</span>
+<span class="go">tpm.ko: tpm2_init_space()</span>
+<span class="go">tpm.ko: tpm2_init_space()</span>
+<span class="go">tpm.ko: tpm_chip_alloc()</span>
+<span class="go">tpm.ko: tpmm_chip_alloc()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: wait_startup()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read_bytes()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read_bytes()</span>
+<span class="go">tpm_tis_core.ko: wait_startup()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_remove()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read32()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read_bytes()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read_bytes()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_read32()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_write32()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_write_bytes()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_flow_control()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_transfer()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_write_bytes()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_write32()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_clkrun_enable()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_remove()</span>
+<span class="go">tpm_tis_core.ko: tpm_tis_core_init()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_init()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_probe()</span>
+<span class="go">tpm_tis_spi.ko: tpm_tis_spi_driver_probe()</span>
+<span class="go">tpm.ko: tpm_dev_release()</span>
+<span class="go">tpm.ko: tpm_dev_release()</span>
+</code></pre></div>
+<h3 id="whole-logs-from-the-test-procedure">Whole logs from the test procedure</h3>
+<p>Below we have collected call stack for Raspberry Pi TPM driver startup. </br></p>
+<ul>
+<li><a href="../logs_tpm_module/log_with_tpm_get_call_stack.txt">Log file with TPM module plugged in</a></li>
+<li><a href="../logs_tpm_module/log_without_tpm_get_call_stack.txt">Log file without TPM</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+    
+  </body>
+</html>
