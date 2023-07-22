@@ -37,3 +37,4 @@ nav:
   - 'SPI interface - implementation': tpm-spi-dev.md
   - 'SPI communication dump': tpm-spi-dump.md
   - 'LPC driver - implementation': TPM_with_LPC_protocol.md
+  - 'Testing LPC on real hardware': LPC_Peripheral_Hardware_Test.md
